@@ -2,15 +2,20 @@
   description = "Nix + Home Manager configs for laptop, desktop, and nixos-mini";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixgl.url = "github:guibou/nixGL";
+    nixgl.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, nixgl, ... }:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ nixgl.overlay ];
+      };
     in {
       homeConfigurations = {
         laptop = home-manager.lib.homeManagerConfiguration {
