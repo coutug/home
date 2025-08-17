@@ -15,25 +15,36 @@
     # k9s.enable = true;
     # neovim.enable = true;
     # tmux.enable = true;
-    # zsh.enable = true;
     zoxide.enable = true;
+    # zsh.enable = true;
   };
 
   home.packages = with pkgs; [
-    duf
-    home-manager
-    # fd #TODO dependency
-    # ripgrep #TODO dependency
-    tealdeer
-    lazygit
-    lazydocker
+    # act
+    # age
+    # argocd
+    # crane
     curlie
-    # jq #TODO dependency
+    duf
+    # fd #TODO dependency
+    # fluxcd
     github-cli
+    # helm
+    # helmfile
+    home-manager
+    # jq #TODO dependency
     kubectl
-    # kustomize helm helmfile argocd fluxcd
-    # sops age yq-go trivy terraform rclone
-    # act crane nmap
+    # kustomize
+    lazydocker
+    lazygit
+    # nmap
+    # rclone
+    # ripgrep #TODO dependency
+    # sops
+    tealdeer
+    # terraform
+    # trivy
+    # yq-go
   ];
 
 }
