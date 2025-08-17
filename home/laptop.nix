@@ -2,8 +2,8 @@
 {
   imports = [ ./common.nix ];
 
-  home.username = "myuser";
-  home.homeDirectory = "/home/myuser";
+  home.username = "gabriel";
+  home.homeDirectory = "/home/gabriel";
   home.stateVersion = "23.11";
 
   # Install nixGL wrapper for OpenGL applications
