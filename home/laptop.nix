@@ -10,4 +10,11 @@
   home.packages = with pkgs; [
     nixgl.auto.nixGLDefault
   ];
+
+  programs = {
+    alacritty = {
+      enable = true;
+      package = pkgs.nixgl.auto.nixGLDefault pkgs.alacritty;
+    };
+  };
 }
