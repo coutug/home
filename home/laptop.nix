@@ -1,4 +1,7 @@
 { pkgs, ... }:
+let
+  nixgl = pkgs.callPackage ../modules/nixGL.nix { };
+in
 {
   imports = [ ./common.nix ];
 
