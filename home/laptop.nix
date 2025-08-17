@@ -20,31 +20,31 @@
   };
 
   home.packages = with pkgs; [
-    # act
-    # age
-    # argocd
-    # crane
+    act
+    age
+    argocd
+    crane
     curlie
     duf
     # fd #TODO dependency
-    # fluxcd
+    fluxcd
     github-cli
-    # helm
-    # helmfile
+    helm
+    helmfile
     home-manager
     # jq #TODO dependency
-    kubectl
-    # kustomize
+    # kubectl #TODO dependency
+    kustomize
     lazydocker
     lazygit
-    # nmap
-    # rclone
+    nmap
+    rclone
     # ripgrep #TODO dependency
-    # sops
+    sops
     tealdeer
-    # terraform
-    # trivy
-    # yq-go
+    opentofu
+    trivy
+    yq-go
   ];
 
 }
