@@ -4,7 +4,7 @@
 
   home.username = "gabriel";
   home.homeDirectory = "/home/gabriel";
-  home.stateVersion = "23.11";
+  home.stateVersion = "25.05";
 
   # Install nixGL wrapper for OpenGL applications
   home.packages = with pkgs; [
@@ -14,7 +14,7 @@
   programs = {
     alacritty = {
       enable = true;
-      package = pkgs.nixgl.auto.nixGLDefault pkgs.alacritty;
+      # package = pkgs.nixgl.auto.nixGLDefault pkgs.alacritty;
     };
   };
 }
