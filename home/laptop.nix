@@ -51,5 +51,9 @@
     source = ./config/tmux.conf;
   };
 
+  xdg.configFile."tmuxinator/kmux.yml" = {
+    source = ./config/kmux.yml;
+  };
+
   # fonts.fontconfig.enable = true;
 }
