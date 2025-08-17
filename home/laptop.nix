@@ -47,4 +47,9 @@
     yq-go
   ];
 
+  home.file.".tmux-nix.conf" = {
+    source = ./config/.tmux.conf;
+  };
+
+  # fonts.fontconfig.enable = true;
 }
