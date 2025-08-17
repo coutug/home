@@ -6,15 +6,13 @@
   home.homeDirectory = "/home/gabriel";
   home.stateVersion = "25.05";
 
-  # Install nixGL wrapper for OpenGL applications
   home.packages = with pkgs; [
-    nixgl.auto.nixGLDefault
+    home-manager
   ];
 
   programs = {
     alacritty = {
       enable = true;
-      # package = pkgs.nixgl.auto.nixGLDefault pkgs.alacritty;
     };
   };
 }
