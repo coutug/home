@@ -29,7 +29,7 @@
     # fd #TODO dependency
     fluxcd
     github-cli
-    helm
+    kubernetes-helm
     helmfile
     home-manager
     # jq #TODO dependency
