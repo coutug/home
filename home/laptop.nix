@@ -9,7 +9,10 @@
   programs = {
     alacritty.enable = true;
     bat.enable = true;
-    # fzf.enable = true; #TODO dependency
+    fzf = {
+      enable = true; #TODO dependency
+      enableZshIntegration = true;
+    };
     # git.enable = true;
     htop.enable = true;
     # k9s.enable = true;
