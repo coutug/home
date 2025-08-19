@@ -20,7 +20,10 @@
     htop.enable = true;
     # neovim.enable = true;
     # tmux.enable = true;
-    zoxide.enable = true;
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+    };
     # zsh.enable = true;
   };
 

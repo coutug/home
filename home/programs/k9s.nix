@@ -293,17 +293,17 @@
 
     skins = let
       colors = {
-        foreground = "#dcd7ba";
-        background = "#171717";
-        black      = "#0e0926ff";
-        blue       = "#7e9cd8";
-        green      = "#00bfff";
-        grey       = "#7a7a7aff";
-        orange     = "#ffa066";
-        purple     = "#957fb8";
-        red        = "#c34043";
-        yellow     = "#c0a36e";
-        yellow_bright = "#e6c384";
+        foreground = "#EAF2F7";
+        background = "#0B0C10";
+        black = "#050508";
+        blue = "#677ec9";
+        green = "#02f2d2";
+        grey = "#A4A9B6";
+        orange = "#ff66cc";
+        purple = "#a985d6";
+        red = "#ff4d6d";
+        yellow = "#02c6f2";
+        yellow_bright = "#FFFFFF";
       };
     in {
       kanagawaSkin = {
