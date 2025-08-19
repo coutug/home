@@ -32,12 +32,14 @@
     # fd #TODO dependency
     fluxcd
     github-cli
-    kubernetes-helm
     helmfile
     home-manager
     # jq #TODO dependency
-    # kubectl #TODO dependency
+    kubectl #TODO dependency
+    kubelogin-oidc
+    kubernetes-helm
     kustomize
+    krew
     lazydocker
     lazygit
     nmap
@@ -47,6 +49,7 @@
     tealdeer
     opentofu
     trivy
+    velero
     yq-go
   ];
 
