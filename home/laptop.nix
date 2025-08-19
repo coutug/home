@@ -1,6 +1,9 @@
 { pkgs, ... }:
 {
-  imports = [ ./common.nix ];
+  imports = [
+    ./common.nix
+    ./programs/k9s.nix
+  ];
 
   home.username = "gabriel";
   home.homeDirectory = "/home/gabriel";
@@ -15,7 +18,6 @@
     };
     # git.enable = true;
     htop.enable = true;
-    # k9s.enable = true;
     # neovim.enable = true;
     # tmux.enable = true;
     zoxide.enable = true;
@@ -35,7 +37,7 @@
     helmfile
     home-manager
     # jq #TODO dependency
-    kubectl #TODO dependency
+    kubectl
     kubelogin-oidc
     kubernetes-helm
     kustomize
