@@ -37,33 +37,58 @@
     curlie
     # discount
     duf
+    etcd
     # fd #TODO dependency
     fluxcd
     # fwupd
     # fwupd-efi
     github-cli
+    go-jsonnet
     helmfile
     home-manager
     # jq #TODO dependency
     # kdePackages.ark
     # kdePackages.bluedevil
     # kdePackages.okular
+    keepassxc
+    kind
+    kopia
     kubectl
+    kubie
+    kubeconform
     kubelogin-oidc
     kubernetes-helm
     kustomize
     krew
+    k0sctl
     lazydocker
     lazygit
+    # libguestfs
+    minikube
+    musescore
+    nix-zsh-completions
     nmap
+    obs-studio
+    qbittorrent-enhanced
     rclone
+    rsync
     # ripgrep #TODO dependency
+    solaar
     sops
+    spotify
     tealdeer
+    traceroute
+    tree
     opentofu
     trivy
+    vector
     velero
+    vesktop
+    vlc
+    yay
+    yazi
     yq-go
+    zoom-us
   ];
 
   home.file.".tmux.conf" = {
