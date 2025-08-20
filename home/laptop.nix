@@ -31,23 +31,23 @@
     act
     age
     argocd
-    bluez
-    bluez-tools
+    # bluez
+    # bluez-tools
     crane
     curlie
-    discount
+    # discount
     duf
     # fd #TODO dependency
     fluxcd
-    fwupd
-    fwupd-efi
+    # fwupd
+    # fwupd-efi
     github-cli
     helmfile
     home-manager
     # jq #TODO dependency
-    kdePackages.ark
-    kdePackages.bluedevil
-    kdePackages.okular
+    # kdePackages.ark
+    # kdePackages.bluedevil
+    # kdePackages.okular
     kubectl
     kubelogin-oidc
     kubernetes-helm
