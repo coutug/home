@@ -91,6 +91,13 @@
     zoom-us
   ];
 
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (pkgs.lib.getName pkg) [
+      "spotify"
+      "zoom"
+    ];
+  
+
   home.file.".tmux.conf" = {
     source = ./config/tmux.conf;
   };
