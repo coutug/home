@@ -46,6 +46,7 @@
     go-jsonnet
     helmfile
     home-manager
+    hey
     # jq #TODO dependency
     # kdePackages.ark
     # kdePackages.bluedevil
