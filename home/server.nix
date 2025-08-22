@@ -1,6 +1,5 @@
 { pkgs, ... }:
 {
-  imports = [ ./common.nix ];
 
   home.username = "myuser";
   home.homeDirectory = "/home/myuser";

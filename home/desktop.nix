@@ -2,7 +2,10 @@
 {
   imports = [ ./common.nix ];
 
-  home.username = "myuser";
-  home.homeDirectory = "/home/myuser";
-  home.stateVersion = "23.11";
+  home.packages = with pkgs; [
+    reaper
+    reaper-sws-extension
+    reaper-reapack-extension
+  ];
+
 }
