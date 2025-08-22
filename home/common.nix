@@ -11,6 +11,9 @@
   home.stateVersion = "25.05";
 
   programs = {
+    # Let Home Manager install and manage itself
+    home-manager.enable = true;
+
     alacritty.enable = true;
     bat.enable = true;
     fzf = {
@@ -46,7 +49,6 @@
     github-cli
     go-jsonnet
     helmfile
-    home-manager
     hey
     # jq #TODO dependency
     # kdePackages.ark
@@ -73,7 +75,7 @@
     obs-studio
     qbittorrent-enhanced
     rclone
-    rsync
+    # rsync
     # ripgrep #TODO dependency
     solaar
     sops
