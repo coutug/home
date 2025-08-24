@@ -1,6 +1,9 @@
 { pkgs, ... }:
 {
-  imports = [ ./common.nix ];
+  imports = [
+    ./common.nix
+    ./programs/zsh.nix
+  ];
 
   home.packages = with pkgs; [
     reaper
