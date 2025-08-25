@@ -15,6 +15,11 @@
     home-manager.enable = true;
 
     alacritty.enable = true;
+    atuin = {
+      enable = true;
+      enableZshIntegration = true;
+      settings = { auto_sync = true; };
+    };
     bat.enable = true;
     fzf = {
       enable = true; #TODO dependency
@@ -28,7 +33,6 @@
       enable = true;
       enableZshIntegration = true;
     };
-    # zsh.enable = true;
   };
 
   home.packages = with pkgs; [
@@ -92,6 +96,7 @@
     yay
     yazi
     yq-go
+    zellij
     zoom-us
   ];
 

@@ -1,0 +1,997 @@
+#compdef mirrord
+
+autoload -U is-at-least
+
+_mirrord() {
+    typeset -A opt_args
+    typeset -a _arguments_options
+    local ret=1
+
+    if is-at-least 5.2; then
+        _arguments_options=(-s -S -C)
+    else
+        _arguments_options=(-s -C)
+    fi
+
+    local context curcontext="$curcontext" state line
+    _arguments "${_arguments_options[@]}" : \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'-V[Print version]' \
+'--version[Print version]' \
+":: :_mirrord_commands" \
+"*::: :->mirrord" \
+&& ret=0
+    case $state in
+    (mirrord)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:mirrord-command-$line[1]:"
+        case $line[1] in
+            (container)
+_arguments "${_arguments_options[@]}" : \
+'-t+[Target name to mirror. Target can either be a deployment or a pod. Valid formats\: deployment/name, pod/name, pod/name/container/name]:TARGET:_default' \
+'--target=[Target name to mirror. Target can either be a deployment or a pod. Valid formats\: deployment/name, pod/name, pod/name/container/name]:TARGET:_default' \
+'-n+[Namespace of the pod to mirror. Defaults to "default"]:TARGET_NAMESPACE:_default' \
+'--target-namespace=[Namespace of the pod to mirror. Defaults to "default"]:TARGET_NAMESPACE:_default' \
+'-a+[Namespace to place agent in]:AGENT_NAMESPACE:_default' \
+'--agent-namespace=[Namespace to place agent in]:AGENT_NAMESPACE:_default' \
+'-l+[Agent log level]:AGENT_LOG_LEVEL:_default' \
+'--agent-log-level=[Agent log level]:AGENT_LOG_LEVEL:_default' \
+'-i+[Agent image]:AGENT_IMAGE:_default' \
+'--agent-image=[Agent image]:AGENT_IMAGE:_default' \
+'--fs-mode=[Default file system behavior\: read, write, local]:FS_MODE:((write\:"Read & Write from remote, apart from overrides (hardcoded and configured in file)"
+read\:"Read from remote, Write local, apart from overrides (hardcoded and configured in file) - default"
+local\:"Read & Write from local (disabled)"
+local-with-overrides\:"Read & Write from local, apart from overrides (hardcoded and configured in file)"))' \
+'-x+[The env vars to filter out]:OVERRIDE_ENV_VARS_EXCLUDE:_default' \
+'--override-env-vars-exclude=[The env vars to filter out]:OVERRIDE_ENV_VARS_EXCLUDE:_default' \
+'-s+[The env vars to select. Default is '\''*'\'']:OVERRIDE_ENV_VARS_INCLUDE:_default' \
+'--override-env-vars-include=[The env vars to select. Default is '\''*'\'']:OVERRIDE_ENV_VARS_INCLUDE:_default' \
+'--skip-processes=[mirrord will not load into these processes, they will run completely locally]:SKIP_PROCESSES:_default' \
+'--agent-ttl=[Agent TTL]:AGENT_TTL:_default' \
+'--agent-startup-timeout=[Agent Startup Timeout seconds]:AGENT_STARTUP_TIMEOUT:_default' \
+'-c+[Accept/reject invalid certificates]' \
+'--accept-invalid-certificates=[Accept/reject invalid certificates]' \
+'-f+[Load config from config file When using -f flag without a value, defaults to "./.mirrord/mirrord.json"]' \
+'--config-file=[Load config from config file When using -f flag without a value, defaults to "./.mirrord/mirrord.json"]' \
+'--context=[Kube context to use from Kubeconfig]:CONTEXT:_default' \
+'--env-file=[Path to env file that should be used for the execution]:ENV_FILE:_files' \
+'--no-remote-dns[Disables resolving a remote DNS]' \
+'-e[Use an Ephemeral Container to mirror traffic]' \
+'--ephemeral-container[Use an Ephemeral Container to mirror traffic]' \
+'--steal[Steal TCP instead of mirroring]' \
+'--no-outgoing[Disable tcp/udp outgoing traffic]' \
+'--no-tcp-outgoing[Disable tcp outgoing feature]' \
+'--no-udp-outgoing[Disable udp outgoing feature]' \
+'--no-telemetry[Disable telemetry. See <https\://github.com/metalbear-co/mirrord/blob/main/TELEMETRY.md>]' \
+'--disable-version-check[Disable version check on startup]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'*::exec -- Container command to be executed:_default' \
+&& ret=0
+;;
+(exec)
+_arguments "${_arguments_options[@]}" : \
+'-t+[Target name to mirror. Target can either be a deployment or a pod. Valid formats\: deployment/name, pod/name, pod/name/container/name]:TARGET:_default' \
+'--target=[Target name to mirror. Target can either be a deployment or a pod. Valid formats\: deployment/name, pod/name, pod/name/container/name]:TARGET:_default' \
+'-n+[Namespace of the pod to mirror. Defaults to "default"]:TARGET_NAMESPACE:_default' \
+'--target-namespace=[Namespace of the pod to mirror. Defaults to "default"]:TARGET_NAMESPACE:_default' \
+'-a+[Namespace to place agent in]:AGENT_NAMESPACE:_default' \
+'--agent-namespace=[Namespace to place agent in]:AGENT_NAMESPACE:_default' \
+'-l+[Agent log level]:AGENT_LOG_LEVEL:_default' \
+'--agent-log-level=[Agent log level]:AGENT_LOG_LEVEL:_default' \
+'-i+[Agent image]:AGENT_IMAGE:_default' \
+'--agent-image=[Agent image]:AGENT_IMAGE:_default' \
+'--fs-mode=[Default file system behavior\: read, write, local]:FS_MODE:((write\:"Read & Write from remote, apart from overrides (hardcoded and configured in file)"
+read\:"Read from remote, Write local, apart from overrides (hardcoded and configured in file) - default"
+local\:"Read & Write from local (disabled)"
+local-with-overrides\:"Read & Write from local, apart from overrides (hardcoded and configured in file)"))' \
+'-x+[The env vars to filter out]:OVERRIDE_ENV_VARS_EXCLUDE:_default' \
+'--override-env-vars-exclude=[The env vars to filter out]:OVERRIDE_ENV_VARS_EXCLUDE:_default' \
+'-s+[The env vars to select. Default is '\''*'\'']:OVERRIDE_ENV_VARS_INCLUDE:_default' \
+'--override-env-vars-include=[The env vars to select. Default is '\''*'\'']:OVERRIDE_ENV_VARS_INCLUDE:_default' \
+'--skip-processes=[mirrord will not load into these processes, they will run completely locally]:SKIP_PROCESSES:_default' \
+'--agent-ttl=[Agent TTL]:AGENT_TTL:_default' \
+'--agent-startup-timeout=[Agent Startup Timeout seconds]:AGENT_STARTUP_TIMEOUT:_default' \
+'-c+[Accept/reject invalid certificates]' \
+'--accept-invalid-certificates=[Accept/reject invalid certificates]' \
+'-f+[Load config from config file When using -f flag without a value, defaults to "./.mirrord/mirrord.json"]' \
+'--config-file=[Load config from config file When using -f flag without a value, defaults to "./.mirrord/mirrord.json"]' \
+'--context=[Kube context to use from Kubeconfig]:CONTEXT:_default' \
+'--env-file=[Path to env file that should be used for the execution]:ENV_FILE:_files' \
+'--no-remote-dns[Disables resolving a remote DNS]' \
+'-e[Use an Ephemeral Container to mirror traffic]' \
+'--ephemeral-container[Use an Ephemeral Container to mirror traffic]' \
+'--steal[Steal TCP instead of mirroring]' \
+'--no-outgoing[Disable tcp/udp outgoing traffic]' \
+'--no-tcp-outgoing[Disable tcp outgoing feature]' \
+'--no-udp-outgoing[Disable udp outgoing feature]' \
+'--no-telemetry[Disable telemetry. See <https\://github.com/metalbear-co/mirrord/blob/main/TELEMETRY.md>]' \
+'--disable-version-check[Disable version check on startup]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':binary -- Binary to execute and connect with the remote pod:_default' \
+'*::binary_args -- Arguments to pass to the binary:_default' \
+&& ret=0
+;;
+(completions)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+':shell:(bash elvish fish powershell zsh)' \
+&& ret=0
+;;
+(extract)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+':path:_default' \
+&& ret=0
+;;
+(operator)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_mirrord__operator_commands" \
+"*::: :->operator" \
+&& ret=0
+
+    case $state in
+    (operator)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:mirrord-operator-command-$line[1]:"
+        case $line[1] in
+            (setup)
+_arguments "${_arguments_options[@]}" : \
+'--license-key=[A mirrord for Teams license key (online)]:LICENSE_KEY:_default' \
+'--license-path=[Path to a file containing a mirrord for Teams license certificate]:LICENSE_PATH:_files' \
+'-f+[Output Kubernetes specs to file instead of stdout]:FILE:_files' \
+'--file=[Output Kubernetes specs to file instead of stdout]:FILE:_files' \
+'-n+[Namespace to create the operator in (this doesn'\''t limit the namespaces the operator will be able to access)]:NAMESPACE:_default' \
+'--namespace=[Namespace to create the operator in (this doesn'\''t limit the namespaces the operator will be able to access)]:NAMESPACE:_default' \
+'--aws-role-arn=[AWS role ARN for the operator'\''s service account. Necessary for enabling SQS queue splitting. For successfully running an SQS queue splitting operator the given IAM role must be able to create, read from, write to, and delete SQS queues. If the queue messages are encrypted using KMS, the operator also needs the \`kms\:Encrypt\`, \`kms\:Decrypt\` and \`kms\:GenerateDataKey\` permissions]:AWS_ROLE_ARN:_default' \
+'--arn=[AWS role ARN for the operator'\''s service account. Necessary for enabling SQS queue splitting. For successfully running an SQS queue splitting operator the given IAM role must be able to create, read from, write to, and delete SQS queues. If the queue messages are encrypted using KMS, the operator also needs the \`kms\:Encrypt\`, \`kms\:Decrypt\` and \`kms\:GenerateDataKey\` permissions]:AWS_ROLE_ARN:_default' \
+'--accept-tos[ToS can be read here <https\://metalbear.co/legal/terms>]' \
+'--sqs-splitting[Enable SQS queue splitting. When set, some extra CRDs will be installed on the cluster, and the operator will run an SQS splitting component]' \
+'--sqs[Enable SQS queue splitting. When set, some extra CRDs will be installed on the cluster, and the operator will run an SQS splitting component]' \
+'--kafka-splitting[Enable Kafka queue splitting. When set, some extra CRDs will be installed on the cluster, and the operator will run a Kafka splitting component]' \
+'--kafka[Enable Kafka queue splitting. When set, some extra CRDs will be installed on the cluster, and the operator will run a Kafka splitting component]' \
+'--application-auto-pause[Enable argocd Application auto-pause When set the operator will temporary pause automated sync for applications whom resources are targeted with \`scale_down\` feature enabled]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+&& ret=0
+;;
+(status)
+_arguments "${_arguments_options[@]}" : \
+'-f+[Specify config file to use]' \
+'--config-file=[Specify config file to use]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(session)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+":: :_mirrord__operator__session_commands" \
+"*::: :->session" \
+&& ret=0
+
+    case $state in
+    (session)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:mirrord-operator-session-command-$line[1]:"
+        case $line[1] in
+            (kill)
+_arguments "${_arguments_options[@]}" : \
+'-i+[Id of the session]:ID:_default' \
+'--id=[Id of the session]:ID:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(kill-all)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(retain-active)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_mirrord__operator__session__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:mirrord-operator-session-help-command-$line[1]:"
+        case $line[1] in
+            (kill)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(kill-all)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(retain-active)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_mirrord__operator__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:mirrord-operator-help-command-$line[1]:"
+        case $line[1] in
+            (setup)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(status)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(session)
+_arguments "${_arguments_options[@]}" : \
+":: :_mirrord__operator__help__session_commands" \
+"*::: :->session" \
+&& ret=0
+
+    case $state in
+    (session)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:mirrord-operator-help-session-command-$line[1]:"
+        case $line[1] in
+            (kill)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(kill-all)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(retain-active)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(ls)
+_arguments "${_arguments_options[@]}" : \
+'-o+[Specify the format of the output]:FORMAT:(json)' \
+'--output=[Specify the format of the output]:FORMAT:(json)' \
+'-n+[Specify the namespace to list targets in]:NAMESPACE:_default' \
+'--namespace=[Specify the namespace to list targets in]:NAMESPACE:_default' \
+'-f+[Specify config file to use]:CONFIG_FILE:_files' \
+'--config-file=[Specify config file to use]:CONFIG_FILE:_files' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(container-ext)
+_arguments "${_arguments_options[@]}" : \
+'-f+[Specify config file to use]:CONFIG_FILE:_files' \
+'--config-file=[Specify config file to use]:CONFIG_FILE:_files' \
+'-t+[Specify target]:TARGET:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(ext)
+_arguments "${_arguments_options[@]}" : \
+'-f+[Specify config file to use]' \
+'--config-file=[Specify config file to use]' \
+'-t+[Specify target]:TARGET:_default' \
+'-e+[User executable - the executable the layer is going to be injected to]:EXECUTABLE:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(extproxy)
+_arguments "${_arguments_options[@]}" : \
+'--port=[]:PORT:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(intproxy)
+_arguments "${_arguments_options[@]}" : \
+'--port=[]:PORT:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(port-forward)
+_arguments "${_arguments_options[@]}" : \
+'-t+[Target name to mirror. Target can either be a deployment or a pod. Valid formats\: deployment/name, pod/name, pod/name/container/name]:TARGET:_default' \
+'--target=[Target name to mirror. Target can either be a deployment or a pod. Valid formats\: deployment/name, pod/name, pod/name/container/name]:TARGET:_default' \
+'-n+[Namespace of the pod to mirror. Defaults to "default"]:TARGET_NAMESPACE:_default' \
+'--target-namespace=[Namespace of the pod to mirror. Defaults to "default"]:TARGET_NAMESPACE:_default' \
+'-a+[Namespace to place agent in]:AGENT_NAMESPACE:_default' \
+'--agent-namespace=[Namespace to place agent in]:AGENT_NAMESPACE:_default' \
+'-l+[Agent log level]:AGENT_LOG_LEVEL:_default' \
+'--agent-log-level=[Agent log level]:AGENT_LOG_LEVEL:_default' \
+'-i+[Agent image]:AGENT_IMAGE:_default' \
+'--agent-image=[Agent image]:AGENT_IMAGE:_default' \
+'--agent-ttl=[Agent TTL]:AGENT_TTL:_default' \
+'--agent-startup-timeout=[Agent Startup Timeout seconds]:AGENT_STARTUP_TIMEOUT:_default' \
+'-c+[Accept/reject invalid certificates]' \
+'--accept-invalid-certificates=[Accept/reject invalid certificates]' \
+'-f+[Load config from config file When using -f flag without a value, defaults to "./.mirrord/mirrord.json"]' \
+'--config-file=[Load config from config file When using -f flag without a value, defaults to "./.mirrord/mirrord.json"]' \
+'--context=[Kube context to use from Kubeconfig]:CONTEXT:_default' \
+'*-L+[Mappings for port forwarding. Expected format is\: '\''-L \\\[local_port\:\\\]remote_ip_or_hostname\:remote_port'\''. If the remote is given as an ip, this is parsed as soon as mirrord starts. Otherwise, the remote is assumed to be a hostname and lookup is performed in the cluster after a connection is made to the target. Multiple forwarding mappings are each passed with -L]:PORT_MAPPING:_default' \
+'*--port-mapping=[Mappings for port forwarding. Expected format is\: '\''-L \\\[local_port\:\\\]remote_ip_or_hostname\:remote_port'\''. If the remote is given as an ip, this is parsed as soon as mirrord starts. Otherwise, the remote is assumed to be a hostname and lookup is performed in the cluster after a connection is made to the target. Multiple forwarding mappings are each passed with -L]:PORT_MAPPING:_default' \
+'*-R+[Mappings for reverse port forwarding. Expected format is\: '\''-R \\\[remote_port\:\\\]local_port'\''. In reverse port forwarding, traffic to the remote_port on the target pod is stolen or mirrored to localhost\:local_port. If stealing, the response is returned to be sent from the target\:remote_port. Multiple reverse mappings are each passed with -R]:REVERSE_PORT_MAPPING:_default' \
+'*--reverse-port-mapping=[Mappings for reverse port forwarding. Expected format is\: '\''-R \\\[remote_port\:\\\]local_port'\''. In reverse port forwarding, traffic to the remote_port on the target pod is stolen or mirrored to localhost\:local_port. If stealing, the response is returned to be sent from the target\:remote_port. Multiple reverse mappings are each passed with -R]:REVERSE_PORT_MAPPING:_default' \
+'-e[Use an Ephemeral Container to mirror traffic]' \
+'--ephemeral-container[Use an Ephemeral Container to mirror traffic]' \
+'--no-telemetry[Disable telemetry - see <https\://github.com/metalbear-co/mirrord/blob/main/TELEMETRY.md>]' \
+'--disable-version-check[Disable version check on startup]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(verify-config)
+_arguments "${_arguments_options[@]}" : \
+'--ide[Config file path]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':path -- Config file path:_files' \
+&& ret=0
+;;
+(teams)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(diagnose)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_mirrord__diagnose_commands" \
+"*::: :->diagnose" \
+&& ret=0
+
+    case $state in
+    (diagnose)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:mirrord-diagnose-command-$line[1]:"
+        case $line[1] in
+            (latency)
+_arguments "${_arguments_options[@]}" : \
+'-f+[Specify config file to use]' \
+'--config-file=[Specify config file to use]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_mirrord__diagnose__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:mirrord-diagnose-help-command-$line[1]:"
+        case $line[1] in
+            (latency)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(vpn)
+_arguments "${_arguments_options[@]}" : \
+'-n+[Specify the Kubernetes namespace to vpn into]:NAMESPACE:_default' \
+'--namespace=[Specify the Kubernetes namespace to vpn into]:NAMESPACE:_default' \
+'-f+[Load config from config file When using -f flag without a value, defaults to "./.mirrord/mirrord.json"]' \
+'--config-file=[Load config from config file When using -f flag without a value, defaults to "./.mirrord/mirrord.json"]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_mirrord__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:mirrord-help-command-$line[1]:"
+        case $line[1] in
+            (container)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(exec)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(completions)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(extract)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(operator)
+_arguments "${_arguments_options[@]}" : \
+":: :_mirrord__help__operator_commands" \
+"*::: :->operator" \
+&& ret=0
+
+    case $state in
+    (operator)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:mirrord-help-operator-command-$line[1]:"
+        case $line[1] in
+            (setup)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(status)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(session)
+_arguments "${_arguments_options[@]}" : \
+":: :_mirrord__help__operator__session_commands" \
+"*::: :->session" \
+&& ret=0
+
+    case $state in
+    (session)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:mirrord-help-operator-session-command-$line[1]:"
+        case $line[1] in
+            (kill)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(kill-all)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(retain-active)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(ls)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(container-ext)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(ext)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(extproxy)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(intproxy)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(port-forward)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(verify-config)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(teams)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(diagnose)
+_arguments "${_arguments_options[@]}" : \
+":: :_mirrord__help__diagnose_commands" \
+"*::: :->diagnose" \
+&& ret=0
+
+    case $state in
+    (diagnose)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:mirrord-help-diagnose-command-$line[1]:"
+        case $line[1] in
+            (latency)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(vpn)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+}
+
+(( $+functions[_mirrord_commands] )) ||
+_mirrord_commands() {
+    local commands; commands=(
+'container:Unstable\: Create and run a new container from an image with mirrord loaded' \
+'exec:Execute a binary using mirrord, mirror remote traffic to it, provide it access to remote resources (network, files) and environment variables' \
+'completions:Generates shell completions for the provided shell. Supported shells\: bash, elvish, fish, powershell, zsh' \
+'extract:' \
+'operator:Operator commands eg. setup' \
+'ls:List targets/resources like pods/namespaces in json format' \
+'container-ext:mirrord container extension integration' \
+'ext:Extension execution - used by extension to execute binaries' \
+'extproxy:External Proxy - used for intproxy when it'\''s running with \`mirrord container\` command' \
+'intproxy:Internal proxy - used to aggregate connections from multiple layers' \
+'port-forward:Port forwarding - UNSTABLE FEATURE' \
+'verify-config:Verify config file without starting mirrord' \
+'teams:Try out mirrord for Teams' \
+'diagnose:Diagnostic commands' \
+'vpn:Run mirrord vpn' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'mirrord commands' commands "$@"
+}
+(( $+functions[_mirrord__completions_commands] )) ||
+_mirrord__completions_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord completions commands' commands "$@"
+}
+(( $+functions[_mirrord__container_commands] )) ||
+_mirrord__container_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord container commands' commands "$@"
+}
+(( $+functions[_mirrord__container-ext_commands] )) ||
+_mirrord__container-ext_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord container-ext commands' commands "$@"
+}
+(( $+functions[_mirrord__diagnose_commands] )) ||
+_mirrord__diagnose_commands() {
+    local commands; commands=(
+'latency:Check network connectivity and provide RTT (latency) statistics' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'mirrord diagnose commands' commands "$@"
+}
+(( $+functions[_mirrord__diagnose__help_commands] )) ||
+_mirrord__diagnose__help_commands() {
+    local commands; commands=(
+'latency:Check network connectivity and provide RTT (latency) statistics' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'mirrord diagnose help commands' commands "$@"
+}
+(( $+functions[_mirrord__diagnose__help__help_commands] )) ||
+_mirrord__diagnose__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord diagnose help help commands' commands "$@"
+}
+(( $+functions[_mirrord__diagnose__help__latency_commands] )) ||
+_mirrord__diagnose__help__latency_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord diagnose help latency commands' commands "$@"
+}
+(( $+functions[_mirrord__diagnose__latency_commands] )) ||
+_mirrord__diagnose__latency_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord diagnose latency commands' commands "$@"
+}
+(( $+functions[_mirrord__exec_commands] )) ||
+_mirrord__exec_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord exec commands' commands "$@"
+}
+(( $+functions[_mirrord__ext_commands] )) ||
+_mirrord__ext_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord ext commands' commands "$@"
+}
+(( $+functions[_mirrord__extproxy_commands] )) ||
+_mirrord__extproxy_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord extproxy commands' commands "$@"
+}
+(( $+functions[_mirrord__extract_commands] )) ||
+_mirrord__extract_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord extract commands' commands "$@"
+}
+(( $+functions[_mirrord__help_commands] )) ||
+_mirrord__help_commands() {
+    local commands; commands=(
+'container:Unstable\: Create and run a new container from an image with mirrord loaded' \
+'exec:Execute a binary using mirrord, mirror remote traffic to it, provide it access to remote resources (network, files) and environment variables' \
+'completions:Generates shell completions for the provided shell. Supported shells\: bash, elvish, fish, powershell, zsh' \
+'extract:' \
+'operator:Operator commands eg. setup' \
+'ls:List targets/resources like pods/namespaces in json format' \
+'container-ext:mirrord container extension integration' \
+'ext:Extension execution - used by extension to execute binaries' \
+'extproxy:External Proxy - used for intproxy when it'\''s running with \`mirrord container\` command' \
+'intproxy:Internal proxy - used to aggregate connections from multiple layers' \
+'port-forward:Port forwarding - UNSTABLE FEATURE' \
+'verify-config:Verify config file without starting mirrord' \
+'teams:Try out mirrord for Teams' \
+'diagnose:Diagnostic commands' \
+'vpn:Run mirrord vpn' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'mirrord help commands' commands "$@"
+}
+(( $+functions[_mirrord__help__completions_commands] )) ||
+_mirrord__help__completions_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help completions commands' commands "$@"
+}
+(( $+functions[_mirrord__help__container_commands] )) ||
+_mirrord__help__container_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help container commands' commands "$@"
+}
+(( $+functions[_mirrord__help__container-ext_commands] )) ||
+_mirrord__help__container-ext_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help container-ext commands' commands "$@"
+}
+(( $+functions[_mirrord__help__diagnose_commands] )) ||
+_mirrord__help__diagnose_commands() {
+    local commands; commands=(
+'latency:Check network connectivity and provide RTT (latency) statistics' \
+    )
+    _describe -t commands 'mirrord help diagnose commands' commands "$@"
+}
+(( $+functions[_mirrord__help__diagnose__latency_commands] )) ||
+_mirrord__help__diagnose__latency_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help diagnose latency commands' commands "$@"
+}
+(( $+functions[_mirrord__help__exec_commands] )) ||
+_mirrord__help__exec_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help exec commands' commands "$@"
+}
+(( $+functions[_mirrord__help__ext_commands] )) ||
+_mirrord__help__ext_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help ext commands' commands "$@"
+}
+(( $+functions[_mirrord__help__extproxy_commands] )) ||
+_mirrord__help__extproxy_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help extproxy commands' commands "$@"
+}
+(( $+functions[_mirrord__help__extract_commands] )) ||
+_mirrord__help__extract_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help extract commands' commands "$@"
+}
+(( $+functions[_mirrord__help__help_commands] )) ||
+_mirrord__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help help commands' commands "$@"
+}
+(( $+functions[_mirrord__help__intproxy_commands] )) ||
+_mirrord__help__intproxy_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help intproxy commands' commands "$@"
+}
+(( $+functions[_mirrord__help__ls_commands] )) ||
+_mirrord__help__ls_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help ls commands' commands "$@"
+}
+(( $+functions[_mirrord__help__operator_commands] )) ||
+_mirrord__help__operator_commands() {
+    local commands; commands=(
+'setup:This will install the operator, which requires a seat based license to be used' \
+'status:Print operator status' \
+'session:Operator session management commands' \
+    )
+    _describe -t commands 'mirrord help operator commands' commands "$@"
+}
+(( $+functions[_mirrord__help__operator__session_commands] )) ||
+_mirrord__help__operator__session_commands() {
+    local commands; commands=(
+'kill:Kills the session specified by \`id\`' \
+'kill-all:Kills all operator sessions' \
+'retain-active:Kills _inactive_ sessions, might be useful if an undead session is still being stored in the session storage' \
+    )
+    _describe -t commands 'mirrord help operator session commands' commands "$@"
+}
+(( $+functions[_mirrord__help__operator__session__kill_commands] )) ||
+_mirrord__help__operator__session__kill_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help operator session kill commands' commands "$@"
+}
+(( $+functions[_mirrord__help__operator__session__kill-all_commands] )) ||
+_mirrord__help__operator__session__kill-all_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help operator session kill-all commands' commands "$@"
+}
+(( $+functions[_mirrord__help__operator__session__retain-active_commands] )) ||
+_mirrord__help__operator__session__retain-active_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help operator session retain-active commands' commands "$@"
+}
+(( $+functions[_mirrord__help__operator__setup_commands] )) ||
+_mirrord__help__operator__setup_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help operator setup commands' commands "$@"
+}
+(( $+functions[_mirrord__help__operator__status_commands] )) ||
+_mirrord__help__operator__status_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help operator status commands' commands "$@"
+}
+(( $+functions[_mirrord__help__port-forward_commands] )) ||
+_mirrord__help__port-forward_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help port-forward commands' commands "$@"
+}
+(( $+functions[_mirrord__help__teams_commands] )) ||
+_mirrord__help__teams_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help teams commands' commands "$@"
+}
+(( $+functions[_mirrord__help__verify-config_commands] )) ||
+_mirrord__help__verify-config_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help verify-config commands' commands "$@"
+}
+(( $+functions[_mirrord__help__vpn_commands] )) ||
+_mirrord__help__vpn_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord help vpn commands' commands "$@"
+}
+(( $+functions[_mirrord__intproxy_commands] )) ||
+_mirrord__intproxy_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord intproxy commands' commands "$@"
+}
+(( $+functions[_mirrord__ls_commands] )) ||
+_mirrord__ls_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord ls commands' commands "$@"
+}
+(( $+functions[_mirrord__operator_commands] )) ||
+_mirrord__operator_commands() {
+    local commands; commands=(
+'setup:This will install the operator, which requires a seat based license to be used' \
+'status:Print operator status' \
+'session:Operator session management commands' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'mirrord operator commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__help_commands] )) ||
+_mirrord__operator__help_commands() {
+    local commands; commands=(
+'setup:This will install the operator, which requires a seat based license to be used' \
+'status:Print operator status' \
+'session:Operator session management commands' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'mirrord operator help commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__help__help_commands] )) ||
+_mirrord__operator__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord operator help help commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__help__session_commands] )) ||
+_mirrord__operator__help__session_commands() {
+    local commands; commands=(
+'kill:Kills the session specified by \`id\`' \
+'kill-all:Kills all operator sessions' \
+'retain-active:Kills _inactive_ sessions, might be useful if an undead session is still being stored in the session storage' \
+    )
+    _describe -t commands 'mirrord operator help session commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__help__session__kill_commands] )) ||
+_mirrord__operator__help__session__kill_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord operator help session kill commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__help__session__kill-all_commands] )) ||
+_mirrord__operator__help__session__kill-all_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord operator help session kill-all commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__help__session__retain-active_commands] )) ||
+_mirrord__operator__help__session__retain-active_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord operator help session retain-active commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__help__setup_commands] )) ||
+_mirrord__operator__help__setup_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord operator help setup commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__help__status_commands] )) ||
+_mirrord__operator__help__status_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord operator help status commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__session_commands] )) ||
+_mirrord__operator__session_commands() {
+    local commands; commands=(
+'kill:Kills the session specified by \`id\`' \
+'kill-all:Kills all operator sessions' \
+'retain-active:Kills _inactive_ sessions, might be useful if an undead session is still being stored in the session storage' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'mirrord operator session commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__session__help_commands] )) ||
+_mirrord__operator__session__help_commands() {
+    local commands; commands=(
+'kill:Kills the session specified by \`id\`' \
+'kill-all:Kills all operator sessions' \
+'retain-active:Kills _inactive_ sessions, might be useful if an undead session is still being stored in the session storage' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'mirrord operator session help commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__session__help__help_commands] )) ||
+_mirrord__operator__session__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord operator session help help commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__session__help__kill_commands] )) ||
+_mirrord__operator__session__help__kill_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord operator session help kill commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__session__help__kill-all_commands] )) ||
+_mirrord__operator__session__help__kill-all_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord operator session help kill-all commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__session__help__retain-active_commands] )) ||
+_mirrord__operator__session__help__retain-active_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord operator session help retain-active commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__session__kill_commands] )) ||
+_mirrord__operator__session__kill_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord operator session kill commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__session__kill-all_commands] )) ||
+_mirrord__operator__session__kill-all_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord operator session kill-all commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__session__retain-active_commands] )) ||
+_mirrord__operator__session__retain-active_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord operator session retain-active commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__setup_commands] )) ||
+_mirrord__operator__setup_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord operator setup commands' commands "$@"
+}
+(( $+functions[_mirrord__operator__status_commands] )) ||
+_mirrord__operator__status_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord operator status commands' commands "$@"
+}
+(( $+functions[_mirrord__port-forward_commands] )) ||
+_mirrord__port-forward_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord port-forward commands' commands "$@"
+}
+(( $+functions[_mirrord__teams_commands] )) ||
+_mirrord__teams_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord teams commands' commands "$@"
+}
+(( $+functions[_mirrord__verify-config_commands] )) ||
+_mirrord__verify-config_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord verify-config commands' commands "$@"
+}
+(( $+functions[_mirrord__vpn_commands] )) ||
+_mirrord__vpn_commands() {
+    local commands; commands=()
+    _describe -t commands 'mirrord vpn commands' commands "$@"
+}
+
+if [ "$funcstack[1]" = "_mirrord" ]; then
+    _mirrord "$@"
+else
+    compdef _mirrord mirrord
+fi
