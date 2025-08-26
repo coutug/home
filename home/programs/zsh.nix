@@ -3,9 +3,22 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
+    autosuggestion = {
+      enable = true;
+      highlight = "fg=cyan";
+    };
     autocd = true;
+    syntaxHighlighting.enable = true;
+    completionInit = ''
+      autoload -Uz compinit
+      compinit
+      zmodload zsh/complist
+
+      zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
+      zstyle ':completion:*' menu select
+
+
+    '';
 
     plugins = [
       {
@@ -62,10 +75,6 @@
       kval  = "kubeconform -summary -schema-location default -schema-location \"https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json\"";
     };
 
-    sessionVariables = {
-      EDITOR = "nvim";
-    };
-
     initContent = lib.mkMerge [
       (lib.mkOrder 500 ''
         [[ -r "${config.home.homeDirectory}/.p10k.zsh" ]] && source "${config.home.homeDirectory}/.p10k.zsh"
@@ -79,7 +88,6 @@
         }
       '')
     ];
-
   };
 
   home.file.".p10k.zsh".source = ../dotfiles/p10k.zsh;
