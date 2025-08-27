@@ -4,6 +4,7 @@
 
   imports = [
     ./programs/k9s.nix
+    ./programs/zsh.nix
   ];
 
   home.username = "gabriel";
@@ -46,6 +47,7 @@
   };
 
   home.packages = with pkgs; [
+    augeas
     act
     age
     argocd
@@ -54,6 +56,7 @@
     crane
     curlie
     # discount
+    dhcpcd
     duf
     etcd
     # fd #TODO dependency
@@ -61,6 +64,7 @@
     # fwupd
     # fwupd-efi
     github-cli
+    gptfdisk
     go-jsonnet
     helmfile
     hey
@@ -81,7 +85,12 @@
     k0sctl
     lazydocker
     lazygit
-    # libguestfs
+    libguestfs
+    libewf
+    lrzip
+    lzop
+    man
+    meslo-lgs-nf
     minikube
     musescore
     nix-zsh-completions
@@ -89,11 +98,16 @@
     obs-studio
     qbittorrent-enhanced
     rclone
-    # rsync
+    rsync
     # ripgrep #TODO dependency
+    sleuthkit
     solaar
     sops
     spotify
+    supermin
+    squashfsTools
+    strace
+    syslinux
     tealdeer
     traceroute
     tree
@@ -102,12 +116,15 @@
     vector
     velero
     vesktop
+    vim
     vlc
+    yara
     yay
     yazi
     yq-go
     zellij
     zoom-us
+    zsh-powerlevel10k
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
