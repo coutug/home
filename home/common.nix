@@ -20,7 +20,6 @@
   home.sessionPath = [
     "${config.home.homeDirectory}/.bun/bin"
   ];
-
   programs = {
     # Let Home Manager install and manage itself
     home-manager.enable = true;
@@ -79,9 +78,11 @@
     kubie
     kubeconform
     kubelogin-oidc
+    kubectl-df-pv
+    kubectl-rook-ceph
     kubernetes-helm
     kustomize
-    krew
+    kyverno
     k0sctl
     lazydocker
     lazygit
