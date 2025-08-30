@@ -1,6 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, system, nixgl, ... }:
 {
   targets.genericLinux.enable = true;
+
+  nixGL = {
+    packages = nixgl.packages.${pkgs.system}; # you must set this or everything will be a noop
+    defaultWrapper = "mesa"; # choose from options
+  };
 
   imports = [
     ./programs/k9s.nix
@@ -24,7 +29,6 @@
     # Let Home Manager install and manage itself
     home-manager.enable = true;
 
-    alacritty.enable = true;
     atuin = {
       enable = true;
       enableZshIntegration = true;
@@ -39,6 +43,11 @@
     htop.enable = true;
     # neovim.enable = true;
     # tmux.enable = true;
+    wezterm = {
+      package = (config.lib.nixGL.wrap pkgs.wezterm);
+      enable = true;
+      enableZshIntegration = true;
+    };
     zoxide = {
       enable = true;
       enableZshIntegration = true;
@@ -46,6 +55,8 @@
   };
 
   home.packages = with pkgs; [
+    # nixgl.nixGLIntel
+
     augeas
     act
     age
@@ -127,7 +138,7 @@
     zoom-us
     zsh-powerlevel10k
   ];
-
+  
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (pkgs.lib.getName pkg) [
       "reaper"

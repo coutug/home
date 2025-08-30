@@ -25,10 +25,12 @@
       homeConfigurations = {
         laptop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
+          extraSpecialArgs = { inherit nixgl; };
           modules = [ ./home/laptop.nix ];
         };
         desktop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
+          extraSpecialArgs = { inherit nixgl; };
           modules = [ ./home/desktop.nix ];
         };
       };
