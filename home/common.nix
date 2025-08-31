@@ -10,6 +10,7 @@
   imports = [
     ./programs/k9s.nix
     ./programs/zsh.nix
+    ./programs/wezterm.nix
   ];
 
   home.username = "gabriel";
@@ -43,11 +44,6 @@
     htop.enable = true;
     # neovim.enable = true;
     # tmux.enable = true;
-    wezterm = {
-      package = (config.lib.nixGL.wrap pkgs.wezterm);
-      enable = true;
-      enableZshIntegration = true;
-    };
     zoxide = {
       enable = true;
       enableZshIntegration = true;
