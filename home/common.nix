@@ -67,6 +67,7 @@
     etcd
     # fd #TODO dependency
     fluxcd
+    jellyfin-ffmpeg
     # fwupd
     # fwupd-efi
     github-cli
@@ -74,6 +75,7 @@
     go-jsonnet
     helmfile
     hey
+    imagemagick
     # jq #TODO dependency
     # kdePackages.ark
     # kdePackages.bluedevil
@@ -104,7 +106,9 @@
     nix-zsh-completions
     nmap
     obs-studio
+    poppler
     qbittorrent-enhanced
+    resvg
     rclone
     rsync
     # ripgrep #TODO dependency
@@ -143,12 +147,14 @@
     ];
   
 
-  home.file.".tmux.conf" = {
-    source = ./config/tmux.conf;
+  # ~/
+  home.file = {
+    ".tmux.conf".source = ./config/tmux.conf;
   };
-
-  xdg.configFile."tmuxinator/kmux.yml" = {
-    source = ./config/kmux.yml;
+  # ~/.config
+  xdg.configFile = {
+    "Code/User/settings.json".source = ./config/code/user/settings.json;
+    "tmuxinator/kmux.yml".source = ./config/kmux.yml;
   };
 
   # fonts.fontconfig.enable = true;

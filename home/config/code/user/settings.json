@@ -1,0 +1,145 @@
+{
+  // ─────────────────────────────
+  // ui / editor
+  // ─────────────────────────────
+  "workbench.startupEditor": "none",
+  "workbench.colorTheme": "Default High Contrast",
+  "editor.lineNumbers": "relative",
+  "editor.tabSize": 2,
+  "keyboard.dispatch": "keyCode",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "explorer.confirmDragAndDrop": false,
+  "git.confirmSync": false,
+  "settingsSync.ignoredExtensions": [],
+  "settingsSync.keybindingsPerPlatform": false,
+  "security.workspace.trust.untrustedFiles": "open",
+
+  // ─────────────────────────────
+  // javascript / prettier / emmet
+  // ─────────────────────────────
+  "prettier.printWidth": 120,
+  "javascript.format.insertSpaceAfterConstructor": true,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+
+  // ─────────────────────────────
+  // python
+  // ─────────────────────────────
+  "python.languageServer": "Pylance",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnType": true
+  },
+  "python.testing.autoTestDiscoverOnSaveEnabled": false,
+
+  // ─────────────────────────────
+  // java
+  // ─────────────────────────────
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java"
+  },
+
+  // ─────────────────────────────
+  // xml / shellscript / associations de fichiers
+  // ─────────────────────────────
+  "[xml]": {
+    "editor.defaultFormatter": "mikeburgh.xml-format"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "files.associations": {
+    "*.java": "java",
+    "*.py": "python",
+    "**/templates/**/*.yaml": "helm"
+  },
+
+  // ─────────────────────────────
+  // kubernetes / yaml / helm
+  // ─────────────────────────────
+  "yaml.schemaStore.enable": true,
+  "[yaml]": {
+    "editor.formatOnSave": false
+  },
+  "yaml.schemas": {
+    "kubernetes": [
+      "**/*k8s*/**/*.yaml",
+      "**/*flux*/**/*.yaml",
+      "**/*argo*/**/*.yaml"
+    ],
+    "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/monitoring.coreos.com/prometheus_v1.json": [
+      "**/prometheus*.yaml"
+    ]
+  },
+  "vs-kubernetes": {
+    "vscode-kubernetes.kubectl-path": "/home/gabriel/.nix-profile/bin/kubectl",
+    "vscode-kubernetes.helm-path": "/home/gabriel/.nix-profile/bin/helm",
+    "vs-kubernetes.crd-code-completion": "enabled",
+    "vs-kubernetes.knownKubeconfigs": [
+      "/home/gabriel/.kube/configs/riv-monitor1.yml"
+    ],
+    "vs-kubernetes.kubeconfig": "/home/gabriel/.kube/configs/riv-monitor1.yml"
+  },
+  "vscode-kubernetes.log-viewer.wrap": true,
+  "disable-lint": false,
+  "disable-linters": [],
+
+  // ─────────────────────────────
+  // markdown
+  // ─────────────────────────────
+  "markdown.copyFiles.destination": {
+    "/*": "images/${documentBaseName}/"
+  },
+  "markdown-preview-enhanced.revealjsTheme": "night.css",
+  "markdown-preview-enhanced.previewTheme": "solarized-dark.css",
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
+
+  // ─────────────────────────────
+  // github / remote
+  // ─────────────────────────────
+  "githubPullRequests.pullBranch": "never",
+  "remote.defaultExtensionsIfInstalledLocally": [
+    "GitHub.copilot",
+    "GitHub.copilot-chat",
+    "GitHub.vscode-pull-request-github"
+  ],
+
+  // ─────────────────────────────
+  // neovim
+  // ─────────────────────────────
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+  "vscode-neovim.neovimInitVimPaths.linux": "/home/gabriel/.config/nvim/init.lua",
+
+  // ─────────────────────────────
+  // docker
+  // ─────────────────────────────
+  "docker.extension.enableComposeLanguageServer": false,
+
+  // ─────────────────────────────
+  // dev containers
+  // ─────────────────────────────
+  "dev.containers.copyGitConfig": false,
+
+  // ─────────────────────────────
+  // terminal
+  // ─────────────────────────────
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell",
+      "args": ["-ExecutionPolicy", "Bypass"]
+    }
+  },
+
+  // ─────────────────────────────
+  // telemetry / privacy (extensions)
+  // ─────────────────────────────
+  "hardhat.telemetry": false,
+  "redhat.telemetry.enabled": false
+}
