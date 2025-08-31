@@ -1,18 +1,18 @@
-{ pkgs, ... }:
+{ ... }:
 {
   programs.k9s = {
     enable = true;
 
     aliases = {
       aliases = {
-        dp  = "deployments";
+        dp = "deployments";
         sec = "v1/secrets";
-        jo  = "jobs";
-        cr  = "clusterroles";
+        jo = "jobs";
+        cr = "clusterroles";
         crb = "clusterrolebindings";
-        ro  = "roles";
-        rb  = "rolebindings";
-        np  = "networkpolicies";
+        ro = "roles";
+        rb = "rolebindings";
+        np = "networkpolicies";
       };
     };
 
@@ -287,141 +287,157 @@
         };
 
         thresholds = {
-          cpu = { critical = 90; warn = 70; };
-          memory = { critical = 90; warn = 70; };
+          cpu = {
+            critical = 90;
+            warn = 70;
+          };
+          memory = {
+            critical = 90;
+            warn = 70;
+          };
         };
       };
     };
 
-    skins = let
-      colors = {
-        foreground = "#EAF2F7";
-        background = "#0B0C10";
-        black = "#050508";
-        blue = "#677ec9";
-        green = "#02f2d2";
-        grey = "#A4A9B6";
-        orange = "#ff66cc";
-        purple = "#a985d6";
-        red = "#ff4d6d";
-        yellow = "#02c6f2";
-        yellow_bright = "#FFFFFF";
-      };
-    in {
-      kanagawaSkin = {
-        k9s = {
-          body = {
-            fgColor = colors.foreground;
-            bgColor = colors.background;
-            logoColor = colors.green;
-          };
-          prompt = {
-            fgColor = colors.foreground;
-            bgColor = colors.background;
-            suggestColor = colors.orange;
-          };
-          info = {
-            fgColor = colors.grey;
-            sectionColor = colors.green;
-          };
-          help = {
-            fgColor = colors.foreground;
-            bgColor = colors.background;
-            keyColor = colors.yellow;
-            numKeyColor = colors.blue;
-            sectionColor = colors.purple;
-          };
-          dialog = {
-            fgColor = colors.black;
-            bgColor = colors.background;
-            buttonFgColor = colors.foreground;
-            buttonBgColor = colors.green;
-            buttonFocusFgColor = colors.black;
-            buttonFocusBgColor = colors.blue;
-            labelFgColor = colors.orange;
-            fieldFgColor = colors.blue;
-          };
-          frame = {
-            border = {
-              fgColor = colors.green;
-              focusColor = colors.green;
+    skins =
+      let
+        colors = {
+          foreground = "#EAF2F7";
+          background = "#0B0C10";
+          black = "#050508";
+          blue = "#677ec9";
+          green = "#02f2d2";
+          grey = "#A4A9B6";
+          orange = "#ff66cc";
+          purple = "#a985d6";
+          red = "#ff4d6d";
+          yellow = "#02c6f2";
+          yellow_bright = "#FFFFFF";
+        };
+      in
+      {
+        kanagawaSkin = {
+          k9s = {
+            body = {
+              fgColor = colors.foreground;
+              bgColor = colors.background;
+              logoColor = colors.green;
             };
-            menu = {
+            prompt = {
+              fgColor = colors.foreground;
+              bgColor = colors.background;
+              suggestColor = colors.orange;
+            };
+            info = {
               fgColor = colors.grey;
-              keyColor = colors.yellow;
-              numKeyColor = colors.yellow;
-            };
-            crumbs = {
-              fgColor = colors.black;
-              bgColor = colors.green;
-              activeColor = colors.yellow;
-            };
-            status = {
-              newColor = colors.blue;
-              modifyColor = colors.green;
-              addColor = colors.grey;
-              pendingColor = colors.orange;
-              errorColor = colors.red;
-              highlightColor = colors.yellow;
-              killColor = colors.purple;
-              completedColor = colors.grey;
-            };
-            title = {
-              fgColor = colors.blue;
-              bgColor = colors.background;
-              highlightColor = colors.purple;
-              counterColor = colors.foreground;
-              filterColor = colors.blue;
-            };
-          };
-          views = {
-            charts = {
-              bgColor = colors.background;
-              defaultDialColors = [ colors.green colors.red ];
-              defaultChartColors = [ colors.green colors.red ];
-            };
-            table = {
-              fgColor = colors.yellow;
-              bgColor = colors.background;
-              cursorFgColor = colors.black;
-              cursorBgColor = colors.blue;
-              markColor = colors.yellow_bright;
-              header = {
-                fgColor = colors.grey;
-                bgColor = colors.background;
-                sorterColor = colors.orange;
-              };
-            };
-            xray = {
-              fgColor = colors.blue;
-              bgColor = colors.background;
-              cursorColor = colors.foreground;
-              graphicColor = colors.yellow_bright;
-              showIcons = false;
-            };
-            yaml = {
-              keyColor = colors.red;
-              colonColor = colors.grey;
-              valueColor = colors.grey;
-            };
-            logs = {
-              fgColor = colors.grey;
-              bgColor = colors.background;
-              indicator = {
-                fgColor = colors.blue;
-                bgColor = colors.background;
-                toggleOnColor = colors.red;
-                toggleOffColor = colors.grey;
-              };
+              sectionColor = colors.green;
             };
             help = {
-              fgColor = colors.grey;
+              fgColor = colors.foreground;
               bgColor = colors.background;
-              indicator = { fgColor = colors.blue; };
+              keyColor = colors.yellow;
+              numKeyColor = colors.blue;
+              sectionColor = colors.purple;
+            };
+            dialog = {
+              fgColor = colors.black;
+              bgColor = colors.background;
+              buttonFgColor = colors.foreground;
+              buttonBgColor = colors.green;
+              buttonFocusFgColor = colors.black;
+              buttonFocusBgColor = colors.blue;
+              labelFgColor = colors.orange;
+              fieldFgColor = colors.blue;
+            };
+            frame = {
+              border = {
+                fgColor = colors.green;
+                focusColor = colors.green;
+              };
+              menu = {
+                fgColor = colors.grey;
+                keyColor = colors.yellow;
+                numKeyColor = colors.yellow;
+              };
+              crumbs = {
+                fgColor = colors.black;
+                bgColor = colors.green;
+                activeColor = colors.yellow;
+              };
+              status = {
+                newColor = colors.blue;
+                modifyColor = colors.green;
+                addColor = colors.grey;
+                pendingColor = colors.orange;
+                errorColor = colors.red;
+                highlightColor = colors.yellow;
+                killColor = colors.purple;
+                completedColor = colors.grey;
+              };
+              title = {
+                fgColor = colors.blue;
+                bgColor = colors.background;
+                highlightColor = colors.purple;
+                counterColor = colors.foreground;
+                filterColor = colors.blue;
+              };
+            };
+            views = {
+              charts = {
+                bgColor = colors.background;
+                defaultDialColors = [
+                  colors.green
+                  colors.red
+                ];
+                defaultChartColors = [
+                  colors.green
+                  colors.red
+                ];
+              };
+              table = {
+                fgColor = colors.yellow;
+                bgColor = colors.background;
+                cursorFgColor = colors.black;
+                cursorBgColor = colors.blue;
+                markColor = colors.yellow_bright;
+                header = {
+                  fgColor = colors.grey;
+                  bgColor = colors.background;
+                  sorterColor = colors.orange;
+                };
+              };
+              xray = {
+                fgColor = colors.blue;
+                bgColor = colors.background;
+                cursorColor = colors.foreground;
+                graphicColor = colors.yellow_bright;
+                showIcons = false;
+              };
+              yaml = {
+                keyColor = colors.red;
+                colonColor = colors.grey;
+                valueColor = colors.grey;
+              };
+              logs = {
+                fgColor = colors.grey;
+                bgColor = colors.background;
+                indicator = {
+                  fgColor = colors.blue;
+                  bgColor = colors.background;
+                  toggleOnColor = colors.red;
+                  toggleOffColor = colors.grey;
+                };
+              };
+              help = {
+                fgColor = colors.grey;
+                bgColor = colors.background;
+                indicator = {
+                  fgColor = colors.blue;
+                };
+              };
             };
           };
         };
       };
-    };
   };
 }

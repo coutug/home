@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   programs.zsh = {
     enable = true;
@@ -53,26 +58,26 @@
     };
 
     shellAliases = {
-      ll    = "eza -la --git";
-      gs    = "git status -sb";
+      ll = "eza -la --git";
+      gs = "git status -sb";
 
-      src   = "source \"$HOME/.zshrc\"";
-      mk    = "minikube";
-      yn    = "yay --noconfirm";
-      yc    = "yay -Yc; yay -Sc";
-      y     = "yay";
-      kc    = "kubie ctx";
-      vpn   = "sudo openvpn \"$HOME/sync/Travail/ovpn/dor-gw1-coutug-laptop.ovpn\"";
+      src = "source \"$HOME/.zshrc\"";
+      mk = "minikube";
+      yn = "yay --noconfirm";
+      yc = "yay -Yc; yay -Sc";
+      y = "yay";
+      kc = "kubie ctx";
+      vpn = "sudo openvpn \"$HOME/sync/Travail/ovpn/dor-gw1-coutug-laptop.ovpn\"";
       watch = "watch -c";
 
-      nv    = "nvim";
+      nv = "nvim";
       pkgls = "pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'";
-      ld    = "lazydocker";
-      lg    = "lazygit";
-      cat   = "bat";
-      kb    = "kustomize build";
+      ld = "lazydocker";
+      lg = "lazygit";
+      cat = "bat";
+      kb = "kustomize build";
 
-      kval  = "kubeconform -summary -schema-location default -schema-location \"https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json\"";
+      kval = "kubeconform -summary -schema-location default -schema-location \"https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json\"";
     };
 
     initContent = lib.mkMerge [
