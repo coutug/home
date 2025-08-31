@@ -1,4 +1,9 @@
-{ config, pkgs, system, nixgl, ... }:
+{
+  config,
+  pkgs,
+  nixgl,
+  ...
+}:
 {
   targets.genericLinux.enable = true;
 
@@ -19,8 +24,8 @@
 
   home.sessionVariables = {
     EDITOR = "nvim";
-    WINEFSYNC=1;  # Optimize vst performance
-    BUN_INSTALL="${config.home.homeDirectory}/.bun";
+    WINEFSYNC = 1; # Optimize vst performance
+    BUN_INSTALL = "${config.home.homeDirectory}/.bun";
   };
 
   home.sessionPath = [
@@ -33,11 +38,13 @@
     atuin = {
       enable = true;
       enableZshIntegration = true;
-      settings = { auto_sync = true; };
+      settings = {
+        auto_sync = true;
+      };
     };
     bat.enable = true;
     fzf = {
-      enable = true; #TODO dependency
+      enable = true; # TODO dependency
       enableZshIntegration = true;
     };
     # git.enable = true;
@@ -104,6 +111,8 @@
     minikube
     musescore
     nix-zsh-completions
+    nixfmt-rfc-style
+    nil
     nmap
     obs-studio
     poppler
@@ -138,14 +147,14 @@
     zoom-us
     zsh-powerlevel10k
   ];
-  
-  nixpkgs.config.allowUnfreePredicate = pkg:
+
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
     builtins.elem (pkgs.lib.getName pkg) [
       "reaper"
       "spotify"
       "zoom"
     ];
-  
 
   # ~/
   home.file = {

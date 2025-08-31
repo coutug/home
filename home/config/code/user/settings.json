@@ -41,6 +41,20 @@
   },
 
   // ─────────────────────────────
+  // nix
+  // ─────────────────────────────
+  "[nix]": {
+    "editor.defaultFormatter": "jnoortheen.nix-ide"
+  },
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "/home/gabriel/.nix-profile/bin/nil",
+  "nix.serverSettings": {
+    "nil": {
+      "formatting": { "command": ["nixfmt"] }
+    }
+  },
+
+  // ─────────────────────────────
   // xml / shellscript / associations de fichiers
   // ─────────────────────────────
   "[xml]": {
