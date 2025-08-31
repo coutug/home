@@ -163,6 +163,7 @@
   # ~/.config
   xdg.configFile = {
     "Code/User/settings.json".source = ./config/code/user/settings.json;
+    "Code/User/keybindings.json".source = ./config/code/user/keybindings.json;
     "tmuxinator/kmux.yml".source = ./config/kmux.yml;
   };
 
