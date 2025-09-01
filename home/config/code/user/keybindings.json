@@ -10,8 +10,9 @@
         "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor"
     },
     {
-        "key": "ctrl+shift+t",
-        "command": "workbench.action.terminal.newWithProfile"
+      "key": "ctrl+shift+t",
+      "command": "workbench.action.terminal.newWithProfile",
+      "args": { "profileName": "zsh" }
     },
     {
         "key": "ctrl+shift+t",
