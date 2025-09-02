@@ -76,64 +76,20 @@
   "[yaml]": {
     "editor.formatOnSave": false
   },
-  "yaml.schemas": {
-    "kubernetes": [
-      "**/*k8s*/**/*.yaml",
-      "**/*flux*/**/*.yaml",
-      "**/*argo*/**/*.yaml"
-    ],
-    // Prometheus Operator
-    "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/monitoring.coreos.com/prometheus_v1.json": [
-      "**/prometheus*.yaml"
-    ],
-
-    // FluxCD (source: fluxcd/flux2)
-    "https://raw.githubusercontent.com/fluxcd/flux2/main/config/crd/bases/kustomize.toolkit.fluxcd.io_kustomizations.yaml": [
-      "**/kustomization*.yaml"
-    ],
-    "https://raw.githubusercontent.com/fluxcd/flux2/main/config/crd/bases/source.toolkit.fluxcd.io_gitrepositories.yaml": [
-      "**/gitrepository*.yaml"
-    ],
-
-    // VictoriaMetrics Operator
-    "https://raw.githubusercontent.com/VictoriaMetrics/operator/master/config/crd/bases/operator.victoriametrics.com_vmpodscrapes.yaml": [
-      "**/vmpodscrape*.yaml"
-    ],
-    "https://raw.githubusercontent.com/VictoriaMetrics/operator/master/config/crd/bases/operator.victoriametrics.com_vmservicescrapes.yaml": [
-      "**/vmservicescrape*.yaml"
-    ],
-    "https://raw.githubusercontent.com/VictoriaMetrics/operator/master/config/crd/bases/operator.victoriametrics.com_vmagents.yaml": [
-      "**/vmagent*.yaml"
-    ],
-
-    // Kyverno
-    "https://raw.githubusercontent.com/kyverno/kyverno/main/config/crds/kyverno.io_clusterpolicies.yaml": [
-      "**/clusterpolicy*.yaml"
-    ],
-    "https://raw.githubusercontent.com/kyverno/kyverno/main/config/crds/kyverno.io_policies.yaml": [
-      "**/policy*.yaml"
-    ],
-
-    // CloudNativePG
-    "https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/config/crd/bases/postgresql.cnpg.io_clusters.yaml": [
-      "**/cluster*.yaml"
-    ],
-    "https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/config/crd/bases/postgresql.cnpg.io_backups.yaml": [
-      "**/backup*.yaml"
-    ]
+  "vscode-kubernetes": {
+    "kubectl-path": "/home/gabriel/.nix-profile/bin/kubectl",
+    "helm-path": "/home/gabriel/.nix-profile/bin/helm",
+    "minikube-path": "/home/gabriel/.nix-profile/bin/minikube",
+    "log-viewer.wrap": true
   },
   "vs-kubernetes": {
-    "vscode-kubernetes.kubectl-path": "/home/gabriel/.nix-profile/bin/kubectl",
-    "vscode-kubernetes.helm-path": "/home/gabriel/.nix-profile/bin/helm",
-    "vs-kubernetes.crd-code-completion": "enabled",
-    "vs-kubernetes.knownKubeconfigs": [
-      "/home/gabriel/.kube/configs/riv-monitor1.yml"
+    "disable-lint": false,
+    "disable-linters": [
+      "resource-limits"
     ],
-    "vs-kubernetes.kubeconfig": "/home/gabriel/.kube/configs/riv-monitor1.yml"
+    "vs-kubernetes.crd-code-completion": "enabled",
+    "checkForMinikubeUpgrade": false
   },
-  "vscode-kubernetes.log-viewer.wrap": true,
-  "disable-lint": false,
-  "disable-linters": [],
 
   // ─────────────────────────────
   // markdown
