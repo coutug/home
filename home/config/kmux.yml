@@ -4,7 +4,7 @@ name: <%= ENV["session_name"] %>
 root: ~/
 
 windows:
-  - vpn: sudo openvpn $HOME/sync/Travail/ovpn/dor-gw2-coutug-laptop.ovpn
+  - vpn: sudo openvpn $HOME/sync/Travail/ovpn/ott-gw2-coutug-laptop.ovpn
   - 1k9s: |
       kubie ctx <%= ENV["session_name"] %>
       sleep 2
