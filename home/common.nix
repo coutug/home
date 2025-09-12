@@ -14,6 +14,7 @@
 
   imports = [
     ./programs/k9s.nix
+    ./programs/obs-studio.nix
     ./programs/zsh.nix
     ./programs/wezterm.nix
   ];
@@ -121,7 +122,6 @@
     nixfmt-rfc-style
     nil
     nmap
-    obs-studio
     poppler
     qbittorrent-enhanced
     resvg
