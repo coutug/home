@@ -1,75 +1,84 @@
-# AGENT.md — Règles et procédures pour ce dépôt Nix + Home Manager
+# Projet "home" - Configuration avec Nix
 
-## Objet
-Ce document explique **comment modifier, tester et déployer** les configurations de ce dépôt
-sur trois hôtes :
-- **Laptop (EndeavourOS)** → `homeConfigurations.laptop`
-- **Desktop (EndeavourOS)** → `homeConfigurations.desktop`
-- **Mini serveur (NixOS)** → `nixosConfigurations.nixos-mini` (+ Home Manager en module)
-
-> ⚠️ Sur EndeavourOS, Nix gère **l’environnement utilisateur** (Home Manager). Le système reste géré par `pacman`. **Ne pas** ajouter/retirer des paquets système via Nix.
+Ce document décrit la structure et les configurations du projet **home**, basé sur des fichiers `nix` pour gérer mes différents environnements. L'objectif est de centraliser et d'automatiser la gestion des machines personnelles et du cluster.
 
 ---
 
-## Arborescence du dépôt (vue d’ensemble)
-.
-├── flake.nix
-├── flake.lock
-├── hosts/
-│ └── nixos-mini/ # modules/option NixOS propres au serveur
-├── home/
-│ ├── common.nix # configuration HM partagée
-│ ├── laptop.nix # Laptop EndeavourOS
-│ ├── desktop.nix # Desktop EndeavourOS
-│ └── server.nix # Home Manager côté serveur (via module NixOS)
-├── modules/ # modules réutilisables (nix, programs, overlays…)
-│ └── nix.nix
-└── secrets/ # fichiers chiffrés (sops-nix/agenix) — jamais en clair
+## Structure générale
 
-
-**Convention d’attributs flake :**
-- `homeConfigurations.laptop` et `homeConfigurations.desktop` ciblent les postes EndeavourOS.
-- `nixosConfigurations.nixos-mini` est la config système du serveur NixOS, qui **importe** Home Manager comme module (`home-manager.users."<USER>" = import ./home/server.nix;`).
-
-Adapter si nécessaire :
-- `<USER>` : utilisateur unix.
-- Si tes hôtes ont d’autres noms, renomme les attributs et fichiers correspondants.
+- **Laptop** : configuration utilisateur via `home-manager` sur **EndeavourOS**
+- **Desktop** : configuration utilisateur via `home-manager` sur **EndeavourOS**
+- **Cluster** : machines avec **NixOS**, déploiement de services via `k0s`
 
 ---
 
-## Règles de modification (où placer le code)
+## 1. Laptop
 
-1. **Changement commun aux trois machines**
-   - Modifier `home/common.nix` (packages, outils CLI, réglages XDG, shells, etc.).
-   - Pour options Nix globales réutilisables, utiliser `modules/nix.nix`.
+### Distribution
+- **EndeavourOS** (base Arch Linux)
 
-2. **Changement spécifique Laptop (EndeavourOS)**
-   - Modifier `home/laptop.nix`.
+### Gestion de configuration
+- `home-manager` avec Nix
+- Certains paquets sont encore gérés via **pacman/yay** (logiciels spécifiques à Arch ou non disponibles dans Nixpkgs)
 
-3. **Changement spécifique Desktop (EndeavourOS)**
-   - Modifier `home/desktop.nix`.
-
-4. **Changement spécifique Serveur (NixOS)**
-   - Modifier `hosts/nixos-mini/*` pour le **système** (services, réseaux, users, FS…).
-   - Modifier `home/server.nix` pour le **home** (packages utilisateur, dotfiles…).
-
-5. **Secrets**
-   - Placer uniquement des **fichiers chiffrés** dans `secrets/` (via `sops-nix` ou `agenix`).
-   - **Interdiction** d’ajouter des secrets en clair dans le repo.
-
-6. **Paquets non libres**
-   - Si nécessaire, gérer l’autorisation via un module dédié (ex : `modules/nix.nix`) plutôt qu’en ligne.
+### Utilisation
+- Machine de travail principale
+- Applications installées :
+  - Outils Kubernetes (`kubectl`, `helm`, `k9s`, etc.)
+  - Outils DevOps (ex: `terraform`, `ansible`, `docker`)
+  - Applications de productivité (éditeur de texte, navigateur, etc.)
 
 ---
 
-## Commandes usuelles (build, test, apply)
+## 2. Desktop
 
-> Toutes les commandes se lancent **à la racine du dépôt**.
+### Distribution
+- **EndeavourOS** (base Arch Linux)
 
-### 1) Vérifications rapides
-```bash
-# Affiche les sorties disponibles du flake
-nix flake show
+### Gestion de configuration
+- `home-manager` avec Nix
+- Certains paquets sont encore gérés via **pacman/yay**
 
-# Vérifie que la flake évalue et passe les checks (si définis)
-nix flake check
+### Utilisation
+- Applications nécessitant un GPU performant
+  - Jeux vidéo
+  - Workloads liés à l’IA (entraîner ou tester des modèles)
+
+### Logiciels principaux
+- Pilotes GPU et dépendances CUDA/cuDNN
+- Applications multimédia et gaming
+- Outils IA (PyTorch, Tensorflow, etc.)
+
+---
+
+## 3. Cluster de petits serveurs
+
+### Matériel
+- Plusieurs petits ordinateurs peu performants
+- Architecture homogène ou hétérogène (selon les machines disponibles)
+
+### Gestion de configuration
+- **NixOS** complet
+- Orchestration avec **k0s** (distribution Kubernetes légère)
+
+### Avantages
+- Déploiement flexible de services
+- Ajout/retrait de nœuds sans impact majeur
+- Gestion déclarative via Nix
+
+### Services à déployer
+- **Vaultwarden** : gestion de mots de passe auto-hébergée
+- **Syncthing** : synchronisation de fichiers (images, documents, etc.)
+- **DNS** : service DNS interne (outil à définir, ex: `CoreDNS` ou `bind`)
+- **Grafana** : visualisation et tableaux de bord
+- **VictoriaMetrics** : base de données de séries temporelles pour monitoring
+- **Vector** : collecte et routage des logs
+- **Cron jobs** et services personnalisés (scripts maison, automatisations légères)
+
+---
+
+## Idées futures
+- Ajout de monitoring plus avancé (Prometheus pour collecte métriques)
+- Mise en place d’un CI/CD minimal pour déploiement des services
+- Amélioration de la gestion des secrets (intégration plus poussée avec Vaultwarden)
+- Déploiement de services orientés développement (Git, runners CI légers)
