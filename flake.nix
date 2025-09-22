@@ -11,9 +11,13 @@
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, nixgl, ... }:
+  outputs = { nixpkgs, home-manager, nixgl, sops-nix, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -25,13 +29,18 @@
       homeConfigurations = {
         laptop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit nixgl; };
-          modules = [ ./home/laptop.nix ];
+          extraSpecialArgs = { inherit nixgl sops-nix; };
+          modules = [
+            ./home/laptop.nix
+          ];
         };
         desktop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit nixgl; };
-          modules = [ ./home/desktop.nix ];
+          extraSpecialArgs = { inherit nixgl sops-nix; };
+          modules = [
+            ./home/desktop.nix
+            sops-nix.nixosModules.sops
+          ];
         };
       };
 

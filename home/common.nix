@@ -2,6 +2,7 @@
   config,
   pkgs,
   nixgl,
+  sops-nix,
   ...
 }:
 {
@@ -13,6 +14,7 @@
   };
 
   imports = [
+    sops-nix.homeManagerModules.sops
     ./programs/k9s.nix
     ./programs/obs-studio.nix
     ./programs/zsh.nix
@@ -32,6 +34,17 @@
   home.sessionPath = [
     "${config.home.homeDirectory}/.bun/bin"
   ];
+
+  sops.age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+
+  sops.secrets."kubeconfig/riv-monitor1" = {
+    sopsFile = ../secrets/kubeconfig/riv-monitor1.yml;
+    format = "yaml";
+    key = "";
+    path = "${config.home.homeDirectory}/.kube/kubeconfig/riv-monitor1.yml";
+    mode = "0644";
+  };
+
   programs = {
     # Let Home Manager install and manage itself
     home-manager.enable = true;
