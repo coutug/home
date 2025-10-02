@@ -33,6 +33,7 @@
 
   home.sessionPath = [
     "${config.home.homeDirectory}/.bun/bin"
+    "${config.home.homeDirectory}/go/bin"
   ];
 
   sops.age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
