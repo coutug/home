@@ -140,8 +140,9 @@
     qbittorrent-enhanced
     resvg
     rclone
-    rsync
     # ripgrep #TODO dependency
+    rsync
+    rustup
     sleuthkit
     solaar
     sops
