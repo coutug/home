@@ -38,13 +38,30 @@
 
   sops.age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
 
-  sops.secrets."kubeconfig/riv-monitor1" = {
-    sopsFile = ../secrets/kubeconfig/riv-monitor1.yml;
-    format = "yaml";
-    key = "";
-    path = "${config.home.homeDirectory}/.kube/kubeconfig/riv-monitor1.yml";
-    mode = "0644";
-  };
+  sops.secrets =
+    let
+      kubeconfigs = [
+        "infradao-cluster"
+        "mgt-cluster"
+        "riv-ceph1"
+        "riv-dev1"
+        "riv-monitor1"
+        "riv-monitor2"
+        "riv-prod1"
+        "riv-stage1"
+      ];
+      mkSecret = name: {
+        name = "kubeconfig/${name}";
+        value = {
+          sopsFile = ../secrets/kubeconfig/${name}.yml;
+          format = "yaml";
+          key = "";
+          path = "${config.home.homeDirectory}/.kube/kubeconfig/${name}.yml";
+          mode = "0644";
+        };
+      };
+    in
+    builtins.listToAttrs (map mkSecret kubeconfigs);
 
   programs = {
     # Let Home Manager install and manage itself
