@@ -15,10 +15,16 @@
 
   imports = [
     sops-nix.homeManagerModules.sops
+    ./programs/atuin.nix
+    ./programs/bat.nix
+    ./programs/fzf.nix
+    ./programs/home-manager.nix
+    ./programs/htop.nix
     ./programs/k9s.nix
     ./programs/obs-studio.nix
     ./programs/zsh.nix
     ./programs/wezterm.nix
+    ./programs/zoxide.nix
   ];
 
   home.username = "gabriel";
@@ -62,39 +68,6 @@
       };
     in
     builtins.listToAttrs (map mkSecret kubeconfigs);
-
-  programs = {
-    # Let Home Manager install and manage itself
-    home-manager.enable = true;
-
-    atuin = {
-      enable = true;
-      enableZshIntegration = true;
-      daemon.enable = true;
-      themes."marineTheme"."marineTheme".name = "marine"; # fonctionne pas
-      settings = {
-        auto_sync = true;
-        sync_frequency = "20m";
-        style = "compact";
-        update_check = false;
-        invert = true;
-        enter_accept = true;
-      };
-    };
-    bat.enable = true;
-    fzf = {
-      enable = true; # TODO dependency
-      enableZshIntegration = true;
-    };
-    # git.enable = true;
-    htop.enable = true;
-    # neovim.enable = true;
-    # tmux.enable = true;
-    zoxide = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-  };
 
   home.packages = with pkgs; [
     # nixgl.nixGLIntel
