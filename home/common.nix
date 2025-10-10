@@ -37,7 +37,7 @@
     BUN_INSTALL = "${config.home.homeDirectory}/.bun";
   };
 
-  home.sessionPath = [
+  home.sessionPath = pkgs.lib.mkAfter [
     "${config.home.homeDirectory}/.bun/bin"
     "${config.home.homeDirectory}/go/bin"
   ];
