@@ -46,28 +46,26 @@
 
   sops.secrets =
     let
-      kubeconfigs = [
-        "infradao-cluster"
-        "mgt-cluster"
-        "riv-ceph1"
-        "riv-dev1"
-        "riv-monitor1"
-        "riv-monitor2"
-        "riv-prod1"
-        "riv-stage1"
-      ];
-      mkSecret = name: {
-        name = "kubeconfig/${name}";
-        value = {
-          sopsFile = ../secrets/kubeconfig/${name}.yml;
-          format = "yaml";
-          key = "";
-          path = "${config.home.homeDirectory}/.kube/kubeconfig/${name}.yml";
-          mode = "0644";
+      kubeconfigNames = builtins.filter (name: pkgs.lib.hasSuffix ".yml" name) (
+        builtins.attrNames (builtins.readDir ../secrets/kubeconfig)
+      );
+      mkSecret =
+        filename:
+        let
+          name = pkgs.lib.removeSuffix ".yml" filename;
+        in
+        {
+          name = "kubeconfig/${name}";
+          value = {
+            sopsFile = ../secrets/kubeconfig/${filename};
+            format = "yaml";
+            key = "";
+            path = "${config.home.homeDirectory}/.kube/kubeconfig/${name}.yml";
+            mode = "0644";
+          };
         };
-      };
     in
-    builtins.listToAttrs (map mkSecret kubeconfigs);
+    builtins.listToAttrs (map mkSecret kubeconfigNames);
 
   home.packages = with pkgs; [
     # nixgl.nixGLIntel
