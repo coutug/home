@@ -39,7 +39,6 @@
           extraSpecialArgs = { inherit nixgl sops-nix; };
           modules = [
             ./home/desktop.nix
-            sops-nix.nixosModules.sops
           ];
         };
       };
