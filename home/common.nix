@@ -105,6 +105,7 @@
     kubeconform
     kubelogin-oidc
     kubectl-df-pv
+    kubectl-linstor
     kubectl-rook-ceph
     kubernetes-helm
     kustomize
