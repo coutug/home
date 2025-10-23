@@ -1,18 +1,21 @@
-# /home/gabriel/.config/tmuxinator/test.yml
+# /home/gabriel/.config/tmuxinator
 
 name: <%= ENV["session_name"] %>
 root: ~/
 
+startup_pane: 1
+
 windows:
-  - vpn: sudo openvpn $HOME/sync/Travail/ovpn/ott-gw2-coutug-laptop.ovpn
+  - vpn: |
+        echo "KMUX"
   - 1k9s: |
       kubie ctx <%= ENV["session_name"] %>
-      sleep 2
+      sleep 1
       clear
       k9s
   - 2k9s: |
       kubie ctx <%= ENV["session_name"] %>
-      sleep 2
+      sleep 1
       clear
       k9s
   - cmd: |
