@@ -35,6 +35,7 @@
     EDITOR = "nvim";
     WINEFSYNC = 1; # Optimize vst performance
     BUN_INSTALL = "${config.home.homeDirectory}/.bun";
+    CODEX_HOME  = "${config.home.homeDirectory}/.codex";
   };
 
   home.sessionPath = pkgs.lib.mkAfter [
