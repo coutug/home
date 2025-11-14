@@ -47,5 +47,10 @@
         "key": "ctrl+w",
         "command": "-vscode-neovim.send",
         "when": "editorTextFocus && neovim.ctrlKeysInsert.w && neovim.init && neovim.mode == 'insert' && editorLangId not in 'neovim.editorLangIdExclusions'"
+    },
+    {
+      "key": "ctrl+j",
+      "command": "-workbench.action.togglePanel",
+      "when": ""
     }
 ]

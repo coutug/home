@@ -135,6 +135,7 @@
   // ─────────────────────────────
   // terminal
   // ─────────────────────────────
+  "terminal.integrated.allowChords": false,
   "terminal.integrated.profiles.windows": {
     "PowerShell": {
       "source": "PowerShell",
