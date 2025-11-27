@@ -16,7 +16,7 @@
       };
     };
 
-    plugin = {
+    plugins = {
       debug = {
         shortCut = "Shift-D";
         description = "Add debug container";

@@ -8,8 +8,8 @@
 {
   targets.genericLinux.enable = true;
 
-  nixGL = {
-    packages = nixgl.packages.${pkgs.system}; # you must set this or everything will be a noop
+  targets.genericLinux.nixGL = {
+    packages = nixgl.packages.${pkgs.stdenv.hostPlatform.system}; # you must set this or everything will be a noop
     defaultWrapper = "mesa"; # choose from options
   };
 
@@ -77,6 +77,7 @@
     argocd
     # bluez
     # bluez-tools
+    # codex # installed by yay as well
     crane
     curlie
     # discount
@@ -144,6 +145,7 @@
     tealdeer
     traceroute
     tree
+    opencode
     opentofu
     trivy
     vector
@@ -178,6 +180,14 @@
     "Code/User/keybindings.json".source = ./config/code/user/keybindings.json;
     "tmuxinator/kmux.yml".source = ./config/kmux.yml;
   };
+
+  # Disable Home Manager manual outputs to avoid building the doc set (and the
+  # noisy Nix warning about options.json generation on recent releases).
+  # manual = {
+  #   html.enable = false;
+  #   json.enable = false;
+  #   manpages.enable = false;
+  # };
 
   # fonts.fontconfig.enable = true;
 }
