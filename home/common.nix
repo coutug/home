@@ -47,30 +47,33 @@
 
   sops.secrets =
     let
-      kubeconfigNames = builtins.filter (name: pkgs.lib.hasSuffix ".yml" name) (
-        builtins.attrNames (builtins.readDir ../secrets/kubeconfig)
-      );
+      codexSecret = ../secrets/codex/config.toml;
+      kubeconfigNames = builtins.attrNames (builtins.readDir ../secrets/kubeconfig);
       mkSecret =
         filename:
-        let
-          name = pkgs.lib.removeSuffix ".yml" filename;
-        in
         {
-          name = "kubeconfig/${name}";
+          name = "kubeconfig/${filename}";
           value = {
             sopsFile = ../secrets/kubeconfig/${filename};
             format = "yaml";
             key = "";
-            path = "${config.home.homeDirectory}/.kube/kubeconfig/${name}.yml";
+            path = "${config.home.homeDirectory}/.kube/kubeconfig/${filename}";
             mode = "0644";
           };
         };
     in
-    builtins.listToAttrs (map mkSecret kubeconfigNames);
+    builtins.listToAttrs (map mkSecret kubeconfigNames)
+    // (if pkgs.lib.pathExists codexSecret then {
+      "codex/config.toml" = {
+        sopsFile = codexSecret;
+        format = "ini";
+        key = "";
+        path = "${config.home.homeDirectory}/.codex/config.toml";
+        mode = "0600";
+      };
+    } else {});
 
   home.packages = with pkgs; [
-    # nixgl.nixGLIntel
-
     augeas
     act
     age

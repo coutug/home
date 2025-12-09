@@ -20,11 +20,13 @@ Ce dépôt héberge les configurations Home Manager (EndeavourOS) et prépare le
   - `server.nix` : squelette (utilisateur `myuser`, `stateVersion = 23.11`) injecté côté NixOS.
   - `programs/*.nix` : modules isolés (atuin, bat, fzf, htop, k9s, obs-studio, wezterm, zoxide, zsh). `wezterm` et `obs-studio` sont encapsulés avec `nixGL`.
   - `config/` & `dotfiles/` : sources VS Code, tmux, oh-my-zsh custom, etc., montés via `home.file`/`xdg.configFile`.
+  - `config/codex/` : (supprimé) — la configuration Codex est désormais uniquement sous `secrets/codex/config.toml` (sops) et déployée vers `~/.codex/config.toml` via sops-nix, seulement si le fichier existe (test `pathExists`).
 - `hosts/`
   - `nixos-mini/` : base `configuration.nix` + `hardware-configuration.nix` minimaliste ; seule valeur réelle `stateVersion = "23.11"`.
 - `modules/` : vide pour l’instant. Prévu pour futurs modules communs NixOS.
 - `secrets/`
   - `kubeconfig/*.yml` révélés via `home/common.nix` dans `~/.kube/kubeconfig/<name>.yml` (via sops-nix).
+  - `codex/config.toml` : version chiffrée contenant la vraie `INCIDENT_IO_API_KEY`. Exposé à `~/.codex/config.toml` via sops-nix. Aucun fichier en clair n’est conservé dans le dépôt.
 
 ## Flux de travail
 - Mise à jour inputs : `nix flake update` (attention aux avertissements dans l’arbre Git sale).
