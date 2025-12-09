@@ -235,6 +235,101 @@
           "kubectl exec --context=$CONTEXT --namespace=$NAMESPACE --stdin --tty $POD --container=$NAME -- vector tap"
         ];
       };
+
+      "argocd" = {
+        shortCut = "s";
+        description = "Sync ArgoCD Application";
+        scopes = [ "application" ];
+        command = "argocd";
+        args = [
+          "app"
+          "sync"
+          "$NAME"
+          "--app-namespace"
+          "$NAMESPACE"
+        ];
+        background = true;
+        confirm = true;
+      };
+
+      "refresh-apps" = {
+        shortCut = "Shift-R";
+        confirm = false;
+        scopes = [ "apps" ];
+        description = "Refresh a argocd app hard";
+        command = "bash";
+        background = false;
+        args = [
+          "-c"
+          "kubectl annotate applications -n argocd $NAME argocd.argoproj.io/refresh=hard"
+        ];
+      };
+
+      "pvc-shell" = {
+        shortCut = "s";
+        description = "Spawn an Ubuntu shell pod with this PVC mounted";
+        scopes = [ "pvc" ];
+        command = "sh";
+        background = false;
+        args = [
+          "-c"
+          ''
+            echo "Starting a shell pod with PVC $NAME mounted at /mnt/data"
+            cat <<EOF | kubectl --kubeconfig $KUBECONFIG apply -f > /dev/null 2>&1 -
+            apiVersion: v1
+            kind: Pod
+            metadata:
+              name: pvc-shell
+              namespace: $NAMESPACE
+            spec:
+              restartPolicy: Never
+              containers:
+                - name: shell
+                  image: ubuntu:latest
+                  command: ["bash"]
+                  stdin: true
+                  tty: true
+                  volumeMounts:
+                    - name: vol
+                      mountPath: /mnt/data
+              volumes:
+                - name: vol
+                  persistentVolumeClaim:
+                    claimName: $NAME
+            EOF
+            echo "Waiting for pod to be ready..."
+            kubectl --kubeconfig $KUBECONFIG -n $NAMESPACE wait --for=condition=Ready pod/pvc-shell > /dev/null 2>&1
+            kubectl --kubeconfig $KUBECONFIG -n $NAMESPACE exec -it pvc-shell -- bash
+            kubectl --kubeconfig $KUBECONFIG -n $NAMESPACE delete pod pvc-shell --grace-period=0 --force=true > /dev/null 2>&1
+          ''
+        ];
+      };
+
+      "remove-finalizers" = {
+        shortCut = "Ctrl-F";
+        confirm = true;
+        dangerous = true;
+        scopes = [ "all" ];
+        description = ''
+          Removes all finalizers from selected resource. Be careful when using it,
+          it may leave dangling resources or delete them
+        '';
+        command = "kubectl";
+        background = true;
+        args = [
+          "patch"
+          "--context"
+          "$CONTEXT"
+          "--namespace"
+          "$NAMESPACE"
+          "$RESOURCE_NAME.$RESOURCE_GROUP"
+          "$NAME"
+          "-p"
+          ''{"metadata":{"finalizers":null}}''
+          "--type"
+          "merge"
+        ];
+      };
     };
 
     settings = {
