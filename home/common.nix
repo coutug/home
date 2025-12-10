@@ -66,7 +66,7 @@
     // (if pkgs.lib.pathExists codexSecret then {
       "codex/config.toml" = {
         sopsFile = codexSecret;
-        format = "ini";
+        format = "binary";
         key = "";
         path = "${config.home.homeDirectory}/.codex/config.toml";
         mode = "0600";
