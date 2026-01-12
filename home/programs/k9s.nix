@@ -306,13 +306,12 @@
       };
 
       "remove-finalizers" = {
-        shortCut = "Ctrl-F";
+        shortCut = "Ctrl-X";
         confirm = true;
         dangerous = true;
         scopes = [ "all" ];
         description = ''
-          Removes all finalizers from selected resource. Be careful when using it,
-          it may leave dangling resources or delete them
+          !!Removes all finalizers
         '';
         command = "kubectl";
         background = true;
