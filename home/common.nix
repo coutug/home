@@ -3,6 +3,7 @@
   pkgs,
   nixgl,
   sops-nix,
+  opencode,
   ...
 }:
 {
@@ -148,7 +149,7 @@
     tealdeer
     traceroute
     tree
-    opencode
+    (opencode.packages.${pkgs.stdenv.hostPlatform.system}.default)
     opentofu
     trivy
     vector

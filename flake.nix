@@ -15,9 +15,12 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    opencode = {
+      url = "github:anomalyco/opencode?ref=v1.1.17";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, nixgl, sops-nix, ... }:
+  outputs = { nixpkgs, home-manager, nixgl, sops-nix, opencode, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -29,14 +32,14 @@
       homeConfigurations = {
         laptop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit nixgl sops-nix; };
+          extraSpecialArgs = { inherit nixgl sops-nix opencode; };
           modules = [
             ./home/laptop.nix
           ];
         };
         desktop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit nixgl sops-nix; };
+          extraSpecialArgs = { inherit nixgl sops-nix opencode; };
           modules = [
             ./home/desktop.nix
           ];
