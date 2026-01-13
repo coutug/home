@@ -36,7 +36,7 @@
     EDITOR = "nvim";
     WINEFSYNC = 1; # Optimize vst performance
     BUN_INSTALL = "${config.home.homeDirectory}/.bun";
-    CODEX_HOME  = "${config.home.homeDirectory}/.codex";
+    CODEX_HOME = "${config.home.homeDirectory}/.codex";
   };
 
   home.sessionPath = pkgs.lib.mkAfter [
@@ -49,30 +49,48 @@
   sops.secrets =
     let
       codexSecret = ../secrets/codex/config.toml;
+      opencodeSecret = ../secrets/opencode/opencode.json;
       kubeconfigNames = builtins.attrNames (builtins.readDir ../secrets/kubeconfig);
-      mkSecret =
-        filename:
-        {
-          name = "kubeconfig/${filename}";
-          value = {
-            sopsFile = ../secrets/kubeconfig/${filename};
-            format = "yaml";
-            key = "";
-            path = "${config.home.homeDirectory}/.kube/kubeconfig/${filename}";
-            mode = "0644";
-          };
+      mkSecret = filename: {
+        name = "kubeconfig/${filename}";
+        value = {
+          sopsFile = ../secrets/kubeconfig/${filename};
+          format = "yaml";
+          key = "";
+          path = "${config.home.homeDirectory}/.kube/kubeconfig/${filename}";
+          mode = "0644";
         };
+      };
     in
     builtins.listToAttrs (map mkSecret kubeconfigNames)
-    // (if pkgs.lib.pathExists codexSecret then {
-      "codex/config.toml" = {
-        sopsFile = codexSecret;
-        format = "binary";
-        key = "";
-        path = "${config.home.homeDirectory}/.codex/config.toml";
-        mode = "0600";
-      };
-    } else {});
+    // (
+      if pkgs.lib.pathExists codexSecret then
+        {
+          "codex/config.toml" = {
+            sopsFile = codexSecret;
+            format = "binary";
+            key = "";
+            path = "${config.home.homeDirectory}/.codex/config.toml";
+            mode = "0600";
+          };
+        }
+      else
+        { }
+    )
+    // (
+      if pkgs.lib.pathExists opencodeSecret then
+        {
+          "opencode/opencode.json" = {
+            sopsFile = opencodeSecret;
+            format = "json";
+            key = "";
+            path = "${config.home.homeDirectory}/.config/opencode/opencode.json";
+            mode = "0600";
+          };
+        }
+      else
+        { }
+    );
 
   home.packages = with pkgs; [
     augeas
@@ -182,7 +200,6 @@
   xdg.configFile = {
     "Code/User/settings.json".source = ./config/code/user/settings.json;
     "Code/User/keybindings.json".source = ./config/code/user/keybindings.json;
-    "opencode/opencode.json".source = ./config/opencode/opencode.json;
     "tmuxinator/kmux.yml".source = ./config/kmux.yml;
   };
 

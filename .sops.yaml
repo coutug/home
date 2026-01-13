@@ -2,10 +2,14 @@ age_keys: &age_keys
   - "age1ktfsdqtzs3c84krtw62rjumqhf4fvf8acqauv5x6cr883wgj53sq5df9y6"
 
 creation_rules:
-  - path_regex: .*.(yaml|yml|json|env)$
+  - path_regex: secrets/opencode/opencode\.json
     age: *age_keys
+    encrypted_regex: '^(INCIDENT_IO_API_KEY)$'
 
   - path_regex: secrets/codex/config\.toml
     age: *age_keys
     encrypted_regex: '^(INCIDENT_IO_API_KEY)$'
     filename_overide: config.ini
+
+  - path_regex: .*.(yaml|yml|json|env)$
+    age: *age_keys
