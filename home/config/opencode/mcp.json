@@ -1,0 +1,18 @@
+{
+  "repositories": [
+    {
+      "name": "mcp-server-docker",
+      "url": "https://github.com/ckreiling/mcp-server-docker",
+      "branch": "main",
+      "image": "mcp-server-docker",
+      "description": "Docker MCP server for container management"
+    },
+    {
+      "name": "mcp-server-kubernetes",
+      "url": "https://github.com/Flux159/mcp-server-kubernetes",
+      "branch": "main",
+      "image": "mcp-server-kubernetes",
+      "description": "MCP Server for kubernetes management commands"
+    }
+  ]
+}
