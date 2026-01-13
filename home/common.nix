@@ -181,6 +181,7 @@
   xdg.configFile = {
     "Code/User/settings.json".source = ./config/code/user/settings.json;
     "Code/User/keybindings.json".source = ./config/code/user/keybindings.json;
+    "opencode/opencode.json".source = ./config/opencode/opencode.json;
     "tmuxinator/kmux.yml".source = ./config/kmux.yml;
   };
 
