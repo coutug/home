@@ -74,6 +74,7 @@
       lg = "lazygit";
       cat = "bat";
       kb = "kustomize build";
+      oc = "opencode";
 
       ollama = "docker exec -it ollama ollama";
 
