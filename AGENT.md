@@ -4,10 +4,10 @@ Ce dépôt héberge les configurations Home Manager (EndeavourOS) et prépare le
 
 ---
 
-## Snapshot (nov. 2025)
+## Snapshot (janv. 2026)
 - Flake (`flake.nix`)
-  - `nixpkgs` : `nixos-25.11` (commit `a320ce8…`).
-  - `home-manager` : `release-25.11` (commit `2217780…`).
+  - `nixpkgs` : `nixos-unstable` (voir `flake.lock`).
+  - `home-manager` : `master` (voir `flake.lock`).
   - `nixgl` suit `nixpkgs`, utilisé via `nixgl.overlay`/`config.lib.nixGL.wrap`.
   - `sops-nix` suit `nixpkgs` (commit `c482a1…`).
 - `flake.lock` est à jour (mis à jour le 27 nov 2025), garder ce rythme à chaque changement de channel.
