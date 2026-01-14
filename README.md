@@ -10,6 +10,10 @@ Configuration Nix et Home Manager pour trois machines :
 - Passky
 - Syncthing
 
+## Outils
+- OpenCode (flake)
+- oh-my-opencode (package local)
+
 ## Commandes utiles
 
 ```bash

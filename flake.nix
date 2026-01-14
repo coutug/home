@@ -18,9 +18,23 @@
     opencode = {
       url = "github:anomalyco/opencode?ref=v1.1.17";
     };
+    oh-my-opencode = {
+      url = "github:code-yeongyu/oh-my-opencode?ref=v3.0.0-beta.7";
+      flake = false;
+    };
   };
 
-  outputs = { nixpkgs, home-manager, nixgl, sops-nix, opencode, ... }:
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      home-manager,
+      nixgl,
+      sops-nix,
+      opencode,
+      oh-my-opencode,
+      ...
+    }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -28,18 +42,40 @@
         config.allowUnfree = true;
         overlays = [ nixgl.overlay ];
       };
-    in {
+      ohMyOpencode = pkgs.callPackage ./pkgs/oh-my-opencode { src = oh-my-opencode; };
+    in
+    {
+      packages = {
+        ${system} = {
+          "oh-my-opencode" = ohMyOpencode;
+        };
+      };
+
       homeConfigurations = {
         laptop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit nixgl sops-nix opencode; };
+          extraSpecialArgs = {
+            inherit
+              nixgl
+              sops-nix
+              opencode
+              ohMyOpencode
+              ;
+          };
           modules = [
             ./home/laptop.nix
           ];
         };
         desktop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit nixgl sops-nix opencode; };
+          extraSpecialArgs = {
+            inherit
+              nixgl
+              sops-nix
+              opencode
+              ohMyOpencode
+              ;
+          };
           modules = [
             ./home/desktop.nix
           ];

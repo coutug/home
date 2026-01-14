@@ -91,6 +91,23 @@
         "type": "github"
       }
     },
+    "oh-my-opencode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1768385761,
+        "narHash": "sha256-TjfER1UBor+UXrtjuoLqyngiCHetlQZtC5U3/nlOLF8=",
+        "owner": "code-yeongyu",
+        "repo": "oh-my-opencode",
+        "rev": "2e1b467de4e6d5feef1f831eea001dc7ed2b1af3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "code-yeongyu",
+        "ref": "v3.0.0-beta.7",
+        "repo": "oh-my-opencode",
+        "type": "github"
+      }
+    },
     "opencode": {
       "inputs": {
         "nixpkgs": "nixpkgs_2"
@@ -115,6 +132,7 @@
         "home-manager": "home-manager",
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs",
+        "oh-my-opencode": "oh-my-opencode",
         "opencode": "opencode",
         "sops-nix": "sops-nix"
       }

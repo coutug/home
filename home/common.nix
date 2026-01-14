@@ -4,6 +4,7 @@
   nixgl,
   sops-nix,
   opencode,
+  ohMyOpencode,
   ...
 }:
 {
@@ -168,6 +169,7 @@
     traceroute
     tree
     (opencode.packages.${pkgs.stdenv.hostPlatform.system}.default)
+    ohMyOpencode
     opentofu
     trivy
     vector

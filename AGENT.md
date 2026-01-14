@@ -11,6 +11,7 @@ Ce dépôt héberge les configurations Home Manager (EndeavourOS) et prépare le
   - `nixgl` suit `nixpkgs`, utilisé via `nixgl.overlay`/`config.lib.nixGL.wrap`.
   - `sops-nix` suit `nixpkgs` (commit `c482a1…`).
   - `opencode` : flake officiel `anomalyco/opencode` épinglé sur `v1.1.17` (voir `flake.nix`/`flake.lock`).
+  - `oh-my-opencode` : source GitHub `code-yeongyu/oh-my-opencode` (tag `v3.0.0-beta.7`), packagé via `pkgs/oh-my-opencode` (build NPM + Bun).
 - `flake.lock` est à jour (mis à jour le 27 nov 2025), garder ce rythme à chaque changement de channel.
 - Workspace arrangé pour `system = "x86_64-linux"`, `config.allowUnfree = true`, plus overlay nixGL.
 
@@ -20,10 +21,11 @@ Ce dépôt héberge les configurations Home Manager (EndeavourOS) et prépare le
   - `laptop.nix` / `desktop.nix` : importent `common.nix`; le desktop ajoute les paquets `reaper*`.
   - `server.nix` : squelette (utilisateur `myuser`, `stateVersion = 23.11`) injecté côté NixOS.
   - `programs/*.nix` : modules isolés (atuin, bat, fzf, htop, k9s, obs-studio, wezterm, zoxide, zsh). `wezterm` et `obs-studio` sont encapsulés avec `nixGL`.
-  - `home/common.nix` : `opencode` provient désormais du flake officiel (pas de `pkgs.opencode`).
+  - `home/common.nix` : `opencode` provient du flake officiel et `oh-my-opencode` du package local `pkgs/oh-my-opencode`.
   - `config/` & `dotfiles/` : sources VS Code, tmux, oh-my-zsh custom, etc., montés via `home.file`/`xdg.configFile`.
   - `config/codex/` : (supprimé) — la configuration Codex est désormais uniquement sous `secrets/codex/config.toml` (sops) et déployée vers `~/.codex/config.toml` via sops-nix, seulement si le fichier existe (test `pathExists`).
   - `config/opencode/opencode.json` : configuration OpenCode déclarative (plugin OAuth + modèles), déployée vers `~/.config/opencode/opencode.json` via `xdg.configFile`.
+- `pkgs/` : dérivations locales (oh-my-opencode).
 - `hosts/`
   - `nixos-mini/` : base `configuration.nix` + `hardware-configuration.nix` minimaliste ; seule valeur réelle `stateVersion = "23.11"`.
 - `modules/` : vide pour l’instant. Prévu pour futurs modules communs NixOS.
