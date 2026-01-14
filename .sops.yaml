@@ -4,7 +4,7 @@ age_keys: &age_keys
 creation_rules:
   - path_regex: secrets/opencode/opencode\.json
     age: *age_keys
-    encrypted_regex: '^(INCIDENT_IO_API_KEY)$'
+    encrypted_regex: '^(INCIDENT_IO_API_KEY|GRAFANA_SERVICE_ACCOUNT_TOKEN)$'
 
   - path_regex: secrets/codex/config\.toml
     age: *age_keys
