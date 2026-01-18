@@ -205,6 +205,7 @@ in
   # ~/
   home.file = {
     ".tmux.conf".source = ./config/tmux.conf;
+    ".kube/kubie.yaml".source = ./config/kubie.yaml;
   };
   # ~/.config
   xdg.configFile = {
