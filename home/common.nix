@@ -1,11 +1,20 @@
 {
   config,
   pkgs,
+  lib,
   nixgl,
   sops-nix,
   opencode,
   ...
 }:
+let
+  codiumExtensionsFile = ./config/code/extensions.list;
+  codiumExtensions = pkgs.lib.filter (s: s != "") (
+    map pkgs.lib.strings.trim (pkgs.lib.splitString "\n" (builtins.readFile codiumExtensionsFile))
+  );
+  backupScript = builtins.readFile ./config/code/scripts/backup-vsconfigs.sh;
+  syncScript = builtins.readFile ./config/code/scripts/sync-vscodium-extensions.sh;
+in
 {
   targets.genericLinux.enable = true;
 
@@ -172,6 +181,7 @@
     trivy
     vector
     velero
+    vscodium
     vesktop
     vim
     vlc
@@ -200,16 +210,33 @@
   xdg.configFile = {
     "Code/User/settings.json".source = ./config/code/user/settings.json;
     "Code/User/keybindings.json".source = ./config/code/user/keybindings.json;
+
+    "VSCodium/User/settings.json".source = ./config/code/user/settings.json;
+    "VSCodium/User/keybindings.json".source = ./config/code/user/keybindings.json;
+
     "tmuxinator/kmux.yml".source = ./config/kmux.yml;
   };
 
-  # Disable Home Manager manual outputs to avoid building the doc set (and the
-  # noisy Nix warning about options.json generation on recent releases).
-  # manual = {
-  #   html.enable = false;
-  #   json.enable = false;
-  #   manpages.enable = false;
-  # };
+  home.activation.backupVSConfigs = lib.hm.dag.entryBefore [ "linkGeneration" ] ''
+    set -euo pipefail
+    export HOME="${config.home.homeDirectory}"
+    timestamp="$(date +%s)"
+    backup_ext=".bak.$timestamp"
 
-  # fonts.fontconfig.enable = true;
+    ${backupScript}
+  '';
+
+  home.activation.syncVSCodiumExtensions = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        set -euo pipefail
+        export HOME="${config.home.homeDirectory}"
+
+        desired_exts="$(cat <<'EOF'
+    ${pkgs.lib.concatMapStringsSep "\n" (ext: ext) codiumExtensions}
+    EOF
+    )"
+
+        codium_bin="${pkgs.vscodium}/bin/codium"
+
+        ${syncScript}
+  '';
 }
