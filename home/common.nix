@@ -122,6 +122,7 @@ in
     # fwupd-efi
     github-cli
     gptfdisk
+    go
     go-jsonnet
     helmfile
     hey
