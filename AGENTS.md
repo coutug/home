@@ -12,7 +12,7 @@ This repo hosts Home Manager configurations (EndeavourOS) and prepares future Ni
   - `home-manager` : `master` (voir `flake.lock`).
   - `nixgl` suit `nixpkgs`, utilisé via `nixgl.overlay`/`config.lib.nixGL.wrap`.
   - `sops-nix` suit `nixpkgs` (commit `c482a1…`).
-  - `opencode` : flake officiel `anomalyco/opencode` épinglé sur `v1.1.17` (voir `flake.nix`/`flake.lock`).
+  - `opencode` : flake officiel `anomalyco/opencode` épinglé sur `v1.1.31` (voir `flake.nix`/`flake.lock`).
 - `flake.lock` est à jour (mis à jour le 27 nov 2025), garder ce rythme à chaque changement de channel.
 - Workspace arrangé pour `system = "x86_64-linux"`, `config.allowUnfree = true`, plus overlay nixGL.
 

@@ -16,11 +16,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     opencode = {
-      url = "github:anomalyco/opencode?ref=v1.1.17";
+      url = "github:anomalyco/opencode?ref=v1.1.31";
     };
   };
 
-  outputs = { nixpkgs, home-manager, nixgl, sops-nix, opencode, ... }:
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      nixgl,
+      sops-nix,
+      opencode,
+      ...
+    }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -28,7 +36,8 @@
         config.allowUnfree = true;
         overlays = [ nixgl.overlay ];
       };
-    in {
+    in
+    {
       homeConfigurations = {
         laptop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
