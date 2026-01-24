@@ -37,8 +37,14 @@ in
   boot.loader.efi.efiSysMountPoint = "/boot";
 
   services.openssh.enable = true;
-  services.openssh.passwordAuthentication = false;
-  services.openssh.permitRootLogin = "no";
+  services.openssh.settings = {
+    PasswordAuthentication = false;
+    PermitRootLogin = "no";
+  };
+
+  programs.zsh = {
+    enable = true;
+  };
 
   users.users.gabriel = {
     isNormalUser = true;
