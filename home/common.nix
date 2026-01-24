@@ -37,22 +37,6 @@ in
     ./programs/zoxide.nix
   ];
 
-  home.username = "gabriel";
-  home.homeDirectory = "/home/gabriel";
-  home.stateVersion = "25.05";
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    WINEFSYNC = 1; # Optimize vst performance
-    BUN_INSTALL = "${config.home.homeDirectory}/.bun";
-    CODEX_HOME = "${config.home.homeDirectory}/.codex";
-  };
-
-  home.sessionPath = pkgs.lib.mkAfter [
-    "${config.home.homeDirectory}/.bun/bin"
-    "${config.home.homeDirectory}/go/bin"
-  ];
-
   sops.age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
 
   sops.secrets =
@@ -101,99 +85,149 @@ in
         { }
     );
 
-  home.packages = with pkgs; [
-    augeas
-    act
-    age
-    argocd
-    # bluez
-    # bluez-tools
-    # codex # installed by yay as well
-    crane
-    curlie
-    # discount
-    dhcpcd
-    duf
-    etcd
-    # fd #TODO dependency
-    fluxcd
-    jellyfin-ffmpeg
-    # fwupd
-    # fwupd-efi
-    github-cli
-    gptfdisk
-    go
-    go-jsonnet
-    helmfile
-    hey
-    imagemagick
-    # jq #TODO dependency
-    # kdePackages.ark
-    # kdePackages.bluedevil
-    # kdePackages.okular
-    keepassxc
-    kind
-    kopia
-    kubectl
-    kubie
-    kubeconform
-    kubelogin-oidc
-    kubectl-df-pv
-    kubectl-linstor
-    kubectl-rook-ceph
-    kubernetes-helm
-    kustomize
-    kyverno
-    k0sctl
-    lazydocker
-    lazygit
-    libguestfs
-    libewf
-    lrzip
-    lzop
-    man
-    meslo-lgs-nf
-    minikube
-    musescore
-    nix-zsh-completions
-    nixfmt-rfc-style
-    nil
-    nmap
-    poppler
-    qbittorrent-enhanced
-    resvg
-    rclone
-    # ripgrep #TODO dependency
-    rsync
-    rustup
-    sleuthkit
-    solaar
-    sops
-    spotify
-    supermin
-    squashfsTools
-    strace
-    syslinux
-    tealdeer
-    traceroute
-    tree
-    (opencode.packages.${pkgs.stdenv.hostPlatform.system}.default)
-    opentofu
-    trivy
-    vector
-    velero
-    vscodium
-    vesktop
-    vim
-    vlc
-    yara
-    yay
-    yazi
-    yq-go
-    zellij
-    zoom-us
-    zsh-powerlevel10k
-  ];
+  home = {
+    username = "gabriel";
+    homeDirectory = "/home/gabriel";
+    stateVersion = "25.05";
+
+    sessionVariables = {
+      EDITOR = "nvim";
+      WINEFSYNC = 1; # Optimize vst performance
+      BUN_INSTALL = "${config.home.homeDirectory}/.bun";
+      CODEX_HOME = "${config.home.homeDirectory}/.codex";
+    };
+
+    sessionPath = pkgs.lib.mkAfter [
+      "${config.home.homeDirectory}/.bun/bin"
+      "${config.home.homeDirectory}/go/bin"
+    ];
+
+    packages = with pkgs; [
+      augeas
+      act
+      age
+      argocd
+      # bluez
+      # bluez-tools
+      # codex # installed by yay as well
+      crane
+      curlie
+      # discount
+      dhcpcd
+      duf
+      etcd
+      # fd #TODO dependency
+      fluxcd
+      jellyfin-ffmpeg
+      # fwupd
+      # fwupd-efi
+      github-cli
+      gptfdisk
+      go
+      go-jsonnet
+      helmfile
+      hey
+      imagemagick
+      # jq #TODO dependency
+      # kdePackages.ark
+      # kdePackages.bluedevil
+      # kdePackages.okular
+      keepassxc
+      kind
+      kopia
+      kubectl
+      kubie
+      kubeconform
+      kubelogin-oidc
+      kubectl-df-pv
+      kubectl-linstor
+      kubectl-rook-ceph
+      kubernetes-helm
+      kustomize
+      kyverno
+      k0sctl
+      lazydocker
+      lazygit
+      libguestfs
+      libewf
+      lrzip
+      lzop
+      man
+      meslo-lgs-nf
+      minikube
+      musescore
+      nix-zsh-completions
+      nixfmt-rfc-style
+      nil
+      nmap
+      poppler
+      qbittorrent-enhanced
+      resvg
+      rclone
+      # ripgrep #TODO dependency
+      rsync
+      rustup
+      sleuthkit
+      solaar
+      sops
+      spotify
+      supermin
+      squashfsTools
+      strace
+      syslinux
+      tealdeer
+      traceroute
+      tree
+      (opencode.packages.${pkgs.stdenv.hostPlatform.system}.default)
+      opentofu
+      trivy
+      vector
+      velero
+      vscodium
+      vesktop
+      vim
+      vlc
+      yara
+      yay
+      yazi
+      yq-go
+      zellij
+      zoom-us
+      nixos-anywhere
+      zsh-powerlevel10k
+    ];
+
+    file = {
+      ".tmux.conf".source = ./config/tmux.conf;
+      ".kube/kubie.yaml".source = ./config/kubie.yaml;
+      ".ssh/config".source = ./config/ssh/config;
+    };
+
+    activation = {
+      backupVSConfigs = lib.hm.dag.entryBefore [ "linkGeneration" ] ''
+        set -euo pipefail
+        export HOME="${config.home.homeDirectory}"
+        timestamp="$(date +%s)"
+        backup_ext=".bak.$timestamp"
+
+        ${backupScript}
+      '';
+
+      syncVSCodiumExtensions = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              set -euo pipefail
+              export HOME="${config.home.homeDirectory}"
+
+              desired_exts="$(cat <<'EOF'
+        ${pkgs.lib.concatMapStringsSep "\n" (ext: ext) codiumExtensions}
+        EOF
+        )"
+
+              codium_bin="${pkgs.vscodium}/bin/codium"
+
+              ${syncScript}
+      '';
+    };
+  };
 
   nixpkgs.config.allowUnfreePredicate =
     pkg:
@@ -203,16 +237,6 @@ in
       "zoom"
     ];
 
-  # ~/
-  home.file = {
-    ".tmux.conf".source = ./config/tmux.conf;
-    ".kube/kubie.yaml".source = ./config/kubie.yaml;
-    ".ssh/config" = {
-      source = ./config/ssh/config;
-      mode = "0600";
-    };
-  };
-  # ~/.config
   xdg.configFile = {
     "Code/User/settings.json".source = ./config/code/user/settings.json;
     "Code/User/keybindings.json".source = ./config/code/user/keybindings.json;
@@ -222,27 +246,4 @@ in
 
     "tmuxinator/kmux.yml".source = ./config/kmux.yml;
   };
-
-  home.activation.backupVSConfigs = lib.hm.dag.entryBefore [ "linkGeneration" ] ''
-    set -euo pipefail
-    export HOME="${config.home.homeDirectory}"
-    timestamp="$(date +%s)"
-    backup_ext=".bak.$timestamp"
-
-    ${backupScript}
-  '';
-
-  home.activation.syncVSCodiumExtensions = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        set -euo pipefail
-        export HOME="${config.home.homeDirectory}"
-
-        desired_exts="$(cat <<'EOF'
-    ${pkgs.lib.concatMapStringsSep "\n" (ext: ext) codiumExtensions}
-    EOF
-    )"
-
-        codium_bin="${pkgs.vscodium}/bin/codium"
-
-        ${syncScript}
-  '';
 }

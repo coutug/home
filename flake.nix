@@ -2,9 +2,9 @@
   description = "Nix + Home Manager configs for laptop, desktop, and nixos-mini";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixgl = {
@@ -16,7 +16,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     opencode = {
-      url = "github:anomalyco/opencode?ref=v1.1.31";
+      url = "github:anomalyco/opencode?ref=v1.1.34";
+    };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -27,6 +31,7 @@
       nixgl,
       sops-nix,
       opencode,
+      disko,
       ...
     }:
     let
@@ -59,13 +64,15 @@
         nixos-mini = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
+            disko.nixosModules.disko
             ./hosts/nixos-mini/configuration.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.myuser = import ./home/server.nix;
+              home-manager.users.gabriel = import ./home/server.nix;
             }
+            { hardware.facter.reportPath = ./hosts/nixos-mini/facter.json; }
           ];
         };
       };

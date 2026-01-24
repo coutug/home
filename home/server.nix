@@ -1,6 +1,8 @@
-{ ... }:
+{ pkgs, ... }:
 {
-  home.username = "myuser";
-  home.homeDirectory = "/home/myuser";
-  home.stateVersion = "23.11";
+  home.username = "gabriel";
+  home.homeDirectory = "/home/gabriel";
+  home.stateVersion = "25.11";
+
+  home.packages = with pkgs; [ vim ];
 }
