@@ -1,0 +1,53 @@
+Host server
+    HostName 192.168.0.14
+    User server
+    Port 22
+    IdentityFile ~/.ssh/server_id_ed25519
+
+Host build
+    HostName build.ott.eosn.io
+    User coutug
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+
+Host ops
+    HostName ops.ott.eosn.io
+    User coutug
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+
+Host packages
+    HostName packages.ott.eosn.io
+    User coutug
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+
+Host dom*.m
+    HostName %har.eosn.io
+    User coutug
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+
+Host dom*.l
+    HostName %hab.eosn.io
+    User coutug
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+
+Host dom*.r
+    HostName %hiv.eosn.io
+    User coutug
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+
+Host dom*.d
+    HostName %hor.eosn.io
+    User coutug
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+
+Host dom*.k
+    HostName %han.eosn.io
+    User coutug
+    Port 22
+    IdentityFile ~/.ssh/id_rsa

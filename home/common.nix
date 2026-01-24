@@ -207,6 +207,10 @@ in
   home.file = {
     ".tmux.conf".source = ./config/tmux.conf;
     ".kube/kubie.yaml".source = ./config/kubie.yaml;
+    ".ssh/config" = {
+      source = ./config/ssh/config;
+      mode = "0600";
+    };
   };
   # ~/.config
   xdg.configFile = {
