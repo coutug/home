@@ -1,8 +1,6 @@
 {
-  config,
   pkgs,
   lib,
-  nixpkgs,
   k0s-nix,
   sops-nix,
   ...
@@ -20,17 +18,21 @@ in
   ];
 
   networking.hostName = "nixos-mini";
-  networking.interfaces.enp6s0.ipv4.addresses = [
-    {
-      address = "192.168.0.14";
-      prefixLength = 24;
-    }
-  ];
+  networking.useDHCP = false;
+  networking.enableIPv6 = false;
+  networking.interfaces.enp6s0 = {
+    ipv4.addresses = [
+      {
+        address = "192.168.0.14";
+        prefixLength = 24;
+      }
+    ];
+    useDHCP = false;
+  };
   networking.defaultGateway = "192.168.0.1";
   networking.nameservers = [
     "1.1.1.1"
-    "1.0.0.1"
-    "8.8.8.8"
+    "192.168.0.1"
   ];
   networking.firewall = {
     enable = true;
@@ -39,8 +41,14 @@ in
       6443
       8132
       10250
+      4240
+      4244
     ];
-    allowedUDPPorts = [ 8472 ];
+    allowedUDPPorts = [
+      8472
+      6081
+    ];
+    checkReversePath = "loose";
   };
 
   boot.loader.systemd-boot.enable = true;
