@@ -1,0 +1,21 @@
+apiVersion: k0s.k0sproject.io/v1beta1
+kind: Cluster
+metadata:
+  name: k0s-mini
+spec:
+  api:
+    address: 0.0.0.0
+    sans:
+      - k0s-mini
+      - localhost
+      - 127.0.0.1
+      - 192.168.0.14
+  network:
+    provider: cilium
+    cni:
+      name: cilium
+  konnectivity:
+    agentPort: 8132
+    adminPort: 8133
+  storage:
+    type: etcd

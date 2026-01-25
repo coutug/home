@@ -59,6 +59,26 @@
         "type": "github"
       }
     },
+    "k0s-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1768267765,
+        "narHash": "sha256-SRZ39UmjSukUZi40idzb9Klvnm1cu59E9XbuE/HDfAw=",
+        "owner": "johbo",
+        "repo": "k0s-nix",
+        "rev": "c966e1c704dd427be6d3972855ccbb55513f7b6a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "johbo",
+        "repo": "k0s-nix",
+        "type": "github"
+      }
+    },
     "nixgl": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -135,6 +155,7 @@
       "inputs": {
         "disko": "disko",
         "home-manager": "home-manager",
+        "k0s-nix": "k0s-nix",
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs",
         "opencode": "opencode",
