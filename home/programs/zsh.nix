@@ -56,29 +56,29 @@
     };
 
     shellAliases = {
+      # utils
       ll = "eza -la --git";
-      gs = "git status -sb";
-
       src = "source \"$HOME/.zshrc\"";
       mk = "minikube";
+      y = "yay";
       yn = "yay --noconfirm";
       yc = "yay -Yc; yay -Sc";
-      y = "yay";
       kc = "kubie ctx";
-      vpn = "sudo openvpn \"$HOME/sync/Travail/ovpn/dor-gw1-coutug-laptop.ovpn\"";
       watch = "watch -c";
-
       nv = "nvim";
-      pkgls = "pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'";
       ld = "lazydocker";
       lg = "lazygit";
       cat = "bat";
       kb = "kustomize build";
       oc = "opencode";
 
+      # long commands
       ollama = "docker exec -it ollama ollama";
-
+      pkgls = "pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'";
       kval = "kubeconform -summary -schema-location default -schema-location \"https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json\"";
+      nix-desktop = "home-manager switch --flake .#desktop -b back";
+      nix-laptop = "home-manager switch --flake .#laptop -b back";
+      nix-mini = "nix run nixpkgs#nixos-rebuild -- switch --flake .#nixos-mini --target-host gabriel@nixos-mini --build-host gabriel@nixos-mini --sudo";
     };
 
     initContent = lib.mkMerge [
