@@ -81,11 +81,7 @@
             }
             { hardware.facter.reportPath = ./hosts/nixos-mini/facter.json; }
           ];
-          nixpkgs.overlays = [
-            nixgl.overlay
-            k0s-nix.overlays.default
-          ];
-          specialArgs = { inherit sops-nix k0s-nix; };
+          specialArgs = { inherit k0s-nix sops-nix; };
         };
       };
     };

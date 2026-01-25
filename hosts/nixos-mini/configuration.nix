@@ -2,8 +2,9 @@
   config,
   pkgs,
   lib,
-  sops-nix,
+  nixpkgs,
   k0s-nix,
+  sops-nix,
   ...
 }:
 
@@ -59,9 +60,12 @@ in
   services.k0s = {
     enable = true;
     role = "controller+worker";
+    controller.isLeader = true;
     clusterName = "k0s-mini";
     tokenFile = "/etc/k0s/k0stoken";
     dataDir = "/var/lib/k0s";
+    package = k0s-nix.packages.${pkgs.stdenv.hostPlatform.system}.k0s;
+    configText = builtins.readFile ./k0s-config.yaml;
   };
 
   users.users.gabriel = {
@@ -93,7 +97,6 @@ in
     htop
     git
     disko
-    k0s
   ];
 
   sops.secrets = lib.mkIf hasK0sTokenSecret {
