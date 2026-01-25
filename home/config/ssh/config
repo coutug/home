@@ -1,4 +1,4 @@
-Host server
+Host nixos-mini
     HostName 192.168.0.14
     User gabriel
     Port 22
