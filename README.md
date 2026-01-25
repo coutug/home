@@ -14,7 +14,7 @@ This repository keeps the declarative state for the EndeavourOS personal machine
 - **Home Manager:** the `home/` directory drives `home-manager switch --flake .#laptop` (or `.#desktop`). Please ask before running any `home-manager` command, especially those that switch or build profiles.
 - **NixOS hosts:** `hosts/` contents are built with `nixos-rebuild` (or similar commands). Always confirm before invoking `nixos-rebuild` on any host or target machine.
 - **Install helper:** We retain `hosts/nixos-mini/disk-config.nix` plus the generated `hosts/nixos-mini/facter.json` so `nixos-anywhere` can partition `/dev/sdb` for `/boot`+`/` and `/dev/sda` for `/data`. Use the command below once everything else is reviewed:
-  `nix run github:nix-community/nixos-anywhere -- --flake .#nixos-mini --target-host gabriel@192.168.0.14 --disk-config hosts/nixos-mini/disk-config.nix --generate-hardware-config nixos-facter hosts/nixos-mini/facter.json`
+  `nix run github:nix-community/nixos-anywhere -- --flake .#nixos-mini --target-host gabriel@192.168.0.14 --generate-hardware-config nixos-facter hosts/nixos-mini/facter.json`
 
 ## Directory guides
 Each major folder defines its own `AGENTS.md` that explains its intent, conventions, and the current status. Read the relevant `AGENTS.md` before editing a section of the tree, especially if you plan to change how secrets are handled, add packages, or alter host state.
