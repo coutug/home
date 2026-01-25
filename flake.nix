@@ -65,6 +65,12 @@
         };
       };
 
+      packages = {
+        ${system} = {
+          inherit (k0s-nix.packages.${system}) k0s;
+        };
+      };
+
       nixosConfigurations = {
         nixos-mini = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -76,7 +82,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit sops-nix; };
+              home-manager.extraSpecialArgs = { inherit sops-nix k0s-nix; };
               home-manager.users.gabriel = ./home/server.nix;
             }
             { hardware.facter.reportPath = ./hosts/nixos-mini/facter.json; }
