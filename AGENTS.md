@@ -27,8 +27,9 @@ This repo stores the Home Manager configurations for the EndeavourOS workstation
   - `nixos-mini/`: NixOS 25.11 host with static IPv4 on `enp6s0`, systemd-boot, and a disk layout described in `disk-config.nix` for `disko`. `nixos-anywhere` now generates `hosts/nixos-mini/facter.json` via `nixos-facter` instead of `hardware-configuration.nix`.
 - `modules/`: currently empty. Intended for shared NixOS modules (firewall, SSH, journald, nix settings, etc.).
 - `secrets/`
-  - `kubeconfig/*.yml`: exposed by `home/common.nix` under `~/.kube/kubeconfig/<name>.yml` via `sops-nix`.
-  - `codex/config.toml`: encrypted file with the real `INCIDENT_IO_API_KEY`, exposed as `~/.codex/config.toml`.
+- `kubeconfig/*.yml`: exposed by `home/common.nix` under `~/.kube/kubeconfig/<name>.yml` via `sops-nix`.
+- `codex/config.toml`: encrypted file with the real `INCIDENT_IO_API_KEY`, exposed as `~/.codex/config.toml`.
+- `k0s/k0stoken.yaml`: new SOPS secret that maps to `/etc/k0s/k0stoken` (owner `root`, mode `0400`) so the controller+worker can start with the cluster join token.
 
 ## Workflow
 - Update inputs: `nix flake update` (warnings may appear when the tree is dirty).
@@ -44,7 +45,7 @@ This repo stores the Home Manager configurations for the EndeavourOS workstation
 2. **Common NixOS module**: populate `modules/server/base.nix` with shared pieces (SSH policy, firewall rules, journald tweaks, nix settings, sops-nix, download buffer, Determinate substituters).
 3. **nixos-mini**: wire the host into the common module, expose metrics (Syncthing, node exporter, etc.), and keep `disk-config.nix` in sync with any future partitions.
 4. **Secrets**: document how to propagate age keys to hosts and validate rotation policies.
-5. **Observability & services**: sketch which services run on `nixos-mini` (Syncthing, Grafana, VictoriaMetrics, Vector, k0s, DNS, Vaultwarden) and decide their placement.
+5. **Observability & services**: `nixos-mini` now runs a `k0s` controller+worker alongside Syncthing, Grafana, VictoriaMetrics, Vector, DNS, and Vaultwarden; keep this stack documented, expose secrets through `sops-nix`, and keep `disk-config.nix`/hardware assets in sync.
 6. **nixos-mini Zsh**: keep `home/server.nix` minimal so it only imports `home/programs/zsh.nix`, letting the host reuse the shared Zsh + dotfile stack without pulling the entire `home/common.nix` surface.
 
 ## Open questions
