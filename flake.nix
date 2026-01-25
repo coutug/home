@@ -70,13 +70,8 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.gabriel = home-manager.lib.homeManagerConfiguration {
-                inherit pkgs;
-                extraSpecialArgs = {
-                  inherit sops-nix;
-                };
-                modules = [ ./home/server.nix ];
-              };
+              home-manager.extraSpecialArgs = { inherit sops-nix; };
+              home-manager.users.gabriel = ./home/server.nix;
             }
             { hardware.facter.reportPath = ./hosts/nixos-mini/facter.json; }
           ];
