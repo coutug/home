@@ -2,15 +2,20 @@
   config,
   pkgs,
   lib,
+  sops-nix,
+  k0s-nix,
   ...
 }:
 
 let
   sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEr2BKqV1JZ1SHtkjEsRCFD6UbXVIsZ4NfB27G/CW2Km gabriel@framework-gabriel";
+  k0sTokenSecret = ../secrets/k0s/k0stoken.yaml;
+  hasK0sTokenSecret = lib.pathExists k0sTokenSecret;
 in
 {
   imports = [
     ./disk-config.nix
+    sops-nix.nixosModules.sops
   ];
 
   networking.hostName = "nixos-mini";
@@ -28,8 +33,13 @@ in
   ];
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 22 ];
-    allowedUDPPorts = [ ];
+    allowedTCPPorts = [
+      22
+      6443
+      8132
+      10250
+    ];
+    allowedUDPPorts = [ 8472 ];
   };
 
   boot.loader.systemd-boot.enable = true;
@@ -44,6 +54,14 @@ in
 
   programs.zsh = {
     enable = true;
+  };
+
+  services.k0s = {
+    enable = true;
+    role = "controller+worker";
+    clusterName = "k0s-mini";
+    tokenFile = "/etc/k0s/k0stoken";
+    dataDir = "/var/lib/k0s";
   };
 
   users.users.gabriel = {
@@ -75,6 +93,18 @@ in
     htop
     git
     disko
+    k0s
   ];
+
+  sops.secrets = lib.mkIf hasK0sTokenSecret {
+    "k0s/k0stoken" = {
+      sopsFile = k0sTokenSecret;
+      format = "yaml";
+      path = "/etc/k0s/k0stoken";
+      mode = "0400";
+      owner = "root";
+      group = "root";
+    };
+  };
 
 }

@@ -22,6 +22,10 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    k0s-nix = {
+      url = "github:johbo/k0s-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -32,6 +36,7 @@
       sops-nix,
       opencode,
       disko,
+      k0s-nix,
       ...
     }:
     let
@@ -66,6 +71,7 @@
           modules = [
             disko.nixosModules.disko
             ./hosts/nixos-mini/configuration.nix
+            k0s-nix.nixosModules.default
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -75,6 +81,11 @@
             }
             { hardware.facter.reportPath = ./hosts/nixos-mini/facter.json; }
           ];
+          nixpkgs.overlays = [
+            nixgl.overlay
+            k0s-nix.overlays.default
+          ];
+          specialArgs = { inherit sops-nix k0s-nix; };
         };
       };
     };
