@@ -82,7 +82,7 @@ in
   services.k0s = {
     enable = true;
     role = "controller+worker";
-    controller.type.isLeader = true;
+    controller.isLeader = true;
     clusterName = "k0s-mini";
     # tokenFile = "/etc/k0s/k0stoken";
     dataDir = "/var/lib/k0s";
@@ -119,6 +119,8 @@ in
     htop
     git
     disko
+    fio
+    vim
   ];
 
   sops.secrets = lib.mkIf hasK0sTokenSecret {
