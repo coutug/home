@@ -112,6 +112,7 @@ in
       # codex # installed by yay as well
       crane
       curlie
+      cilium-cli
       # discount
       dhcpcd
       duf

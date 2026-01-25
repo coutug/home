@@ -120,6 +120,7 @@ in
     git
     disko
     fio
+    ripgrep
     vim
   ];
 
