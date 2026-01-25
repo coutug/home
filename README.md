@@ -12,7 +12,9 @@ This repository keeps the declarative state for the EndeavourOS personal machine
 ## Key workflows
 - **Inputs:** run `nix flake update`, `nix flake show`, and `nix flake check` to refresh or validate the flake inputs. These operations do not change the managed machines.
 - **Home Manager:** the `home/` directory drives `home-manager switch --flake .#laptop` (or `.#desktop`). Please ask before running any `home-manager` command, especially those that switch or build profiles.
-- **NixOS hosts:** `hosts/` contents are built with `nixos-rebuild` (or similar commands). Always confirm before invoking `nixos-rebuild` on any host or target machine.
+- **NixOS hosts:** `hosts/` contents are built with `nixos-rebuild` (or similar commands). Always confirm before invoking `nixos-rebuild` on any host or target machine. The preferred update command is:
+
+    `nix run nixpkgs#nixos-rebuild -- switch --flake .#nixos-mini --target-host gabriel@nixos-mini --build-host gabriel@nixos-mini --sudo`
 - **Install helper:** We retain `hosts/nixos-mini/disk-config.nix` plus the generated `hosts/nixos-mini/facter.json` so `nixos-anywhere` can partition `/dev/sdb` for `/boot`+`/` and `/dev/sda` for `/data`. Use the command below once everything else is reviewed:
   `nix run github:nix-community/nixos-anywhere -- --flake .#nixos-mini --target-host gabriel@192.168.0.14 --generate-hardware-config nixos-facter hosts/nixos-mini/facter.json`
 
