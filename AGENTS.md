@@ -18,7 +18,7 @@ This repo stores the Home Manager configurations for the EndeavourOS workstation
 - `home/`
   - `common.nix`: base profile for user `gabriel`. It configures `targets.genericLinux`, `sops-nix`, exports the kubeconfig secrets, sets session variables, packages, `xdg.configFile`, and disables the manual outputs that trigger the HM 25.11 warning about `options.json` with no context.
   - `laptop.nix` / `desktop.nix`: import `common.nix`; the desktop adds the `reaper*` packages.
-  - `server.nix`: skeleton for the host-side home profile used by NixOS; it now defines user `gabriel` with `stateVersion = "25.11"`.
+- `server.nix`: skeleton for the host-side home profile used by NixOS; it now defines user `gabriel` with `stateVersion = "25.11"`, selectively imports `./programs/zsh.nix`, and wires in `sops-nix` so `nixos-mini` reuses the shared Zsh setup without pulling the entire `common.nix` surface or all secrets.
   - `programs/*.nix`: modular definitions for tools like `atuin`, `bat`, `fzf`, `htop`, `k9s`, `obs-studio`, `wezterm`, `zoxide`, and shell tooling. `wezterm` and `obs-studio` are wrapped with `nixGL`.
   - `config/` & `dotfiles/`: static VS Code settings, tmux, Oh My Zsh custom assets, etc., exposed via `home.file`/`xdg.configFile`.
   - `config/opencode/opencode.json`: declarative OpenCode configuration (OAuth plugin + templates), placed under `~/.config/opencode/opencode.json`.
@@ -45,6 +45,7 @@ This repo stores the Home Manager configurations for the EndeavourOS workstation
 3. **nixos-mini**: wire the host into the common module, expose metrics (Syncthing, node exporter, etc.), and keep `disk-config.nix` in sync with any future partitions.
 4. **Secrets**: document how to propagate age keys to hosts and validate rotation policies.
 5. **Observability & services**: sketch which services run on `nixos-mini` (Syncthing, Grafana, VictoriaMetrics, Vector, k0s, DNS, Vaultwarden) and decide their placement.
+6. **nixos-mini Zsh**: keep `home/server.nix` minimal so it only imports `home/programs/zsh.nix`, letting the host reuse the shared Zsh + dotfile stack without pulling the entire `home/common.nix` surface.
 
 ## Open questions
 - Which additional services should `nixos-mini` host (monitoring, backup targets, etc.)?
