@@ -1,21 +1,109 @@
 apiVersion: k0s.k0sproject.io/v1beta1
-kind: Cluster
+kind: ClusterConfig
 metadata:
   name: k0s-mini
 spec:
   api:
-    address: 0.0.0.0
+    address: 192.168.0.14
     sans:
-      - k0s-mini
-      - localhost
-      - 127.0.0.1
       - 192.168.0.14
-  network:
-    provider: cilium
-    cni:
-      name: cilium
-  konnectivity:
-    agentPort: 8132
-    adminPort: 8133
   storage:
     type: etcd
+    etcd:
+      peerAddress: 192.168.0.14
+  network:
+    provider: custom
+    kubeProxy:
+      disabled: true
+    dualStack:
+      enabled: false
+  telemetry:
+    enabled: false
+  extensions:
+    helm:
+      concurrencyLevel: 2
+      repositories:
+        - name: prom-crds
+          url: https://prometheus-community.github.io/helm-charts
+        - name: cilium
+          url: https://helm.cilium.io
+      charts:
+        - name: prom-crds
+          chartname: prom-crds/prometheus-operator-crds
+          version: "26.0.0"
+          order: 1
+          values: |
+            crds:
+              alertmanagerconfigs:
+                enabled: false
+              alertmanagers:
+                enabled: false
+              prometheuses:
+                enabled: false
+              thanosrulers:
+                enabled: false
+          namespace: kube-system
+        - name: cilium
+          chartname: cilium/cilium
+          version: "1.18.6"
+          order: 2
+          values: |
+            ipam:
+              mode: "kubernetes"
+            ipv6:
+              enabled: false
+            envoy:
+              enabled: true
+              rollOutPods: true
+              prometheus:
+                enabled: true
+                serviceMonitor:
+                  enabled: true
+            hubble:
+              enabled: true
+              listenAddress: ":4244"
+              metrics:
+                enabled:
+                  - dns
+                  - drop
+                  - tcp
+                  - flow
+                  - port-distribution
+                  - icmp
+                  - http
+                serviceMonitor:
+                  enabled: true
+              relay:
+                enabled: true
+                rollOutPods: true
+                prometheus:
+                  enabled: true
+                  serviceMonitor:
+                    enabled: true
+              ui:
+                enabled: true
+                rollOutPods: true
+            operator:
+              replicas: 1
+              rollOutPods: true
+              prometheus:
+                enabled: true
+                metricsService: true
+                serviceMonitor:
+                  enabled: true
+
+            rollOutCiliumPods: true
+            prometheus:
+              enabled: true
+              serviceMonitor:
+                enabled: true
+
+            # kube-proxy replacement is required when using l2announcements
+            kubeProxyReplacement: true
+            k8sServiceHost: 192.168.0.14
+            k8sServicePort: 6443
+
+            # Enable native bandwidth management + BBR TCP algorith
+            bandwidthManager:
+              enabled: true
+          namespace: kube-system

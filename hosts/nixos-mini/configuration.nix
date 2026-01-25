@@ -57,12 +57,34 @@ in
     enable = true;
   };
 
+  boot.kernelModules = [
+    "br_netfilter"
+    "overlay"
+    "nf_conntrack"
+    "ip_tables"
+    "iptable_nat"
+    "xt_socket"
+    "xt_conntrack"
+    "ip6_tables"
+    "nf_nat"
+    "xfrm_user"
+    "xfrm_algo"
+    "veth"
+    "tun"
+  ];
+
+  boot.kernel.sysctl = {
+    "net.ipv4.ip_forward" = 1;
+    "net.bridge.bridge-nf-call-iptables" = 1;
+    "net.bridge.bridge-nf-call-ip6tables" = 1;
+  };
+
   services.k0s = {
     enable = true;
     role = "controller+worker";
-    controller.isLeader = true;
+    controller.type.isLeader = true;
     clusterName = "k0s-mini";
-    tokenFile = "/etc/k0s/k0stoken";
+    # tokenFile = "/etc/k0s/k0stoken";
     dataDir = "/var/lib/k0s";
     package = k0s-nix.packages.${pkgs.stdenv.hostPlatform.system}.k0s;
     configText = builtins.readFile ./k0s-config.yaml;
