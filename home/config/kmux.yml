@@ -1,24 +1,35 @@
-# /home/gabriel/.config/tmuxinator
-
-name: <%= ENV["session_name"] %>
-root: ~/
-
-startup_pane: 1
+# ~/.config/tmuxp/kmux1.0.yaml
+session_name: ${session_name}
+start_directory: "~"
 
 windows:
-  - vpn: |
-        echo "KMUX"
-  - 1k9s: |
-      kubie ctx <%= ENV["session_name"] %>
-      sleep 1
-      clear
-      k9s
-  - 2k9s: |
-      kubie ctx <%= ENV["session_name"] %>
-      sleep 1
-      clear
-      k9s
-  - cmd: |
-      kubie ctx <%= ENV["session_name"] %>
-      clear
+  - window_name: vpn
+    panes:
+      - shell_command:
+          - echo "KMUX"
 
+  - window_name: 1k9s
+    focus: true
+    panes:
+      - shell_command:
+          - kubie ctx ${session_name}
+          - sleep 1
+          - clear
+          - k9s
+        focus: true
+
+  - window_name: 2k9s
+    panes:
+      - shell_command:
+          - kubie ctx ${session_name}
+          - sleep 1
+          - clear
+          - k9s
+
+  - window_name: cmd
+    panes:
+      - shell_command:
+          - kubie ctx ${session_name}
+          - sleep 1
+          - clear
+          - k9s -c ks -n flux-system

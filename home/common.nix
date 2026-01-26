@@ -181,6 +181,8 @@ in
       tree
       (opencode.packages.${pkgs.stdenv.hostPlatform.system}.default)
       opentofu
+      tmuxp
+      tmux
       trivy
       vector
       velero
@@ -245,6 +247,6 @@ in
     "VSCodium/User/settings.json".source = ./config/code/user/settings.json;
     "VSCodium/User/keybindings.json".source = ./config/code/user/keybindings.json;
 
-    "tmuxinator/kmux.yml".source = ./config/kmux.yml;
+    "tmuxp/kmux.yml".source = ./config/kmux.yml;
   };
 }

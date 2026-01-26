@@ -1,11 +1,11 @@
 kmux() {
-  if ! command -v kubie &> /dev/null || ! command -v tmux &> /dev/null || ! command -v tmuxinator &> /dev/null || ! command -v k9s &> /dev/null; then
+  if ! command -v kubie &> /dev/null || ! command -v tmux &> /dev/null || ! command -v tmuxp &> /dev/null || ! command -v k9s &> /dev/null; then
     echo "Erreur : il manque certain packages. Veuillez les installer d'abord."
     return 1
   fi
 
   # kubeconfigs directory
-  KUBECONFIG_DIR="/home/gabriel/.kube/configs"
+  KUBECONFIG_DIR="/home/gabriel/.kube/kubeconfig"
   if [ ! -d "$KUBECONFIG_DIR" ]; then
     echo "Erreur : Le répertoire '$KUBECONFIG_DIR' n'existe pas."
     exit 1
@@ -38,6 +38,6 @@ kmux() {
   echo "Contexte sélectionné : $current_context"
   export session_name="$current_context"
 
-  tmuxinator start kmux
+  tmuxp load kmux
 }
 
