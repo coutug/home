@@ -1,5 +1,5 @@
 kmux() {
-  if ! command -v kubie &> /dev/null || ! command -v tmux &> /dev/null || ! command -v tmuxp &> /dev/null || ! command -v k9s &> /dev/null; then
+  if ! command -v kubie &> /dev/null || ! command -v tmux &> /dev/null || ! command -v tmuxp &> /dev/null || ! command -v k9s &> /dev/null || ! command -v fzf &> /dev/null; then
     echo "Erreur : il manque certain packages. Veuillez les installer d'abord."
     return 1
   fi
@@ -11,20 +11,25 @@ kmux() {
     exit 1
   fi
 
-  kubeconfigs=$(find "$KUBECONFIG_DIR" -type f \( -name "*.yaml" -o -name "*.yml" \))
-  if [ -z "$kubeconfigs" ]; then
+  declare -a kubeconfigs
+  while IFS= read -r -d '' config; do
+    kubeconfigs+=("$config")
+  done < <(find -L "$KUBECONFIG_DIR" -type f \( -name "*.yaml" -o -name "*.yml" \) -print0)
+  if [ ${#kubeconfigs[@]} -eq 0 ]; then
     echo "Aucun fichier kubeconfig trouvé dans le répertoire '$KUBECONFIG_DIR'."
     exit 1
   fi
-  
   declare -a contexts
-  echo "$kubeconfigs" | while read -r config; do
-    context=$(kubectl config --kubeconfig="$config" get-contexts -o name | head -n1)
+  for config in "${kubeconfigs[@]}"; do
+    context_line=$(grep -m1 '^[[:space:]]*current-context:' "$config" 2>/dev/null || true)
 
-    if [ -n "$context" ]; then
+    if [ -n "$context_line" ]; then
+      context=${context_line#*:}
+      context=${context#"${context%%[![:space:]]*}"}
+      context=${context%"${context##*[![:space:]]}"}
+      if [ -n "$context" ]; then
         contexts+=("$context")
-    else
-        echo "Attention : Aucun contexte trouvé dans le fichier '$config'."
+      fi
     fi
   done
   if [ ${#contexts[@]} -eq 0 ]; then
@@ -40,4 +45,3 @@ kmux() {
 
   tmuxp load kmux
 }
-
