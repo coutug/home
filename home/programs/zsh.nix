@@ -90,7 +90,7 @@
           local base="$HOME/sync/Travail/Repo"
           local choice
           choice=$(printf '%s\n' "$base"/*(/:t) | fzf) || return
-          code "$base/$choice"
+          codium "$base/$choice"
         }
       '')
     ];
