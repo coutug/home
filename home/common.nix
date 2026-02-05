@@ -106,6 +106,7 @@ in
       augeas
       act
       age
+      antigravity
       argocd
       # bluez
       # bluez-tools
@@ -232,13 +233,7 @@ in
     };
   };
 
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (pkgs.lib.getName pkg) [
-      "reaper"
-      "spotify"
-      "zoom"
-    ];
+  nixpkgs.config.allowUnfree = true;
 
   xdg.configFile = {
     "Code/User/settings.json".source = ./config/code/user/settings.json;
