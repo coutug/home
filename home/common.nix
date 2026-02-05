@@ -243,5 +243,6 @@ in
     "VSCodium/User/keybindings.json".source = ./config/code/user/keybindings.json;
 
     "tmuxp/kmux.yml".source = ./config/kmux.yml;
+    "opencode/prompts/test-dash.md".source = ./config/opencode/test-dash.md;
   };
 }

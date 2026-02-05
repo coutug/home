@@ -13,6 +13,7 @@ This repo stores the Home Manager configurations for the EndeavourOS workstation
   - `opencode`: official `anomalyco/opencode` flake pinned to `v1.1.31` (see `flake.nix`/`flake.lock`).
 - `flake.lock` is up to date (updated Jan 24 2026); keep the same cadence whenever channels change.
 - Workspace assumes `system = "x86_64-linux"`, `config.allowUnfree = true`, and the nixGL overlay.
+- `home/common.nix` now mirrors the flake-level `nixpkgs.config.allowUnfree = true` so the home profile can build unfree packages like `antigravity`.
 
 ## Layout & conventions
 - `home/`
