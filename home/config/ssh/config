@@ -51,3 +51,9 @@ Host dom*.k
     User coutug
     Port 22
     IdentityFile ~/.ssh/id_rsa
+
+Host dom*.o
+    HostName %htt.eosn.io
+    User coutug
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
