@@ -16,7 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     opencode = {
-      url = "github:anomalyco/opencode?ref=v1.1.34";
+      url = "github:anomalyco/opencode?ref=v1.1.53";
     };
     disko = {
       url = "github:nix-community/disko";
