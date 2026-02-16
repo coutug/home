@@ -19,6 +19,7 @@ This repo stores the Home Manager configurations for the EndeavourOS workstation
 - `home/`
   - `common.nix`: base profile for user `gabriel`. It configures `targets.genericLinux`, `sops-nix`, exports the kubeconfig secrets, sets session variables, packages, `xdg.configFile`, and disables the manual outputs that trigger the HM 25.11 warning about `options.json` with no context.
   - `laptop.nix` / `desktop.nix`: import `common.nix`; the desktop adds the `reaper*` packages.
+  - `home/config/wezterm/cyberdream.lua`: stores the official cyberdream theme and is deployed into `~/.config/wezterm/cyberdream.lua` via the `xdg.configFile` entry and `extraConfig` in `home/programs/wezterm.nix`.
 - `server.nix`: skeleton for the host-side home profile used by NixOS; it now defines user `gabriel` with `stateVersion = "25.11"`, selectively imports `./programs/zsh.nix`, and wires in `sops-nix` so `nixos-mini` reuses the shared Zsh setup without pulling the entire `common.nix` surface or all secrets. It now flips a session flag so the Powerlevel10k arrow and path segment turn orange in server shells, keeping the rest of the prompt identical.
   - `programs/*.nix`: modular definitions for tools like `atuin`, `bat`, `fzf`, `htop`, `k9s`, `obs-studio`, `wezterm`, `zoxide`, and shell tooling. `wezterm` and `obs-studio` are wrapped with `nixGL`.
   - `config/` & `dotfiles/`: static VS Code settings, tmux, Oh My Zsh custom assets, etc., exposed via `home.file`/`xdg.configFile`.

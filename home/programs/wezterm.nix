@@ -11,7 +11,7 @@
       -- Leader key
       config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
 
-      config.color_scheme = "Builtin Solarized Dark"
+      config.colors = dofile(wezterm.config_dir .. "/cyberdream.lua")
 
       -- config.window_decorations = "RESIZE"
       -- config.window_padding = { left = 6, right = 6, top = 4, bottom = 4 }
@@ -78,4 +78,6 @@
       return config
     '';
   };
+
+  xdg.configFile."wezterm/cyberdream.lua".source = ../config/wezterm/cyberdream.lua;
 }
