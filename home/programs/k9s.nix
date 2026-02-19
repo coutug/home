@@ -348,7 +348,7 @@
           crumbsless = false;
           reactive = true;
           noIcons = false;
-          skin = "kanagawaSkin"; # active le skin défini plus bas
+          skin = "cyberdreamSkin"; # use custom cyberdream skin defined below
         };
 
         skipLatestRevCheck = false;
@@ -408,6 +408,7 @@
           yellow = "#02c6f2";
           yellow_bright = "#FFFFFF";
         };
+        cyberdreamSkin = import ../config/k9s/cyberdream.nix;
       in
       {
         kanagawaSkin = {
@@ -532,6 +533,7 @@
             };
           };
         };
+        cyberdreamSkin = cyberdreamSkin;
       };
   };
 }
