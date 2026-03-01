@@ -8,7 +8,7 @@
 
 let
   sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEr2BKqV1JZ1SHtkjEsRCFD6UbXVIsZ4NfB27G/CW2Km gabriel@framework-gabriel";
-  k0sTokenSecret = ../secrets/k0s/k0stoken.yaml;
+  k0sTokenSecret = ../../secrets/k0s/token-mini2.yaml;
   hasK0sTokenSecret = lib.pathExists k0sTokenSecret;
 in
 {
@@ -17,13 +17,15 @@ in
     sops-nix.nixosModules.sops
   ];
 
-  networking.hostName = "nixos-mini";
+  hardware.enableRedistributableFirmware = true;
+
+  networking.hostName = "nixos-mini2";
   networking.useDHCP = false;
   networking.enableIPv6 = false;
-  networking.interfaces.enp6s0 = {
+  networking.interfaces.enp4s0 = {
     ipv4.addresses = [
       {
-        address = "192.168.0.14";
+        address = "192.168.0.15";
         prefixLength = 24;
       }
     ];
@@ -40,6 +42,9 @@ in
       22
       6443
       8132
+      9443
+      2379
+      2380
       10250
       4240
       4244
@@ -89,10 +94,9 @@ in
 
   services.k0s = {
     enable = true;
-    role = "controller+worker";
-    controller.isLeader = true;
+    role = "worker";
     clusterName = "k0s-mini";
-    # tokenFile = "/etc/k0s/k0stoken";
+    tokenFile = "/etc/k0s/k0stoken";
     dataDir = "/var/lib/k0s";
     package = k0s-nix.packages.${pkgs.stdenv.hostPlatform.system}.k0s;
     configText = builtins.readFile ./k0s-config.yaml;
@@ -129,6 +133,7 @@ in
     disko
     fio
     ripgrep
+    ssh-to-age
     vim
   ];
 
@@ -136,6 +141,7 @@ in
     "k0s/k0stoken" = {
       sopsFile = k0sTokenSecret;
       format = "yaml";
+      key = "token";
       path = "/etc/k0s/k0stoken";
       mode = "0400";
       owner = "root";

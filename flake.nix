@@ -1,5 +1,5 @@
 {
-  description = "Nix + Home Manager configs for laptop, desktop, and nixos-mini";
+  description = "Nix + Home Manager configs for laptop, desktop, and NixOS mini hosts";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
@@ -72,11 +72,11 @@
       };
 
       nixosConfigurations = {
-        nixos-mini = nixpkgs.lib.nixosSystem {
+        nixos-mini1 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             disko.nixosModules.disko
-            ./hosts/nixos-mini/configuration.nix
+            ./hosts/nixos-mini1/configuration.nix
             k0s-nix.nixosModules.default
             home-manager.nixosModules.home-manager
             {
@@ -85,7 +85,25 @@
               home-manager.extraSpecialArgs = { inherit sops-nix k0s-nix; };
               home-manager.users.gabriel = ./home/server.nix;
             }
-            { hardware.facter.reportPath = ./hosts/nixos-mini/facter.json; }
+            { hardware.facter.reportPath = ./hosts/nixos-mini1/facter.json; }
+          ];
+          specialArgs = { inherit k0s-nix sops-nix; };
+        };
+
+        nixos-mini2 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            disko.nixosModules.disko
+            ./hosts/nixos-mini2/configuration.nix
+            k0s-nix.nixosModules.default
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit sops-nix k0s-nix; };
+              home-manager.users.gabriel = ./home/server.nix;
+            }
+            { hardware.facter.reportPath = ./hosts/nixos-mini2/facter.json; }
           ];
           specialArgs = { inherit k0s-nix sops-nix; };
         };

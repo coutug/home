@@ -120,6 +120,7 @@ in
       etcd
       # fd #TODO dependency
       fluxcd
+      fluxcd-operator
       jellyfin-ffmpeg
       # fwupd
       # fwupd-efi

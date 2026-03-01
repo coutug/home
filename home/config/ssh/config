@@ -1,5 +1,11 @@
-Host nixos-mini
+Host nixos-mini1
     HostName 192.168.0.14
+    User gabriel
+    Port 22
+    IdentityFile ~/.ssh/server_id_ed25519
+
+Host nixos-mini2
+    HostName 192.168.0.15
     User gabriel
     Port 22
     IdentityFile ~/.ssh/server_id_ed25519

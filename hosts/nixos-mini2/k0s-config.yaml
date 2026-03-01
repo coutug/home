@@ -1,7 +1,7 @@
 apiVersion: k0s.k0sproject.io/v1beta1
 kind: ClusterConfig
 metadata:
-  name: k0s-mini
+  name: k0s-mini2
 spec:
   api:
     address: 192.168.0.14
