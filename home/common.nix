@@ -103,102 +103,111 @@ in
     ];
 
     packages = with pkgs; [
-      augeas
       act
       age
       antigravity
       argocd
+      augeas
       # bluez
       # bluez-tools
       # codex # installed by yay as well
+      cilium-cli
+      clipboard-jh
       crane
       curlie
-      cilium-cli
       # discount
       dhcpcd
       duf
+      dust
       etcd
+      eza
       # fd #TODO dependency
-      fluxcd
-      fluxcd-operator
-      jellyfin-ffmpeg
       # fwupd
       # fwupd-efi
+      fluxcd
+      fluxcd-operator
+      fx
       github-cli
       gptfdisk
       go
       go-jsonnet
+      gum
       helmfile
       hey
       imagemagick
       # jq #TODO dependency
+      jellyfin-ffmpeg
       # kdePackages.ark
       # kdePackages.bluedevil
       # kdePackages.okular
+      k0sctl
+      kdash
       keepassxc
       kind
       kopia
-      kubectl
-      kubie
       kubeconform
-      kubelogin-oidc
+      kubectl
       kubectl-df-pv
       kubectl-linstor
       kubectl-rook-ceph
+      kubelogin-oidc
       kubernetes-helm
+      kubie
       kustomize
       kyverno
-      k0sctl
       lazydocker
       lazygit
       libguestfs
       libewf
+      lsd
       lrzip
       lzop
       man
       meslo-lgs-nf
       minikube
       musescore
+      navi
+      nil
       nix-zsh-completions
       nixfmt-rfc-style
-      nil
+      nixos-anywhere
       nmap
+      (opencode.packages.${pkgs.stdenv.hostPlatform.system}.default)
+      opentofu
       poppler
       qbittorrent-enhanced
-      resvg
-      rclone
       # ripgrep #TODO dependency
+      rclone
+      resvg
       rsync
       rustup
       sleuthkit
       solaar
       sops
       spotify
-      supermin
       squashfsTools
       strace
+      supermin
       syslinux
       tealdeer
-      traceroute
-      tree
-      (opencode.packages.${pkgs.stdenv.hostPlatform.system}.default)
-      opentofu
-      tmuxp
       tmux
+      tmuxp
+      traceroute
+      transfer-sh
+      tree
       trivy
       vector
       velero
-      vscodium
       vesktop
       vim
       vlc
+      vscodium
       yara
       yay
       yazi
       yq-go
       zellij
       zoom-us
-      nixos-anywhere
       zsh-powerlevel10k
     ];
 
