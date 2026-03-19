@@ -193,6 +193,7 @@ in
       tmux
       tmuxp
       traceroute
+      tradingview
       transfer-sh
       tree
       trivy
