@@ -255,6 +255,8 @@ in
     "VSCodium/User/keybindings.json".source = ./config/code/user/keybindings.json;
 
     "tmuxp/kmux.yml".source = ./config/kmux.yml;
+    "opencode/prompts/build.md".source = ./config/opencode/build.md;
+    "opencode/prompts/plan.md".source = ./config/opencode/plan.md;
     "opencode/prompts/test-dash.md".source = ./config/opencode/test-dash.md;
   };
 }
