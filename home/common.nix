@@ -121,6 +121,7 @@ in
       dust
       etcd
       eza
+      fabric-ai
       # fd #TODO dependency
       # fwupd
       # fwupd-efi
