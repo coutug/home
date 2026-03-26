@@ -42,6 +42,7 @@ If anything is unclear → ask before coding.
 - Prefer the smallest possible change that solves the problem
 - Do NOT refactor unrelated code
 - Do NOT introduce breaking changes unless explicitly required
+- Remove code as soon as it is no longer needed
 
 ---
 
@@ -62,6 +63,7 @@ If anything is unclear → ask before coding.
 - Use explicit naming
 - Keep functions small and focused
 - Avoid duplication when safe
+- Clean up the unused code as you go
 
 ---
 
