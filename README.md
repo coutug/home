@@ -3,7 +3,7 @@
 This repository keeps the declarative state for the EndeavourOS personal machines under `home/` along with the NixOS host definitions under `hosts/`. The root `flake.nix` wires everything, and you can consult `AGENTS.md` files for detailed guidelines about each domain.
 
 ## Workspace layout
-- `home/`: Home Manager configuration for `gabriel`. `common.nix` defines shared packages, programs, and secrets. `laptop.nix`/`desktop.nix` lift the shared profile into the per-machine goals, while `home/programs`, `home/config`, and `home/dotfiles` expose smaller helpers and static files.
+- `home/`: Home Manager configuration for `gabriel`. `common.nix` defines shared packages, programs, and secrets. `laptop.nix`/`desktop.nix` lift the shared profile into the per-machine goals, while `home/programs`, `home/config`, and `home/dotfiles` expose smaller helpers and static files. `home/config/opencode/dashboard-builder/` contains the dashboard orchestration prompts.
 - `hosts/`: NixOS host configurations. `nixos-mini1` and `nixos-mini2` target NixOS `25.11`; both run in the same k0s cluster as controller+worker nodes.
 - `modules/`: currently empty. Intended to hold reusable NixOS modules (SSH, firewall, journald, nix settings, etc.).
 - `secrets/`: SOPS-encrypted data (Codex, OpenCode, kubeconfigs). `home/common.nix` and eventual NixOS configs unwrap the secrets into the home directory.

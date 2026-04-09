@@ -5,8 +5,8 @@ Home Manager controls everything under `home/`. `common.nix` defines the shared 
 Supporting folders:
 
 - `home/programs`: reusable Home Manager modules for tools like `atuin`, `bat`, `fzf`, `htop`, `k9s`, `obs-studio`, `wezterm`, `zoxide`, and shell tooling. Each file returns attributes imported by `common.nix`.
-- `home/config` & `home/dotfiles`: static configuration fragments (VS Code settings, tmux config, custom Oh My Zsh plugins, etc.) exposed via `home.file`/`xdg.configFile` so they stay under version control.
-- `secrets/`: referenced through `sops-nix` in `common.nix` to deploy kubeconfigs, Codex, and OpenCode data under `~/.kube` and `~/.codex`.
+- `home/config` & `home/dotfiles`: static configuration fragments (VS Code settings, tmux config, custom Oh My Zsh plugins, dashboard-builder prompts, etc.) exposed via `home.file`/`xdg.configFile` so they stay under version control.
+- `secrets/`: referenced through `sops-nix` in `common.nix` to deploy kubeconfigs, Codex, and OpenCode data under `~/.kube`, `~/.codex`, and `~/.config/opencode`.
 
 Workflow reminders:
 

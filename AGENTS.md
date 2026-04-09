@@ -10,7 +10,7 @@ This repo stores the Home Manager configurations for the EndeavourOS workstation
   - `home-manager`: `release-25.11` (see `flake.lock`).
   - `nixgl`: follows `nixpkgs`, used through `nixgl.overlay` and `config.lib.nixGL.wrap`.
   - `sops-nix`: follows `nixpkgs` (commit `c482a1…`).
-  - `opencode`: official `anomalyco/opencode` flake pinned to `v1.1.31` (see `flake.nix`/`flake.lock`).
+  - `opencode`: official `anomalyco/opencode` flake pinned to `v1.3.2` (see `flake.nix`/`flake.lock`).
 - `flake.lock` is up to date (updated Jan 24 2026); keep the same cadence whenever channels change.
 - Workspace assumes `system = "x86_64-linux"`, `config.allowUnfree = true`, and the nixGL overlay.
 - `home/common.nix` now mirrors the flake-level `nixpkgs.config.allowUnfree = true` so the home profile can build unfree packages like `antigravity`.
@@ -24,7 +24,8 @@ This repo stores the Home Manager configurations for the EndeavourOS workstation
 - `server.nix`: skeleton for the host-side home profile used by NixOS; it now defines user `gabriel` with `stateVersion = "25.11"`, selectively imports `./programs/zsh.nix`, and wires in `sops-nix` so `nixos-mini1` and `nixos-mini2` reuse the shared Zsh setup without pulling the entire `common.nix` surface or all secrets. It now flips a session flag so the Powerlevel10k arrow and path segment turn orange in server shells, keeping the rest of the prompt identical.
   - `programs/*.nix`: modular definitions for tools like `atuin`, `bat`, `fzf`, `htop`, `k9s`, `obs-studio`, `wezterm`, `zoxide`, and shell tooling. `wezterm` and `obs-studio` are wrapped with `nixGL`.
   - `config/` & `dotfiles/`: static VS Code settings, tmux, Oh My Zsh custom assets, etc., exposed via `home.file`/`xdg.configFile`.
-  - `config/opencode/opencode.json`: declarative OpenCode configuration (OAuth plugin + templates), placed under `~/.config/opencode/opencode.json`.
+  - `config/opencode/opencode.json`: declarative OpenCode configuration (agents, MCPs, permissions, and templates), placed under `~/.config/opencode/opencode.json`.
+  - `config/opencode/dashboard-builder/*.md`: prompts for the dashboard orchestration workflow (research, metrics analysis, architecture, panel design, implementation) deployed under `~/.config/opencode/prompts/dashboard-builder/`.
   - `config/ssh/`: tracks `config/ssh/config` and exposes it through `home.common.nix` so `~/.ssh/config` remains declarative.
 - `hosts/`
   - `nixos-mini1/`: primary NixOS 25.11 host with static IPv4 on `enp6s0`, systemd-boot, and a disk layout described in `disk-config.nix` for `disko`. `nixos-anywhere` now generates `hosts/nixos-mini1/facter.json` via `nixos-facter` instead of `hardware-configuration.nix`.
@@ -51,6 +52,7 @@ This repo stores the Home Manager configurations for the EndeavourOS workstation
 4. **Secrets**: document how to propagate age keys to hosts and validate rotation policies.
 5. **Observability & services**: `nixos-mini1` and `nixos-mini2` run `k0s` as controller+worker, alongside Syncthing, Grafana, VictoriaMetrics, Vector, DNS, and Vaultwarden; keep this stack documented, expose secrets through `sops-nix`, and keep `disk-config.nix`/hardware assets in sync.
 6. **nixos-mini Zsh**: keep `home/server.nix` minimal so it only imports `home/programs/zsh.nix`, letting both hosts reuse the shared Zsh + dotfile stack without pulling the entire `home/common.nix` surface.
+7. **OpenCode dashboard workflow**: keep the dashboard builder agents and prompts aligned between `secrets/opencode/opencode.json`, `home/common.nix`, and `home/config/opencode/dashboard-builder/` as the workflow evolves.
 
 ## Open questions
 - Which additional services should `nixos-mini1`/`nixos-mini2` host (monitoring, backup targets, etc.)?

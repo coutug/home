@@ -255,8 +255,19 @@ in
     "VSCodium/User/keybindings.json".source = ./config/code/user/keybindings.json;
 
     "tmuxp/kmux.yml".source = ./config/kmux.yml;
+    "opencode/prompts/dashboard-builder/orchestrator.md".source =
+      ./config/opencode/dashboard-builder/orchestrator.md;
+    "opencode/prompts/dashboard-builder/researcher.md".source =
+      ./config/opencode/dashboard-builder/researcher.md;
+    "opencode/prompts/dashboard-builder/metrics-analyst.md".source =
+      ./config/opencode/dashboard-builder/metrics-analyst.md;
+    "opencode/prompts/dashboard-builder/architect.md".source =
+      ./config/opencode/dashboard-builder/architect.md;
+    "opencode/prompts/dashboard-builder/panel-designer.md".source =
+      ./config/opencode/dashboard-builder/panel-designer.md;
+    "opencode/prompts/dashboard-builder/implementer.md".source =
+      ./config/opencode/dashboard-builder/implementer.md;
     "opencode/prompts/build.md".source = ./config/opencode/build.md;
     "opencode/prompts/plan.md".source = ./config/opencode/plan.md;
-    "opencode/prompts/test-dash.md".source = ./config/opencode/test-dash.md;
   };
 }
