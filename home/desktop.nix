@@ -4,10 +4,11 @@
     ./common.nix
   ];
 
-  home.packages = with pkgs; [
-    reaper
-    reaper-sws-extension
-    reaper-reapack-extension
-  ];
+  # audio device not working, installed with yay
+  # home.packages = with pkgs; [
+  #   reaper
+  #   reaper-sws-extension
+  #   reaper-reapack-extension
+  # ];
 
 }
