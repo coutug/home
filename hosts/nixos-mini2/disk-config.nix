@@ -3,7 +3,7 @@
 {
   disko.devices = {
     disk.root = {
-      device = lib.mkDefault "/dev/disk/by-id/ata-TOSHIBA_DT01ACA200_77U9XSUAS";
+      device = lib.mkDefault "/dev/disk/by-id/ata-ST4000DM004-2U9104_ZFN5LSXN";
       type = "disk";
       content = {
         type = "gpt";
@@ -40,7 +40,7 @@
       };
     };
     disk.data = {
-      device = lib.mkDefault "/dev/disk/by-id/ata-ST4000DM004-2U9104_ZFN5LSXN";
+      device = lib.mkDefault "/dev/disk/by-id/ata-TOSHIBA_DT01ACA200_77U9XSUAS";
       type = "disk";
       content = {
         type = "gpt";

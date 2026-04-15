@@ -18,9 +18,9 @@ This repository keeps the declarative state for the EndeavourOS personal machine
 - **Secondary host update:**
 
     `nix run nixpkgs#nixos-rebuild -- switch --flake .#nixos-mini2 --target-host gabriel@nixos-mini2 --build-host gabriel@nixos-mini2 --sudo`
-- **Install helper:** We retain `hosts/nixos-mini1/disk-config.nix` and `hosts/nixos-mini2/disk-config.nix` plus generated `facter.json` files so `nixos-anywhere` can partition `/dev/sdb` for `/boot`+`/` and `/dev/sda` for `/data`. Use the commands below once everything else is reviewed:
-  `nix run github:nix-community/nixos-anywhere -- --flake .#nixos-mini1 --target-host gabriel@192.168.0.14 --generate-hardware-config nixos-facter hosts/nixos-mini1/facter.json`
-  `nix run github:nix-community/nixos-anywhere -- --flake .#nixos-mini2 --target-host gabriel@192.168.0.15 --generate-hardware-config nixos-facter hosts/nixos-mini2/facter.json`
+- **Install helper:** We retain `hosts/nixos-mini1/disk-config.nix` and `hosts/nixos-mini2/disk-config.nix` plus generated `facter.json` files so `nixos-anywhere` can partition `/dev/sdb` for `/boot`+`/` and `/dev/sda` for `/data`. Use the commands below once everything else is reviewed (keep the full command here):
+  `nix run github:nix-community/nixos-anywhere -- --flake .#nixos-mini1 --target-host gabriel@192.168.0.14 ~/.ssh/server_id_ed25519 --generate-hardware-config nixos-facter hosts/nixos-mini1/facter.json`
+  `nix run github:nix-community/nixos-anywhere -- --flake .#nixos-mini2 --target-host gabriel@192.168.0.15 ~/.ssh/server_id_ed25519 --generate-hardware-config nixos-facter hosts/nixos-mini2/facter.json`
   `nixos-mini2` keeps facter enabled and sanitizes null CPU entries from the generated report to avoid a nixpkgs facter virtualisation evaluation issue.
 
 ## Directory guides

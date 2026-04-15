@@ -3,7 +3,7 @@
 {
   disko.devices = {
     disk.root = {
-      device = lib.mkDefault "/dev/disk/by-id/ata-ST31000524AS_6VPJ0EAK";
+      device = lib.mkDefault "/dev/disk/by-id/ata-Hitachi_HDS721050CLA662_JP1572FN1D71VK";
       type = "disk";
       content = {
         type = "gpt";
@@ -40,7 +40,7 @@
       };
     };
     disk.data = {
-      device = lib.mkDefault "/dev/disk/by-id/ata-Hitachi_HDS721050CLA662_JP1572FN1D71VK";
+      device = lib.mkDefault "/dev/disk/by-id/ata-ST31000524AS_6VPJ0EAK";
       type = "disk";
       content = {
         type = "gpt";

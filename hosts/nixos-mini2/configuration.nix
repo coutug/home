@@ -1,20 +1,15 @@
 {
   pkgs,
-  lib,
   k0s-nix,
-  sops-nix,
   ...
 }:
 
 let
   sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEr2BKqV1JZ1SHtkjEsRCFD6UbXVIsZ4NfB27G/CW2Km gabriel@framework-gabriel";
-  k0sTokenSecret = ../../secrets/k0s/token-mini2.yaml;
-  hasK0sTokenSecret = lib.pathExists k0sTokenSecret;
 in
 {
   imports = [
     ./disk-config.nix
-    sops-nix.nixosModules.sops
   ];
 
   hardware.enableRedistributableFirmware = true;
@@ -63,7 +58,7 @@ in
   services.openssh.enable = true;
   services.openssh.settings = {
     PasswordAuthentication = false;
-    PermitRootLogin = "no";
+    PermitRootLogin = "prohibit-password";
   };
 
   programs.zsh = {
@@ -94,14 +89,15 @@ in
 
   services.k0s = {
     enable = true;
-    role = "worker";
+    role = "controller+worker";
+    controller.isLeader = true;
     clusterName = "k0s-mini";
-    tokenFile = "/etc/k0s/k0stoken";
     dataDir = "/var/lib/k0s";
     package = k0s-nix.packages.${pkgs.stdenv.hostPlatform.system}.k0s;
     configText = builtins.readFile ./k0s-config.yaml;
   };
 
+  users.users.root.openssh.authorizedKeys.keys = [ sshKey ];
   users.users.gabriel = {
     isNormalUser = true;
     description = "Primary administrator";
@@ -136,17 +132,5 @@ in
     ssh-to-age
     vim
   ];
-
-  sops.secrets = lib.mkIf hasK0sTokenSecret {
-    "k0s/k0stoken" = {
-      sopsFile = k0sTokenSecret;
-      format = "yaml";
-      key = "token";
-      path = "/etc/k0s/k0stoken";
-      mode = "0400";
-      owner = "root";
-      group = "root";
-    };
-  };
 
 }

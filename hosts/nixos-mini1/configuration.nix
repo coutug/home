@@ -8,7 +8,7 @@
 
 let
   sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEr2BKqV1JZ1SHtkjEsRCFD6UbXVIsZ4NfB27G/CW2Km gabriel@framework-gabriel";
-  k0sTokenSecret = ../../secrets/k0s/k0stoken.yaml;
+  k0sTokenSecret = ../../secrets/k0s/token-mini1.yaml;
   hasK0sTokenSecret = lib.pathExists k0sTokenSecret;
 in
 {
@@ -40,11 +40,6 @@ in
     enable = true;
     allowedTCPPorts = [
       22
-      6443
-      8132
-      9443
-      2379
-      2380
       10250
       4240
       4244
@@ -94,10 +89,9 @@ in
 
   services.k0s = {
     enable = true;
-    role = "controller+worker";
-    controller.isLeader = true;
+    role = "worker";
     clusterName = "k0s-mini";
-    # tokenFile = "/etc/k0s/k0stoken";
+    tokenFile = "/etc/k0s/k0stoken";
     dataDir = "/var/lib/k0s";
     package = k0s-nix.packages.${pkgs.stdenv.hostPlatform.system}.k0s;
     configText = builtins.readFile ./k0s-config.yaml;
@@ -141,6 +135,7 @@ in
     "k0s/k0stoken" = {
       sopsFile = k0sTokenSecret;
       format = "yaml";
+      key = "token";
       path = "/etc/k0s/k0stoken";
       mode = "0400";
       owner = "root";

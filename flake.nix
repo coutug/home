@@ -77,6 +77,7 @@
           modules = [
             disko.nixosModules.disko
             ./hosts/nixos-mini1/configuration.nix
+            ./hosts/nixos-mini1/hardware-configuration.nix
             k0s-nix.nixosModules.default
             home-manager.nixosModules.home-manager
             {
@@ -85,7 +86,6 @@
               home-manager.extraSpecialArgs = { inherit sops-nix k0s-nix; };
               home-manager.users.gabriel = ./home/server.nix;
             }
-            { hardware.facter.reportPath = ./hosts/nixos-mini1/facter.json; }
           ];
           specialArgs = { inherit k0s-nix sops-nix; };
         };
@@ -95,6 +95,7 @@
           modules = [
             disko.nixosModules.disko
             ./hosts/nixos-mini2/configuration.nix
+            ./hosts/nixos-mini2/hardware-configuration.nix
             k0s-nix.nixosModules.default
             home-manager.nixosModules.home-manager
             {
@@ -103,7 +104,6 @@
               home-manager.extraSpecialArgs = { inherit sops-nix k0s-nix; };
               home-manager.users.gabriel = ./home/server.nix;
             }
-            { hardware.facter.reportPath = ./hosts/nixos-mini2/facter.json; }
           ];
           specialArgs = { inherit k0s-nix sops-nix; };
         };
