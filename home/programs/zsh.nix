@@ -78,8 +78,8 @@
       kval = "kubeconform -summary -schema-location default -schema-location \"https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json\"";
       nix-desktop = "home-manager switch --flake .#desktop -b back";
       nix-laptop = "home-manager switch --flake .#laptop -b back";
-      nix-mini1 = "nix run nixpkgs#nixos-rebuild -- switch --flake .#nixos-mini1 --target-host gabriel@nixos-mini1 --build-host gabriel@nixos-mini1 --sudo";
-      nix-mini2 = "nix run nixpkgs#nixos-rebuild -- switch --flake .#nixos-mini2 --target-host gabriel@nixos-mini2 --build-host gabriel@nixos-mini2 --sudo";
+      nix-mini1 = "nix run nixpkgs#nixos-rebuild -- switch --flake .#nixos-mini1 --target-host root@nixos-mini1 --build-host root@nixos-mini1";
+      nix-mini2 = "nix run nixpkgs#nixos-rebuild -- switch --flake .#nixos-mini2 --target-host root@nixos-mini2 --build-host root@nixos-mini2";
     };
 
     initContent = lib.mkMerge [

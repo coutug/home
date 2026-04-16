@@ -97,15 +97,17 @@ in
     configText = builtins.readFile ./k0s-config.yaml;
   };
 
-  users.users.root.openssh.authorizedKeys.keys = [ sshKey ];
-  users.users.gabriel = {
-    isNormalUser = true;
-    description = "Primary administrator";
-    home = "/home/gabriel";
-    createHome = true;
-    shell = pkgs.zsh;
-    extraGroups = [ "wheel" ];
-    openssh.authorizedKeys.keys = [ sshKey ];
+  users.users = {
+    root.openssh.authorizedKeys.keys = [ sshKey ];
+    gabriel = {
+      isNormalUser = true;
+      description = "Primary administrator";
+      home = "/home/gabriel";
+      createHome = true;
+      shell = pkgs.zsh;
+      extraGroups = [ "wheel" ];
+      openssh.authorizedKeys.keys = [ sshKey ];
+    };
   };
 
   security.sudo.enable = true;
@@ -118,7 +120,7 @@ in
       "nix-command"
       "flakes"
     ];
-    trusted-users = [ "root" "gabriel" ];
+    # trusted-users = [ "root" "gabriel" ];
     auto-optimise-store = true;
     download-buffer-size = 134217728;
   };
