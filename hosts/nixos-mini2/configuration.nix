@@ -118,6 +118,7 @@ in
       "nix-command"
       "flakes"
     ];
+    trusted-users = [ "root" "gabriel" ];
     auto-optimise-store = true;
     download-buffer-size = 134217728;
   };
