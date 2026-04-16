@@ -1,6 +1,5 @@
 age_keys: &age_keys
-  - "age1ktfsdqtzs3c84krtw62rjumqhf4fvf8acqauv5x6cr883wgj53sq5df9y6"
-  - "age1mlpdulhwpr7845m3shw5n6jvdsvm0su5uztw7c9euaen2n4w34wqfmer6x"
+  - "age1ktfsdqtzs3c84krtw62rjumqhf4fvf8acqauv5x6cr883wgj53sq5df9y6" # local
 
 creation_rules:
   - path_regex: secrets/opencode/opencode\.json

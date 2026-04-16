@@ -1,11 +1,6 @@
-# Add host
+# Running nixos-anywhere
 
-Comment out the flake.nix line using the facter.json file (while it is not generated)
+- hardware-configuration.nix is generated from the command *[ref](https://github.com/nix-community/nixos-anywhere/blob/main/docs/quickstart.md#8-prepare-hardware-configuration)*
 
- ```
- nix run github:nix-community/nixos-anywhere -- \
-  --flake .#nixos-mini2 \
-  --target-host root@192.168.0.64 \
-  -i ~/.ssh/server_id_ed25519 \
-  --generate-hardware-config nixos-facter hosts/nixos-mini2/facter.json
-```
+nix run github:nix-community/nixos-anywhere -- --flake .#nixos-mini1 --target-host gabriel@192.168.0.14 -i ~/.ssh/server_id_ed25519 --generate-hardware-config nixos-generate-config ./hosts/nixos-mini1/hardware-configuration.nix
+nix run github:nix-community/nixos-anywhere -- --flake .#nixos-mini2 --target-host gabriel@192.168.0.15 -i ~/.ssh/server_id_ed25519 --generate-hardware-config nixos-generate-config ./hosts/nixos-mini2/hardware-configuration.nix

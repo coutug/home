@@ -131,15 +131,18 @@ in
     vim
   ];
 
-  sops.secrets = lib.mkIf hasK0sTokenSecret {
-    "k0s/k0stoken" = {
-      sopsFile = k0sTokenSecret;
-      format = "yaml";
-      key = "token";
-      path = "/etc/k0s/k0stoken";
-      mode = "0400";
-      owner = "root";
-      group = "root";
+  sops = {
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    secrets = lib.mkIf hasK0sTokenSecret {
+      "k0s/k0stoken" = {
+        sopsFile = k0sTokenSecret;
+        format = "yaml";
+        key = "token";
+        path = "/etc/k0s/k0stoken";
+        mode = "0400";
+        owner = "root";
+        group = "root";
+      };
     };
   };
 
