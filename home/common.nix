@@ -269,5 +269,6 @@ in
       ./config/opencode/dashboard-builder/implementer.md;
     "opencode/prompts/build.md".source = ./config/opencode/build.md;
     "opencode/prompts/plan.md".source = ./config/opencode/plan.md;
+    "opencode/prompts/teacher.md".source = ./config/opencode/teacher.md;
   };
 }
