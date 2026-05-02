@@ -10,6 +10,12 @@ Host nixos-mini2
     Port 22
     IdentityFile ~/.ssh/server_id_ed25519
 
+Host nixos-mini3
+    HostName 192.168.0.64
+    User gabriel
+    Port 22
+    IdentityFile ~/.ssh/server_id_ed25519
+
 Host build
     HostName build.ott.eosn.io
     User coutug

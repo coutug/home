@@ -107,6 +107,27 @@
           ];
           specialArgs = { inherit k0s-nix sops-nix; };
         };
+
+        nixos-mini3 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            disko.nixosModules.disko
+            ./hosts/nixos-mini3/configuration.nix
+          ]
+          ++ nixpkgs.lib.optionals (builtins.pathExists ./hosts/nixos-mini3/hardware-configuration.nix) [
+            ./hosts/nixos-mini3/hardware-configuration.nix
+          ]
+          ++ [
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit sops-nix k0s-nix; };
+              home-manager.users.gabriel = ./home/server.nix;
+            }
+          ];
+          specialArgs = { inherit k0s-nix sops-nix; };
+        };
       };
     };
 }

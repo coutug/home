@@ -4,7 +4,7 @@ Declarative Home Manager profiles, NixOS host definitions, and SOPS-encrypted se
 
 ## Layout
 - `home/`: Home Manager configuration for `gabriel` (`common.nix`, `laptop.nix`, `desktop.nix`, `server.nix`, `programs/`, `config/`, `dotfiles/`)
-- `hosts/`: NixOS hosts (`nixos-mini1`, `nixos-mini2`)
+- `hosts/`: NixOS hosts (`nixos-mini1`, `nixos-mini2`, `nixos-mini3`)
 - `secrets/`: encrypted data consumed by the configs
 - `modules/`: shared NixOS modules when/if they exist
 - `result/`: build output; ignore it
@@ -20,6 +20,7 @@ Read the nearest `AGENTS.md` before editing a subtree:
 - `home/AGENTS.md`: Home Manager conventions
 - `hosts/nixos-mini1/AGENTS.md`: worker host specifics
 - `hosts/nixos-mini2/AGENTS.md`: primary host specifics
+- `hosts/nixos-mini3/AGENTS.md`: worker host specifics
 - `secrets/AGENTS.md`: secret handling rules
 
 ## Notes

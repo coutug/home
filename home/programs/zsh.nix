@@ -80,6 +80,7 @@
       nix-laptop = "home-manager switch --flake .#laptop -b back";
       nix-mini1 = "nix run nixpkgs#nixos-rebuild -- switch --flake .#nixos-mini1 --target-host root@nixos-mini1 --build-host root@nixos-mini1";
       nix-mini2 = "nix run nixpkgs#nixos-rebuild -- switch --flake .#nixos-mini2 --target-host root@nixos-mini2 --build-host root@nixos-mini2";
+      nix-mini3 = "nix run nixpkgs#nixos-rebuild -- switch --flake .#nixos-mini3 --target-host root@nixos-mini3 --build-host root@nixos-mini3";
     };
 
     initContent = lib.mkMerge [
