@@ -113,6 +113,7 @@
           modules = [
             disko.nixosModules.disko
             ./hosts/nixos-mini3/configuration.nix
+            k0s-nix.nixosModules.default
           ]
           ++ nixpkgs.lib.optionals (builtins.pathExists ./hosts/nixos-mini3/hardware-configuration.nix) [
             ./hosts/nixos-mini3/hardware-configuration.nix
