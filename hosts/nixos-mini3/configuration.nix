@@ -132,6 +132,7 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    age
     duf
     htop
     git
