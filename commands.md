@@ -1,7 +1,14 @@
+# New server
+
+From USB installation of nixOS
+- add network by connecting with Ethernet
+
+Create age key from ssh-to-age and create k0s token from k0s controller
+
 # Running nixos-anywhere
 
 - hardware-configuration.nix is generated from the command *[ref](https://github.com/nix-community/nixos-anywhere/blob/main/docs/quickstart.md#8-prepare-hardware-configuration)*
 
 nix run github:nix-community/nixos-anywhere -- --flake .#nixos-mini1 --target-host root@192.168.0.14 -i ~/.ssh/server_id_ed25519 --generate-hardware-config nixos-generate-config ./hosts/nixos-mini1/hardware-configuration.nix
 nix run github:nix-community/nixos-anywhere -- --flake .#nixos-mini2 --target-host root@192.168.0.15 -i ~/.ssh/server_id_ed25519 --generate-hardware-config nixos-generate-config ./hosts/nixos-mini2/hardware-configuration.nix
-nix run github:nix-community/nixos-anywhere -- --flake .#nixos-mini3 --target-host root@192.168.0.64 -i ~/.ssh/server_id_ed25519 --generate-hardware-config nixos-generate-config ./hosts/nixos-mini3/hardware-configuration.nix
+SSHPASS=root-password nix run github:nix-community/nixos-anywhere -- --flake .#nixos-mini3 --target-host root@192.168.0.64 -i ~/.ssh/server_id_ed25519 --generate-hardware-config nixos-generate-config ./hosts/nixos-mini3/hardware-configuration.nix --env-password

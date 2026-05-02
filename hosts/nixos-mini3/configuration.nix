@@ -138,6 +138,7 @@ in
     disko
     fio
     ripgrep
+    ssh-to-age
     vim
     k0s-nix.packages.${pkgs.stdenv.hostPlatform.system}.k0s
   ];
