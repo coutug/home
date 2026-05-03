@@ -4,6 +4,8 @@ From USB installation of nixOS
 - add network by connecting with Ethernet
 
 Create age key from ssh-to-age and create k0s token from k0s controller
+ssh-to-age to create private key from ssh key
+age-keygen to get public key and add it to .sops.yaml to encrypt the k0s token
 
 # Running nixos-anywhere
 
