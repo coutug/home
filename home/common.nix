@@ -4,7 +4,6 @@
   lib,
   nixgl,
   sops-nix,
-  opencode,
   ...
 }:
 let
@@ -32,6 +31,7 @@ in
     ./programs/htop.nix
     ./programs/k9s.nix
     ./programs/obs-studio.nix
+    ./programs/opencode.nix
     ./programs/zsh.nix
     ./programs/wezterm.nix
     ./programs/zoxide.nix
@@ -42,7 +42,6 @@ in
   sops.secrets =
     let
       codexSecret = ../secrets/codex/config.toml;
-      opencodeSecret = ../secrets/opencode/opencode.json;
       kubeconfigNames = builtins.attrNames (builtins.readDir ../secrets/kubeconfig);
       mkSecret = filename: {
         name = "kubeconfig/${filename}";
@@ -64,20 +63,6 @@ in
             format = "binary";
             key = "";
             path = "${config.home.homeDirectory}/.codex/config.toml";
-            mode = "0600";
-          };
-        }
-      else
-        { }
-    )
-    // (
-      if pkgs.lib.pathExists opencodeSecret then
-        {
-          "opencode/opencode.json" = {
-            sopsFile = opencodeSecret;
-            format = "json";
-            key = "";
-            path = "${config.home.homeDirectory}/.config/opencode/opencode.json";
             mode = "0600";
           };
         }
@@ -173,7 +158,6 @@ in
       nixfmt-rfc-style
       nixos-anywhere
       nmap
-      (opencode.packages.${pkgs.stdenv.hostPlatform.system}.default)
       opentofu
       poppler
       qbittorrent-enhanced
@@ -255,20 +239,5 @@ in
     "VSCodium/User/keybindings.json".source = ./config/code/user/keybindings.json;
 
     "tmuxp/kmux.yml".source = ./config/kmux.yml;
-    "opencode/prompts/dashboard-builder/orchestrator.md".source =
-      ./config/opencode/dashboard-builder/orchestrator.md;
-    "opencode/prompts/dashboard-builder/researcher.md".source =
-      ./config/opencode/dashboard-builder/researcher.md;
-    "opencode/prompts/dashboard-builder/metrics-analyst.md".source =
-      ./config/opencode/dashboard-builder/metrics-analyst.md;
-    "opencode/prompts/dashboard-builder/architect.md".source =
-      ./config/opencode/dashboard-builder/architect.md;
-    "opencode/prompts/dashboard-builder/panel-designer.md".source =
-      ./config/opencode/dashboard-builder/panel-designer.md;
-    "opencode/prompts/dashboard-builder/implementer.md".source =
-      ./config/opencode/dashboard-builder/implementer.md;
-    "opencode/prompts/build.md".source = ./config/opencode/build.md;
-    "opencode/prompts/plan.md".source = ./config/opencode/plan.md;
-    "opencode/prompts/teacher.md".source = ./config/opencode/teacher.md;
   };
 }
