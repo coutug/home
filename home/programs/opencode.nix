@@ -24,6 +24,8 @@ in
   ];
 
   xdg.configFile = {
+    "opencode/AGENTS.md".source = ../config/opencode/AGENTS.md;
+
     "opencode/prompts/build.md".source = ../config/opencode/build.md;
     "opencode/prompts/plan.md".source = ../config/opencode/plan.md;
     "opencode/prompts/teacher.md".source = ../config/opencode/teacher.md;
@@ -33,5 +35,7 @@ in
 
     "opencode/skills/build-dashboard/SKILL.md".source =
       ../config/opencode/skills/build-dashboard/SKILL.md;
+    "opencode/skills/caveman/SKILL.md".source =
+      ../config/opencode/skills/caveman/SKILL.md;
   };
 }
