@@ -4,13 +4,13 @@ metadata:
   name: k0s-mini1
 spec:
   api:
-    address: 192.168.0.15
+    address: 192.168.0.12
     sans:
-      - 192.168.0.15
+      - 192.168.0.12
   storage:
     type: etcd
     etcd:
-      peerAddress: 192.168.0.15
+      peerAddress: 192.168.0.12
   network:
     provider: custom
     kubeProxy:
@@ -100,7 +100,7 @@ spec:
 
             # kube-proxy replacement is required when using l2announcements
             kubeProxyReplacement: true
-            k8sServiceHost: 192.168.0.15
+            k8sServiceHost: 192.168.0.12
             k8sServicePort: 6443
 
             # Enable native bandwidth management + BBR TCP algorith

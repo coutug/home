@@ -4,7 +4,7 @@
 
 ## Host-specific facts
 - NixOS `25.11`
-- static IPv4 on `enp4s0`
+- DHCP on `enp4s0` with router-side reservation
 - disk layout is defined in `disk-config.nix`
 - hardware metadata is generated into `facter.json` via `nixos-facter`
 
