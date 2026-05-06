@@ -1,7 +1,7 @@
 apiVersion: k0s.k0sproject.io/v1beta1
 kind: ClusterConfig
 metadata:
-  name: k0s-mini2
+  name: k0s-mini
 spec:
   api:
     address: 192.168.0.12
@@ -30,7 +30,7 @@ spec:
       charts:
         - name: prom-crds
           chartname: prom-crds/prometheus-operator-crds
-          version: "26.0.0"
+          version: "28.0.1"
           order: 1
           values: |
             crds:
@@ -45,7 +45,7 @@ spec:
           namespace: kube-system
         - name: cilium
           chartname: cilium/cilium
-          version: "1.18.6"
+          version: "1.19.3"
           order: 2
           values: |
             ipam:

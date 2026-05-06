@@ -82,7 +82,7 @@ in
     clusterName = "k0s-mini";
     dataDir = "/var/lib/k0s";
     package = k0s-nix.packages.${pkgs.stdenv.hostPlatform.system}.k0s;
-    configText = builtins.readFile ./k0s-config.yaml;
+    configText = builtins.readFile ../k0s/k0s-config.yaml;
   };
 
   users.users = {
