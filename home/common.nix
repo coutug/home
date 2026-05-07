@@ -171,6 +171,7 @@ in
       sops
       spotify
       squashfsTools
+      ssh-to-age
       strace
       supermin
       syslinux
