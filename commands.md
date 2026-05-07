@@ -11,6 +11,8 @@ From USB installation of NixOS:
 The bootstrap script generates and stores the SSH host key as a SOPS secret,
 updates SOPS recipients, prepares `--extra-files`, and runs `nixos-anywhere`.
 
+**!! once the keys are generated and updated, push changes to git before running nixos-anywhere**
+
 ```bash
 scripts/bootstrap-host.sh nixos-mini1 192.168.0.11 ~/.ssh/server_id_ed25519
 scripts/bootstrap-host.sh nixos-mini2 192.168.0.12 ~/.ssh/server_id_ed25519

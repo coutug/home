@@ -116,14 +116,21 @@ add_recipient "$users_sops_config" "$recipient" "$host"
 
 confirm 'Run sops updatekeys for user and host k0s secrets?'
 printf '\n==> Updating user password hash secret recipients\n'
-sops updatekeys "$users_secret"
+(
+  cd "$repo_root/secrets/users"
+  sops updatekeys -y "$(basename "$users_secret")"
+)
 
 case "$host" in
   nixos-mini1 | nixos-mini3)
-    k0s_token_secret="$repo_root/secrets/k0s/token-${host#nixos-}.yaml"
+    k0s_token_file="token-${host#nixos-}.yaml"
+    k0s_token_secret="$repo_root/secrets/k0s/$k0s_token_file"
     if [[ -f "$k0s_token_secret" ]]; then
       printf '\n==> Updating k0s token secret recipients: %s\n' "$k0s_token_secret"
-      sops updatekeys "$k0s_token_secret"
+      (
+        cd "$repo_root/secrets/k0s"
+        sops updatekeys -y "$k0s_token_file"
+      )
     else
       printf '\nSkipping missing k0s token secret: %s\n' "$k0s_token_secret"
     fi

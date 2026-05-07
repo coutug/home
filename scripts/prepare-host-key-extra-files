@@ -25,6 +25,7 @@ umask 077
 tmpdir="$(mktemp -d)"
 
 mkdir -p "$tmpdir/etc/ssh"
+chmod 0755 "$tmpdir/etc" "$tmpdir/etc/ssh"
 
 sops --decrypt --extract '["ssh_host_ed25519_key"]' "$secret_file" \
   >"$tmpdir/etc/ssh/ssh_host_ed25519_key"
