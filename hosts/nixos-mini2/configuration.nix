@@ -1,6 +1,7 @@
 {
   pkgs,
   k0s-nix,
+  sops-nix,
   ...
 }:
 
@@ -10,6 +11,8 @@ in
 {
   imports = [
     ./disk-config.nix
+    sops-nix.nixosModules.sops
+    ../../modules/nixos/mini-sops-bootstrap.nix
   ];
 
   hardware.enableRedistributableFirmware = true;

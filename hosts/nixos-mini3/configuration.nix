@@ -15,6 +15,7 @@ in
   imports = [
     ./disk-config.nix
     sops-nix.nixosModules.sops
+    ../../modules/nixos/mini-sops-bootstrap.nix
   ];
 
   hardware.enableRedistributableFirmware = true;
@@ -40,6 +41,12 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
+
+  services.logind.settings.Login = {
+    HandleLidSwitch = "ignore";
+    HandleLidSwitchExternalPower = "ignore";
+    HandleLidSwitchDocked = "ignore";
+  };
 
   services.openssh = {
     enable = true;
@@ -85,6 +92,8 @@ in
     configText = builtins.readFile ../k0s/k0s-config.yaml;
   };
 
+  mini.sopsBootstrap.enablePasswordSecrets = true;
+
   users.users = {
     root.openssh.authorizedKeys.keys = [ sshKey ];
     gabriel = {
@@ -129,18 +138,15 @@ in
     k0s-nix.packages.${pkgs.stdenv.hostPlatform.system}.k0s
   ];
 
-  sops = {
-    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-    secrets = lib.mkIf hasK0sTokenSecret {
-      "k0s/k0stoken" = {
-        sopsFile = k0sTokenSecret;
-        format = "yaml";
-        key = "token";
-        path = "/etc/k0s/k0stoken";
-        mode = "0400";
-        owner = "root";
-        group = "root";
-      };
+  sops.secrets = lib.mkIf hasK0sTokenSecret {
+    "k0s/k0stoken" = {
+      sopsFile = k0sTokenSecret;
+      format = "yaml";
+      key = "token";
+      path = "/etc/k0s/k0stoken";
+      mode = "0400";
+      owner = "root";
+      group = "root";
     };
   };
 }

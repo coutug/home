@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  printf 'usage: %s <hostname>\n' "${0##*/}" >&2
+}
+
+if [[ $# -ne 1 ]]; then
+  usage
+  exit 1
+fi
+
+host="$1"
+
+repo_root="$(git rev-parse --show-toplevel)"
+secret_file="$repo_root/secrets/hosts/$host/ssh_host_ed25519_key.yaml"
+
+if [[ ! -f "$secret_file" ]]; then
+  printf 'ERROR: missing secret: %s\n' "$secret_file" >&2
+  exit 1
+fi
+
+old_umask="$(umask)"
+umask 077
+tmpdir="$(mktemp -d)"
+
+mkdir -p "$tmpdir/etc/ssh"
+
+sops --decrypt --extract '["ssh_host_ed25519_key"]' "$secret_file" \
+  >"$tmpdir/etc/ssh/ssh_host_ed25519_key"
+
+sops --decrypt --extract '["ssh_host_ed25519_key_pub"]' "$secret_file" \
+  >"$tmpdir/etc/ssh/ssh_host_ed25519_key.pub"
+
+chmod 0600 "$tmpdir/etc/ssh/ssh_host_ed25519_key"
+chmod 0644 "$tmpdir/etc/ssh/ssh_host_ed25519_key.pub"
+umask "$old_umask"
+
+printf '%s\n' "$tmpdir"
