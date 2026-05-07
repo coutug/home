@@ -149,7 +149,7 @@ extra_files="$("$repo_root/scripts/prepare-host-key-extra-files" "$host")"
 printf 'Prepared extra files directory: %s\n' "$extra_files"
 
 printf '\nThe next step will run nixos-anywhere against root@%s.\n' "$target_ip"
-confirm 'Continue with installation?'
+confirm '!! Make sure to push changes to repo!! Continue with installation?'
 
 read -rsp 'Root password: ' root_passwd
 printf '\n'
