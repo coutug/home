@@ -167,6 +167,7 @@ in
       resvg
       rsync
       rustup
+      slack
       sleuthkit
       solaar
       sops
