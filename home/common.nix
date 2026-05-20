@@ -133,6 +133,7 @@ in
       kopia
       kubeconform
       kubectl
+      kubectl-cnpg
       kubectl-df-pv
       kubectl-linstor
       kubectl-rook-ceph
