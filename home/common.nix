@@ -90,26 +90,18 @@ in
     packages = with pkgs; [
       act
       age
-      antigravity
       argocd
       augeas
-      # bluez
-      # bluez-tools
-      # codex # installed by yay as well
       cilium-cli
       clipboard-jh
       crane
       curlie
-      # discount
       dhcpcd
       duf
       dust
       etcd
       eza
       fabric-ai
-      # fd #TODO dependency
-      # fwupd
-      # fwupd-efi
       fluxcd
       fluxcd-operator
       fx
@@ -118,19 +110,12 @@ in
       go
       go-jsonnet
       gum
-      helmfile
       hey
       imagemagick
-      # jq #TODO dependency
       jellyfin-ffmpeg
-      # kdePackages.ark
-      # kdePackages.bluedevil
-      # kdePackages.okular
       k0sctl
-      kdash
       keepassxc
       kind
-      kopia
       kubeconform
       kubectl
       kubectl-cnpg
@@ -162,7 +147,6 @@ in
       opentofu
       poppler
       qbittorrent-enhanced
-      # ripgrep #TODO dependency
       rclone
       resvg
       rsync
@@ -195,7 +179,6 @@ in
       yay
       yazi
       yq-go
-      zellij
       zoom-us
       zsh-powerlevel10k
     ];
