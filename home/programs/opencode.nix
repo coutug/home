@@ -35,7 +35,8 @@ in
 
     "opencode/skills/build-dashboard/SKILL.md".source =
       ../config/opencode/skills/build-dashboard/SKILL.md;
-    "opencode/skills/caveman/SKILL.md".source =
-      ../config/opencode/skills/caveman/SKILL.md;
+    "opencode/skills/caveman/SKILL.md".source = ../config/opencode/skills/caveman/SKILL.md;
+    "opencode/skills/grill-with-docs/SKILL.md".source =
+      ../config/opencode/skills/grill-with-docs/SKILL.md;
   };
 }
