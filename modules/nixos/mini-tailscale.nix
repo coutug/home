@@ -25,8 +25,8 @@ in
 
     sops.secrets."tailscale/auth-key" = {
       sopsFile = cfg.authKeySopsFile;
-      format = "dotenv";
-      key = "key";
+      format = "binary";
+      key = "";
       mode = "0400";
       owner = "root";
       group = "root";
