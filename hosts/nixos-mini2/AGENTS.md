@@ -19,5 +19,6 @@
 ## Network notes
 - controller ports exposed: `6443`, `8132`, `9443`, `2379`, `2380`
 - worker/overlay ports exposed: `10250`, `4240`, `4244` TCP and `8472`, `6081` UDP
+- Tailscale is enabled with auth key from `secrets/tailscale/mini2`; UDP `41641` is opened by `services.tailscale.openFirewall`.
 
 Do not run rebuild or deployment commands without explicit approval.

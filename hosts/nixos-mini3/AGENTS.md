@@ -19,5 +19,6 @@
 
 ## Network notes
 - worker/overlay ports remain aligned with the mini worker profile
+- Tailscale is enabled with auth key from `secrets/tailscale/mini3`; UDP `41641` is opened by `services.tailscale.openFirewall`.
 
 Do not run rebuild or deployment commands without explicit approval.

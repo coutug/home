@@ -32,7 +32,7 @@
       {
         name = "prom-crds";
         chartname = "prom-crds/prometheus-operator-crds";
-        version = "28.0.1";
+        version = "29.0.0";
         order = 1;
         values = ''
           crds:
@@ -50,7 +50,7 @@
       {
         name = "cilium";
         chartname = "cilium/cilium";
-        version = "1.19.3";
+        version = "1.19.4";
         order = 2;
         values = ''
           ipam:
