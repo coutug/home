@@ -84,7 +84,7 @@ in
     tokenFile = "/etc/k0s/k0stoken";
     dataDir = "/var/lib/k0s";
     package = k0s-nix.packages.${pkgs.stdenv.hostPlatform.system}.k0s;
-    configText = builtins.readFile ../k0s/k0s-config.yaml;
+    spec = import ../k0s/k0s-config.nix;
   };
 
   mini.tailscale = {
