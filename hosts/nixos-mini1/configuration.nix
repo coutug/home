@@ -16,6 +16,7 @@ in
     ./disk-config.nix
     sops-nix.nixosModules.sops
     ../../modules/nixos/mini-sops-bootstrap.nix
+    ../../modules/nixos/mini-tailscale.nix
   ];
 
   hardware.enableRedistributableFirmware = true;
@@ -85,6 +86,12 @@ in
     package = k0s-nix.packages.${pkgs.stdenv.hostPlatform.system}.k0s;
     configText = builtins.readFile ../k0s/k0s-config.yaml;
   };
+
+  mini.tailscale = {
+    enable = true;
+    authKeySopsFile = ../../secrets/tailscale/mini1.env;
+  };
+
   users.users = {
     root.openssh.authorizedKeys.keys = [ sshKey ];
     gabriel = {

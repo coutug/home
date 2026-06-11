@@ -10,4 +10,5 @@
 
 ## Notes
 - Secrets in this tree are deployed declaratively from the configs.
+- Tailscale auth keys live under `secrets/tailscale/*.env` as SOPS-encrypted dotenv files with a `key` entry.
 - If a new secret becomes part of the system, update the relevant `AGENTS.md`.
