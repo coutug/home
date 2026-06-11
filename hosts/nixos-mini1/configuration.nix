@@ -89,7 +89,7 @@ in
 
   mini.tailscale = {
     enable = true;
-    authKeySopsFile = ../../secrets/tailscale/mini1.env;
+    authKeySopsFile = ../../secrets/tailscale/mini1;
   };
 
   users.users = {
