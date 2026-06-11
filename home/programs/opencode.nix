@@ -33,10 +33,9 @@ in
 
     "opencode/commands/build-dashboard.md".source = ../config/opencode/commands/build-dashboard.md;
 
-    "opencode/skills/build-dashboard/SKILL.md".source =
-      ../config/opencode/skills/build-dashboard/SKILL.md;
+    "opencode/skills/build-dashboard/SKILL.md".source = ../config/opencode/skills/build-dashboard/SKILL.md;
     "opencode/skills/caveman/SKILL.md".source = ../config/opencode/skills/caveman/SKILL.md;
-    "opencode/skills/grill-with-docs/SKILL.md".source =
-      ../config/opencode/skills/grill-with-docs/SKILL.md;
+    "opencode/skills/grill-with-docs/SKILL.md".source = ../config/opencode/skills/grill-with-docs/SKILL.md;
+    "opencode/skills/update-monitoring-doc/SKILL.md".source = ../config/opencode/skills/update-monitoring-doc/SKILL.md;
   };
 }
