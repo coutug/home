@@ -1,17 +1,17 @@
 Host nixos-mini1
-    HostName 192.168.0.11
+    HostName 100.84.194.107
     User gabriel
     Port 22
     IdentityFile ~/.ssh/server_id_ed25519
 
 Host nixos-mini2
-    HostName 192.168.0.12
+    HostName 100.127.154.106
     User gabriel
     Port 22
     IdentityFile ~/.ssh/server_id_ed25519
 
 Host nixos-mini3
-    HostName 192.168.0.13
+    HostName 100.96.173.4
     User gabriel
     Port 22
     IdentityFile ~/.ssh/server_id_ed25519
