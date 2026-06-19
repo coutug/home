@@ -112,7 +112,6 @@ in
       gum
       hey
       imagemagick
-      jellyfin-desktop
       k0sctl
       keepassxc
       kind
