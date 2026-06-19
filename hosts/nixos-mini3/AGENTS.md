@@ -3,7 +3,7 @@
 `hosts/nixos-mini3` defines a new mini host cloned from `nixos-mini1`.
 
 ## Host-specific facts
-- NixOS `25.11`
+- NixOS `26.05`
 - DHCP on `enp4s0` with router-side reservation
 - single-disk layout is defined in `disk-config.nix`
 - hardware metadata will be generated later into `hardware-configuration.nix`
