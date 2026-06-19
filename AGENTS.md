@@ -5,8 +5,8 @@
 This repo manages Home Manager profiles, NixOS host configurations, and SOPS-encrypted secrets through the root `flake.nix`.
 
 ## Baseline
-- `nixpkgs`: `nixos-26.05`
-- `home-manager`: `release-26.05`
+- `nixpkgs`: `nixos-25.11`
+- `home-manager`: `release-25.11`
 - `nixgl`, `sops-nix`, and `opencode` are pinned in `flake.lock`
 - target system: `x86_64-linux`
 - `allowUnfree = true`

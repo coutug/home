@@ -112,7 +112,7 @@ in
       gum
       hey
       imagemagick
-      jellyfin-desktop
+      jellyfin-ffmpeg
       k0sctl
       keepassxc
       kind
