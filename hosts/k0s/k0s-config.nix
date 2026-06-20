@@ -50,7 +50,7 @@
       {
         name = "cilium";
         chartname = "cilium/cilium";
-        version = "1.19.4";
+        version = "1.19.5";
         order = 2;
         values = ''
           ipam:
@@ -105,8 +105,15 @@
 
           # kube-proxy replacement is required when using l2announcements
           kubeProxyReplacement: true
+          l2announcements:
+            enabled: true
+            leaseDuration: 60s
+            leaseRenewDeadline: 30s
           k8sServiceHost: 192.168.0.12
           k8sServicePort: 6443
+          k8sClientRateLimit:
+            qps: 5
+            burst: 10
 
           # Enable native bandwidth management + BBR TCP algorith
           bandwidthManager:
