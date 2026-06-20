@@ -103,6 +103,13 @@
             serviceMonitor:
               enabled: true
 
+          l7Proxy: true
+          gatewayAPI:
+            enabled: true
+            gatewayClass:
+              create: true
+            externalTrafficPolicy: Cluster
+
           # kube-proxy replacement is required when using l2announcements
           kubeProxyReplacement: true
           l2announcements:
