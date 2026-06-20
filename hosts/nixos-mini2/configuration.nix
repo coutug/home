@@ -94,6 +94,8 @@ in
   mini.tailscale = {
     enable = true;
     authKeySopsFile = ../../secrets/tailscale/mini2;
+    advertiseRoutes = [ "10.250.0.0/24" ];
+    useRoutingFeatures = "both";
   };
 
   users.users = {
