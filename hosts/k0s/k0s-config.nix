@@ -107,7 +107,7 @@
           gatewayAPI:
             enabled: true
             gatewayClass:
-              create: true
+              create: auto
             externalTrafficPolicy: Cluster
 
           # kube-proxy replacement is required when using l2announcements
