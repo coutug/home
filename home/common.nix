@@ -180,6 +180,7 @@ in
       yq-go
       zoom-us
       zsh-powerlevel10k
+      zstd
     ];
 
     file = {
