@@ -90,7 +90,7 @@
         source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
 
         repo() {
-          local base="$HOME/sync/Travail/Repo"
+          local base="$HOME/Documents/repo"
           local choice
           choice=$(printf '%s\n' "$base"/*(/:t) | fzf) || return
           code "$base/$choice"
