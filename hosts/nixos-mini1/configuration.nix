@@ -7,7 +7,7 @@
 }:
 
 let
-  sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEr2BKqV1JZ1SHtkjEsRCFD6UbXVIsZ4NfB27G/CW2Km gabriel@framework-gabriel";
+  sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDR8km7sIsGl39tjl328Ja0V+nyWP2hHGAYo5k0I5B4x coutug.framework";
   k0sTokenSecret = ../../secrets/k0s/token-mini1.yaml;
   hasK0sTokenSecret = lib.pathExists k0sTokenSecret;
 in
