@@ -24,6 +24,7 @@ in
   networking.hostName = "nixos-mini3";
   networking.useDHCP = true;
   networking.enableIPv6 = false;
+  networking.nameservers = [ "8.8.8.8" ];
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [
