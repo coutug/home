@@ -50,7 +50,7 @@
       {
         name = "cilium";
         chartname = "cilium/cilium";
-        version = "1.19.5";
+        version = "1.20.0-pre.3";
         order = 2;
         values = ''
           ipam:
