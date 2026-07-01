@@ -27,6 +27,7 @@ in
     ./programs/atuin.nix
     ./programs/bat.nix
     ./programs/fzf.nix
+    ./programs/git.nix
     ./programs/home-manager.nix
     ./programs/htop.nix
     ./programs/k9s.nix
