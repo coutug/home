@@ -144,7 +144,7 @@ in
       nixfmt-rfc-style
       nixos-anywhere
       nmap
-      opentofu
+      pi-coding-agent
       poppler
       qbittorrent-enhanced
       rclone
