@@ -179,6 +179,7 @@ in
       yay
       yazi
       yq-go
+      yt-dlp
       zoom-us
       zsh-powerlevel10k
       zstd
