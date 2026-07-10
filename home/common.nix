@@ -144,6 +144,7 @@ in
       nixfmt-rfc-style
       nixos-anywhere
       nmap
+      ntfs3g
       pi-coding-agent
       poppler
       qbittorrent-enhanced
