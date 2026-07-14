@@ -53,7 +53,7 @@
         "terraform"
         "yy"
       ];
-      custom = "$HOME/.zsh/custom/";
+      custom = "${config.home.homeDirectory}/.zsh/custom";
     };
 
     shellAliases = {
