@@ -42,7 +42,6 @@ in
 
   sops.secrets =
     let
-      codexSecret = ../secrets/codex/config.toml;
       kubeconfigNames = builtins.attrNames (builtins.readDir ../secrets/kubeconfig);
       mkSecret = filename: {
         name = "kubeconfig/${filename}";
@@ -55,21 +54,7 @@ in
         };
       };
     in
-    builtins.listToAttrs (map mkSecret kubeconfigNames)
-    // (
-      if pkgs.lib.pathExists codexSecret then
-        {
-          "codex/config.toml" = {
-            sopsFile = codexSecret;
-            format = "binary";
-            key = "";
-            path = "${config.home.homeDirectory}/.codex/config.toml";
-            mode = "0600";
-          };
-        }
-      else
-        { }
-    );
+    builtins.listToAttrs (map mkSecret kubeconfigNames);
 
   home = {
     username = "gabriel";
@@ -80,7 +65,6 @@ in
       EDITOR = "nvim";
       WINEFSYNC = 1; # Optimize vst performance
       BUN_INSTALL = "${config.home.homeDirectory}/.bun";
-      CODEX_HOME = "${config.home.homeDirectory}/.codex";
     };
 
     sessionPath = pkgs.lib.mkAfter [
