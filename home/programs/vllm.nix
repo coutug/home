@@ -16,7 +16,7 @@ in
 
     AddDevice=nvidia.com/gpu=all
 
-    PublishPort=127.0.0.1:8001:8000
+    PublishPort=100.100.235.93:8001:8000
 
     Volume=${home}/.cache/huggingface:/root/.cache/huggingface
     Volume=${home}/.cache/vllm:/root/.cache/vllm
@@ -25,7 +25,7 @@ in
 
     Pull=missing
 
-    Exec=--model google/gemma-4-12B-it-qat-w4a16-ct --served-model-name gemma4 --language-model-only --max-model-len 32768 --gpu-memory-utilization 0.85 --host 0.0.0.0 --port 8000
+    Exec=--model google/gemma-4-12B-it-qat-w4a16-ct --served-model-name gemma4 --language-model-only --max-model-len 32768 --gpu-memory-utilization 0.85 --enable-auto-tool-choice --tool-call-parser gemma4 --reasoning-parser gemma4 --host 0.0.0.0 --port 8000
 
     [Service]
     Restart=on-failure
