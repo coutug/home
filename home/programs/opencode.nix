@@ -24,19 +24,14 @@ in
   ];
 
   xdg.configFile = {
+    "opencode/agents" = {
+      source = ../config/opencode/agents;
+      recursive = true;
+    };
+    "opencode/skills" = {
+      source = ../config/opencode/skills;
+      recursive = true;
+    };
     "opencode/AGENTS.md".source = ../config/opencode/AGENTS.md;
-
-    "opencode/prompts/build.md".source = ../config/opencode/build.md;
-    "opencode/prompts/plan.md".source = ../config/opencode/plan.md;
-    "opencode/prompts/teacher.md".source = ../config/opencode/teacher.md;
-    "opencode/prompts/dashboard-builder.md".source = ../config/opencode/prompts/dashboard-builder.md;
-
-    "opencode/commands/build-dashboard.md".source = ../config/opencode/commands/build-dashboard.md;
-
-    "opencode/skills/build-dashboard/SKILL.md".source = ../config/opencode/skills/build-dashboard/SKILL.md;
-    "opencode/skills/caveman/SKILL.md".source = ../config/opencode/skills/caveman/SKILL.md;
-    "opencode/skills/grill-with-docs/SKILL.md".source = ../config/opencode/skills/grill-with-docs/SKILL.md;
-    "opencode/skills/quickwit-query/SKILL.md".source = ../config/opencode/skills/quickwit-query/SKILL.md;
-    "opencode/skills/update-monitoring-doc/SKILL.md".source = ../config/opencode/skills/update-monitoring-doc/SKILL.md;
   };
 }
