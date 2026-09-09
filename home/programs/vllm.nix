@@ -25,7 +25,7 @@ in
 
     Pull=missing
 
-    Exec=--model google/gemma-4-12B-it-qat-w4a16-ct --served-model-name gemma4 --language-model-only --max-model-len 32768 --gpu-memory-utilization 0.92 --host 0.0.0.0 --port 8000
+    Exec=--model google/gemma-4-12B-it-qat-w4a16-ct --served-model-name gemma4 --language-model-only --max-model-len 32768 --gpu-memory-utilization 0.85 --host 0.0.0.0 --port 8000
 
     [Service]
     Restart=on-failure
