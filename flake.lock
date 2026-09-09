@@ -60,16 +60,21 @@
       }
     },
     "k0s-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1787406975,
-        "narHash": "sha256-lzhYbwzXUBIt947ZvlX7s6Q8nezMWW8eiuKkNvTqcrg=",
-        "owner": "johbo",
+        "lastModified": 1788704389,
+        "narHash": "sha256-I/0vrzsGtmsuSIo2Rcsc7gWYqlk3b1CNbhTy8ZMXX4c=",
+        "owner": "nix-community",
         "repo": "k0s-nix",
-        "rev": "0fd1c2ebb0339bb7be1e3d51e3a7d5916f24bb71",
+        "rev": "0163fe029f074f26c3ff825f679f70c4213b8e17",
         "type": "github"
       },
       "original": {
-        "owner": "johbo",
+        "owner": "nix-community",
         "repo": "k0s-nix",
         "type": "github"
       }

@@ -23,7 +23,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     k0s-nix = {
-      url = "github:johbo/k0s-nix";
+      url = "github:nix-community/k0s-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
