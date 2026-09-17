@@ -122,7 +122,6 @@ in
       man
       meslo-lgs-nf
       minikube
-      musescore
       navi
       nil
       nix-zsh-completions
