@@ -3,10 +3,10 @@
 `hosts/nixos-mini3` defines a new mini host cloned from `nixos-mini1`.
 
 ## Host-specific facts
-- NixOS `25.11`
+- NixOS input `26.05`; `system.stateVersion` remains `25.11`
 - DHCP on `enp4s0` with router-side reservation
 - single-disk layout is defined in `disk-config.nix`
-- hardware metadata will be generated later into `hardware-configuration.nix`
+- hardware metadata is generated into `hardware-configuration.nix` via `nixos-generate-config`
 
 ## k0s role
 - k0s is installed and configured as a worker
@@ -15,7 +15,7 @@
 
 ## Deployment notes
 - `nixos-anywhere` should use `hosts/nixos-mini3/disk-config.nix`
-- `hardware-configuration.nix` will be generated later
+- installation regenerates `hosts/nixos-mini3/hardware-configuration.nix`
 
 ## Network notes
 - worker/overlay ports remain aligned with the mini worker profile

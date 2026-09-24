@@ -12,7 +12,7 @@ in
 
     authKeySopsFile = lib.mkOption {
       type = lib.types.path;
-      description = "SOPS-encrypted dotenv file containing the Tailscale auth key as `key`.";
+      description = "SOPS-encrypted binary file containing the Tailscale auth key value.";
     };
 
     advertiseRoutes = lib.mkOption {

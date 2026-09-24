@@ -3,10 +3,10 @@
 `hosts/nixos-mini1` defines the worker node of the mini NixOS cluster.
 
 ## Host-specific facts
-- NixOS `25.11`
+- NixOS input `26.05`; `system.stateVersion` remains `25.11`
 - DHCP on `enp6s0` with router-side reservation
 - disk layout is defined in `disk-config.nix`
-- hardware metadata is generated into `facter.json` via `nixos-facter`
+- hardware metadata is generated into `hardware-configuration.nix` via `nixos-generate-config`
 
 ## k0s role
 - runs as a `k0s` worker
@@ -15,7 +15,7 @@
 
 ## Deployment notes
 - `nixos-anywhere` must use `hosts/nixos-mini1/disk-config.nix`
-- installation also regenerates `hosts/nixos-mini1/facter.json`
+- installation regenerates `hosts/nixos-mini1/hardware-configuration.nix`
 
 ## Network notes
 - worker/overlay ports exposed: `10250`, `4240`, `4244` TCP and `8472`, `6081` UDP

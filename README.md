@@ -6,13 +6,13 @@ Declarative Home Manager profiles, NixOS host definitions, and SOPS-encrypted se
 - `home/`: Home Manager configuration for `gabriel` (`common.nix`, `laptop.nix`, `desktop.nix`, `server.nix`, `programs/`, `config/`, `dotfiles/`)
 - `hosts/`: NixOS hosts (`nixos-mini1`, `nixos-mini2`, `nixos-mini3`)
 - `secrets/`: encrypted data consumed by the configs
-- `modules/`: shared NixOS modules when/if they exist
+- `modules/`: shared NixOS modules
 - `result/`: build output; ignore it
 
 ## Workflows
 - Refresh/verify inputs with `nix flake update`, `nix flake show`, and `nix flake check`
 - Ask before running any `home-manager switch`, `nixos-rebuild`, or `nixos-anywhere` command
-- Hosts use `disk-config.nix` plus generated `facter.json` reports for installation
+- Hosts use `disk-config.nix`; bootstrap generates `hardware-configuration.nix` with `nixos-generate-config`
 
 ## AGENTS guide
 Read the nearest `AGENTS.md` before editing a subtree:

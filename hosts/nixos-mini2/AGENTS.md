@@ -3,18 +3,17 @@
 `hosts/nixos-mini2` defines the primary node of the mini NixOS cluster.
 
 ## Host-specific facts
-- NixOS `25.11`
+- NixOS input `26.05`; `system.stateVersion` remains `25.11`
 - DHCP on `enp4s0` with router-side reservation
 - disk layout is defined in `disk-config.nix`
-- hardware metadata is generated into `facter.json` via `nixos-facter`
+- hardware metadata is generated into `hardware-configuration.nix` via `nixos-generate-config`
 
 ## k0s role
 - bootstrap controller + worker for the `k0s-mini` cluster
 
 ## Deployment notes
 - `nixos-anywhere` must use `hosts/nixos-mini2/disk-config.nix`
-- installation also regenerates `hosts/nixos-mini2/facter.json`
-- this host keeps facter enabled and filters null CPU entries before evaluation
+- installation regenerates `hosts/nixos-mini2/hardware-configuration.nix`
 
 ## Network notes
 - controller ports exposed: `6443`, `8132`, `9443`, `2379`, `2380`
