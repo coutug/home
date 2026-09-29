@@ -31,6 +31,7 @@ in
     ./programs/home-manager.nix
     ./programs/htop.nix
     ./programs/k9s.nix
+    ./programs/neovim.nix
     ./programs/obs-studio.nix
     ./programs/opencode.nix
     ./programs/zsh.nix
@@ -62,10 +63,9 @@ in
     stateVersion = "25.05";
 
     sessionVariables = {
-      EDITOR = "nvim";
       WINEFSYNC = 1; # Optimize vst performance
       BUN_INSTALL = "${config.home.homeDirectory}/.bun";
-      OMO_AST_GREP_SG_PATH="${config.home.homeDirectory}/.local/node_modules/@ast-grep/cli/sg";
+      OMO_AST_GREP_SG_PATH = "${config.home.homeDirectory}/.local/node_modules/@ast-grep/cli/sg";
     };
 
     sessionPath = pkgs.lib.mkAfter [
@@ -157,7 +157,6 @@ in
       vector
       velero
       vesktop
-      vim
       vlc
       vscodium
       yara

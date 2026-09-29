@@ -132,6 +132,22 @@
         "type": "github"
       }
     },
+    "nvim-config": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790705561,
+        "narHash": "sha256-jI9kgO6Qy9qexFZCfEGydo6eDvzYuNQy6pzpbuUIkxs=",
+        "owner": "coutug",
+        "repo": "nvim",
+        "rev": "5b19b6d4da5ecfb753b371f8bba878a7ce176342",
+        "type": "github"
+      },
+      "original": {
+        "owner": "coutug",
+        "repo": "nvim",
+        "type": "github"
+      }
+    },
     "opencode": {
       "inputs": {
         "nixpkgs": "nixpkgs_2"
@@ -158,6 +174,7 @@
         "k0s-nix": "k0s-nix",
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs",
+        "nvim-config": "nvim-config",
         "opencode": "opencode",
         "sops-nix": "sops-nix"
       }

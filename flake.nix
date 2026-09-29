@@ -18,6 +18,10 @@
     opencode = {
       url = "github:anomalyco/opencode?ref=v1.18.29";
     };
+    nvim-config = {
+      url = "github:coutug/nvim";
+      flake = false;
+    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,6 +39,7 @@
       nixgl,
       sops-nix,
       opencode,
+      nvim-config,
       disko,
       k0s-nix,
       ...
@@ -51,14 +56,28 @@
       homeConfigurations = {
         laptop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit nixgl sops-nix opencode; };
+          extraSpecialArgs = {
+            inherit
+              nixgl
+              sops-nix
+              opencode
+              nvim-config
+              ;
+          };
           modules = [
             ./home/laptop.nix
           ];
         };
         desktop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit nixgl sops-nix opencode; };
+          extraSpecialArgs = {
+            inherit
+              nixgl
+              sops-nix
+              opencode
+              nvim-config
+              ;
+          };
           modules = [
             ./home/desktop.nix
           ];
