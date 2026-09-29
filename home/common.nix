@@ -57,6 +57,8 @@ in
     in
     builtins.listToAttrs (map mkSecret kubeconfigNames);
 
+  news.display = "silent";
+
   home = {
     username = "gabriel";
     homeDirectory = "/home/gabriel";
@@ -125,7 +127,7 @@ in
       navi
       nil
       nix-zsh-completions
-      nixfmt-rfc-style
+      nixfmt
       nixos-anywhere
       nmap
       ntfs3g
