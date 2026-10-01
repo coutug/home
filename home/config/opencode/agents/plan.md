@@ -35,6 +35,7 @@ For every request, adapt the depth of the plan to the task complexity.
 Include only sections and details that add value.
 
 ## 1. Context Analysis
+- When in a new code repository, understand and analyze it first
 - Identify constraints
 - List assumptions
 
