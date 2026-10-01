@@ -1,23 +1,28 @@
 {
   config,
   pkgs,
-  lib,
   opencode,
   ...
 }:
 let
-  opencodeSecret = ../../secrets/opencode/opencode.json;
-in
-{
-  sops.secrets = lib.mkIf (pkgs.lib.pathExists opencodeSecret) {
-    "opencode/opencode.json" = {
-      sopsFile = opencodeSecret;
-      format = "json";
+  opencodeSecretsDir = ../../secrets/opencode;
+  opencodeSecrets = builtins.readDir opencodeSecretsDir;
+  opencodeSecretNames = builtins.filter (name: opencodeSecrets.${name} == "regular") (
+    builtins.attrNames opencodeSecrets
+  );
+  mkOpencodeSecret = name: {
+    name = "opencode/${name}";
+    value = {
+      sopsFile = opencodeSecretsDir + "/${name}";
+      format = "binary";
       key = "";
-      path = "${config.home.homeDirectory}/.config/opencode/opencode.json";
+      path = "${config.home.homeDirectory}/.config/opencode/${name}";
       mode = "0600";
     };
   };
+in
+{
+  sops.secrets = builtins.listToAttrs (map mkOpencodeSecret opencodeSecretNames);
 
   home.packages = [
     opencode.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -33,5 +38,7 @@ in
       recursive = true;
     };
     "opencode/AGENTS.md".source = ../config/opencode/AGENTS.md;
+    "opencode/opencode.jsonc".source = ../config/opencode/opencode.jsonc;
+    "opencode/tui.jsonc".source = ../config/opencode/tui.jsonc;
   };
 }

@@ -356,7 +356,7 @@ Ne pas supposer qu'un secret est toujours YAML ni que chaque champ est
 `ENC[...]` :
 
 - `secrets/tailscale/mini*` sont binaires chiffrés sans extension ;
-- `secrets/opencode/opencode.json` utilise chiffrement sélectif ;
+- `secrets/opencode/*` sont des secrets binaires chiffrés sans extension, déployés comme fichiers séparés sous `~/.config/opencode/` ;
 - `docs/network.md` est une enveloppe SOPS malgré extension Markdown.
 
 Pour tester chiffrement/déchiffrement, créer fixture isolée avec identité Age

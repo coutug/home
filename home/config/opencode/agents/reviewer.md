@@ -1,6 +1,9 @@
 ---
 description: Reviews implemented changes for correctness, security, scope, and maintainability.
 mode: subagent
+model: openai/gpt-5.6-terra
+reasoningEffort: low
+textVerbosity: low
 permission:
   edit: deny
   bash: deny

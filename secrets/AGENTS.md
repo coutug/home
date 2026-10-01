@@ -11,4 +11,5 @@
 ## Notes
 - Secrets in this tree are deployed declaratively from the configs.
 - Tailscale auth keys live in extensionless `secrets/tailscale/mini*` files as SOPS-encrypted binary secrets containing the key value.
+- OpenCode secrets live in extensionless `secrets/opencode/*` files as SOPS-encrypted binary secrets, deployed separately under `~/.config/opencode/`.
 - If a new secret becomes part of the system, update the relevant `AGENTS.md`.

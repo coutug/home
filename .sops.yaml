@@ -2,9 +2,8 @@ age_keys: &age_keys
   - "age1ktfsdqtzs3c84krtw62rjumqhf4fvf8acqauv5x6cr883wgj53sq5df9y6" # local
 
 creation_rules:
-  - path_regex: secrets/opencode/opencode\.json
+  - path_regex: secrets/opencode/[^/]+$
     age: *age_keys
-    encrypted_regex: '^(INCIDENT_IO_API_KEY|GRAFANA_SERVICE_ACCOUNT_TOKEN|Authorization|baseURL)$'
 
   - path_regex: .*.(yaml|yml|json|env)$
     age: *age_keys
