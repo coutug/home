@@ -3,6 +3,7 @@
 	"theme": "github",
 	"autoupdate": false,
 	"default_agent": "plan",
+	"subagent_depth": 2,
 	"watcher": {
     "ignore": ["node_modules/**", "dist/**", ".git/**"]
   },
