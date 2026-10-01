@@ -149,6 +149,7 @@ in
       supermin
       syslinux
       tealdeer
+      thunderbird
       tmux
       tmuxp
       traceroute
