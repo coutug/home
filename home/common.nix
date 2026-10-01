@@ -68,6 +68,7 @@ in
       WINEFSYNC = 1; # Optimize vst performance
       BUN_INSTALL = "${config.home.homeDirectory}/.bun";
       OMO_AST_GREP_SG_PATH = "${config.home.homeDirectory}/.local/node_modules/@ast-grep/cli/sg";
+      OPENCODE_ENABLE_PARALLEL = 1; # opencode web search
     };
 
     sessionPath = pkgs.lib.mkAfter [

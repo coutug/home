@@ -16,10 +16,13 @@
 		"read": "allow",
 		"grep": "allow",
 		"glob": "allow",
+		"skill": "allow",
 		"todowrite": "allow",
 		"todoread": "allow",
 		"webfetch": "allow",
+		"websearch": "allow",
 		"question": "allow"
+		// "lsp": "allow"
 	},
 	"provider": {
 		"vllm": {
