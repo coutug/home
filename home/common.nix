@@ -157,6 +157,7 @@ in
       tradingview
       transfer-sh
       tree
+      luaPackages.tree-sitter-cli
       trivy
       vector
       velero
