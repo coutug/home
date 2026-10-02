@@ -67,6 +67,7 @@
       kc = "kubie ctx";
       watch = "watch -c";
       nv = "nvim";
+      nv-dev = "NVIM_APPNAME=nvim-dev nvim";
       ld = "lazydocker";
       lg = "lazygit";
       cat = "bat";
@@ -74,7 +75,6 @@
       oc = "opencode";
 
       # long commands
-      ollama = "docker exec -it ollama ollama";
       pkgls = "pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'";
       kval = "kubeconform -summary -schema-location default -schema-location \"https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json\"";
       nix-desktop = "home-manager switch --flake .#desktop -b back";
