@@ -8,7 +8,6 @@
     "ignore": ["node_modules/**", "dist/**", ".git/**"]
   },
 	"plugin": [
-		"opencode-ralph-loop",
 		"@mohak34/opencode-notifier@latest",
 		"opencode-scheduler",
 		"opencode-goal-plugin@0.11.0" // linked to command which is only needed for opencode v1
@@ -17,7 +16,6 @@
     "goal": {
       "description": "Set a session-scoped goal and auto-continue until complete.",
       "template": "$ARGUMENTS",
-      "agent": "build"
     }
   },
 	"permission": {
@@ -69,7 +67,7 @@
 			"headers": {
 				"Authorization": "{file:./gh-token}"
 			},
-			"enabled": true
+			"enabled": false
 		},
 		"gh_grep": {
 			"type": "remote",
