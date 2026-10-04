@@ -33,6 +33,10 @@ in
       source = ../config/opencode/agents;
       recursive = true;
     };
+    "opencode/commands" = {
+      source = ../config/opencode/commands;
+      recursive = true;
+    };
     "opencode/skills" = {
       source = ../config/opencode/skills;
       recursive = true;
