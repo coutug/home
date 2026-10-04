@@ -46,6 +46,7 @@
         "kubectl"
         "minikube"
         "kmux"
+        "opencode"
         "pvc-usage"
         "sudo"
         "systemd"
@@ -70,9 +71,7 @@
       nv-dev = "NVIM_APPNAME=nvim-dev nvim";
       ld = "lazydocker";
       lg = "lazygit";
-      cat = "bat";
       kb = "kustomize build";
-      oc = "opencode";
 
       # long commands
       pkgls = "pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'";
