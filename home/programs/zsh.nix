@@ -72,6 +72,7 @@
       ld = "lazydocker";
       lg = "lazygit";
       kb = "kustomize build";
+      oc = "opencode";
 
       # long commands
       pkgls = "pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'";
