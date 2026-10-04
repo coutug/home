@@ -46,7 +46,6 @@
         "kubectl"
         "minikube"
         "kmux"
-        "opencode"
         "pvc-usage"
         "sudo"
         "systemd"
