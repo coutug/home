@@ -51,7 +51,7 @@ in
           format = "yaml";
           key = "";
           path = "${config.home.homeDirectory}/.kube/kubeconfig/${filename}";
-          mode = "0644";
+          mode = "0600";
         };
       };
     in
@@ -181,6 +181,10 @@ in
     };
 
     activation = {
+      ensureKubeconfigDirectory = lib.hm.dag.entryBefore [ "sops-nix" ] ''
+        ${pkgs.coreutils}/bin/install -d -m 0700 "${config.home.homeDirectory}/.kube/kubeconfig"
+      '';
+
       backupVSConfigs = lib.hm.dag.entryBefore [ "linkGeneration" ] ''
         set -euo pipefail
         export HOME="${config.home.homeDirectory}"
