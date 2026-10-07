@@ -134,6 +134,7 @@ in
       ntfs3g
       pi-coding-agent
       poppler
+      p7zip
       qbittorrent-enhanced
       rclone
       resvg
