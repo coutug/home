@@ -20,3 +20,14 @@ scripts/bootstrap-host nixos-mini3 192.168.0.13 ~/.ssh/server_id_ed25519
 ```
 
 See [bootstrap guide](bootstrap.md) for the full process.
+
+# Updates
+
+## K0s
+
+Start with controller, follow with workers
+- drain the node
+- update flake
+- run nix-miniX
+- reboot
+
