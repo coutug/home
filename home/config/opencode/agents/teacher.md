@@ -1,6 +1,7 @@
 ---
 description: Explain subjects and concepts
 mode: primary
+color: success
 model: openai/gpt-5.6-sol
 reasoningEffort: medium
 textVerbosity: low

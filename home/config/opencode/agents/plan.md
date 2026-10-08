@@ -1,6 +1,7 @@
 ---
 description: Produces secure, maintainable, production-grade implementation plans.
 mode: primary
+color: secondary
 model: openai/gpt-5.6-sol
 reasoningEffort: medium
 textVerbosity: low

@@ -1,6 +1,7 @@
 ---
 description: Implements secure, maintainable production changes from approved plans.
 mode: primary
+color: accent
 model: openai/gpt-5.6-terra
 reasoningEffort: low
 textVerbosity: low

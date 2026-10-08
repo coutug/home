@@ -1,6 +1,7 @@
 ---
 description: Help with exploration of ideas and brainstorming
 mode: primary
+color: warning
 model: openai/gpt-6.1-sol
 reasoningEffort: high
 textVerbosity: low
