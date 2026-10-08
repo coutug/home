@@ -117,6 +117,57 @@ mettre à jour règle et secret Tailscale propres à hôte, lancer `sops updatek
 
 **Bénéfice.** Bootstrap complet et déterministe.
 
+### 12. Générer dynamiquement les tokens k0s au bootstrap
+
+**Constat.** Les tokens workers sont actuellement stockés durablement dans
+`secrets/k0s/token-mini*.yaml`, alors qu'ils ne servent qu'à première jointure.
+Cette gestion élargit politique SOPS et impose rotation de secrets qui peuvent
+être remplacés par credentials courts consommés immédiatement.
+
+**Action.** Remplacer gestion SOPS des tokens par une phase de jointure dans
+`scripts/bootstrap-host`, après installation NixOS et retour SSH du worker :
+
+1. installer NixOS sans token et laisser `k0s.service` inactif via
+   `ConditionPathExists` ; cet état préconfiguré remplace assertion proposée
+   dans recommandation 4 ;
+2. vérifier disponibilité du contrôleur et synchronisation des horloges ;
+3. générer sur `nixos-mini2` un token unique avec
+   `k0s token create --role=worker --expiry=10m` ;
+4. transférer directement par SSH vers `/var/lib/k0s/k0stoken`
+   (`root:root`, `0400`) et déclarer ce chemin dans `services.k0s.tokenFile` ;
+5. démarrer unité k0s gérée par Nix, sans appeler `k0s install worker` ;
+6. attendre node `Ready` et réseau fonctionnel, puis invalider token par son ID
+   avec `k0s token invalidate` ;
+7. conserver fichier invalidé présent pour futurs redémarrages : module
+   `k0s-nix` vérifie son existence à chaque démarrage, même après jointure.
+
+Retirer fichiers `token-mini*.yaml`, déclarations `sops.secrets` associées et
+traitement des recipients k0s dans bootstrap. Conserver gestion SOPS des autres
+secrets et clés SSH hôtes. Le contrôleur initial ne requiert aucun token ; un
+contrôleur additionnel doit utiliser rôle `controller`.
+
+Le transfert ne doit écrire aucun plaintext dans dépôt ou disque local, afficher
+token dans terminal ou logs, ni désactiver vérification clés SSH. Utiliser
+écriture atomique, `pipefail`, permissions restrictives et nettoyage sur erreur.
+Identifier précisément token créé, invalider sur abandon lorsque possible et
+laisser expiration courte comme filet de sécurité. Si token expire avant
+jointure, générer nouveau token sans lancer automatiquement `k0s reset`.
+
+Pour workers existants, préparer nouveau fichier token avant changement de
+`tokenFile` et retrait secrets SOPS, afin d'éviter blocage au redémarrage.
+Conserver état et certificats sous `/var/lib/k0s` ; migrer un worker à la fois.
+
+**Validation.** Tester worker neuf, expiration avant jointure, interruption SSH
+et abandon. Confirmer absence de token dans dépôt et store Nix, service inactif
+avant transfert, node `Ready` après démarrage, token absent de
+`k0s token list` après invalidation, puis reboot et rebuild réussis sans nouvelle
+jointure ni nouveau token.
+
+**Rollback.** Restaurer temporairement ancien secret SOPS et ancien `tokenFile`
+avec fichier présent avant activation, sans supprimer `/var/lib/k0s`. Pour node
+non encore joint, générer token valide. Ne jamais lancer automatiquement
+`k0s reset`, qui détruit identité locale du node.
+
 ### 14. Pinner sources Helm et images runtime
 
 **Constat.** Charts Helm sont obtenus auprès dépôts distants à installation.
