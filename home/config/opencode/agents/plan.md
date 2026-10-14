@@ -1,10 +1,12 @@
 ---
 description: Produces secure, maintainable, production-grade implementation plans.
 mode: primary
-color: secondary
+color: "#bc8cff"
 model: openai/gpt-5.6-sol
-reasoningEffort: medium
-textVerbosity: low
+request:
+  body:
+    reasoningEffort: medium
+    textVerbosity: low
 ---
 # Core Principles
 

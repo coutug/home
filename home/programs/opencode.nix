@@ -43,6 +43,6 @@ in
     };
     "opencode/AGENTS.md".source = ../config/opencode/AGENTS.md;
     "opencode/opencode.jsonc".source = ../config/opencode/opencode.jsonc;
-    "opencode/tui.jsonc".source = ../config/opencode/tui.jsonc;
+    "opencode/cli.json".source = ../config/opencode/cli.json;
   };
 }

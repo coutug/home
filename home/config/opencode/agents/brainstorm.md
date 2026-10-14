@@ -1,10 +1,12 @@
 ---
 description: Help with exploration of ideas and brainstorming
 mode: primary
-color: warning
+color: "#e3b341"
 model: openai/gpt-6.1-sol
-reasoningEffort: high
-textVerbosity: low
+request:
+  body:
+    reasoningEffort: high
+    textVerbosity: low
 ---
 Help explore ideas and do research. Brainstorm ideas and try to come up with novel, yet realistic ideas.
 - Do as much research as you need to help

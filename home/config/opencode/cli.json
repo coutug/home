@@ -1,0 +1,24 @@
+{
+  "$schema": "https://opencode.ai/v2/cli.json",
+  "theme": {
+    "name": "github",
+    "mode": "system"
+  },
+  "scroll": {
+    "speed": 3,
+    "acceleration": true
+  },
+  "diffs": {
+    "view": "auto"
+  },
+  "cursor": {
+    "style": "block",
+    "blinking": true
+  },
+  "mouse": true,
+  "attention": {
+    "notifications": true,
+    "sound": true,
+    "volume": 0.4
+  }
+}
