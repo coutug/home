@@ -23,6 +23,21 @@
 		{ "action": "question", "resource": "*", "effect": "allow" }
 	],
 	"providers": {
+		"openai": {
+			"models": {
+				"gpt-6.1-sol": {
+					"variants": [
+						{ "id": "medium", "settings": { "reasoningEffort": "medium", "textVerbosity": "low" } },
+						{ "id": "high", "settings": { "reasoningEffort": "high", "textVerbosity": "low" } }
+					]
+				},
+				"gpt-6-luna": {
+					"variants": [
+						{ "id": "high", "settings": { "reasoningEffort": "high", "textVerbosity": "low" } }
+					]
+				}
+			}
+		},
 		"vllm": {
 			"name": "vllm",
 			"settings": {
