@@ -16,7 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     opencode = {
-      url = "github:anomalyco/opencode?ref=v2.0.29";
+      url = "github:anomalyco/opencode?ref=v2.0.27";
     };
     nvim-config = {
       url = "github:coutug/nvim";
