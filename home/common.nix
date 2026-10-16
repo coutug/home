@@ -142,7 +142,6 @@ in
       rustup
       slack
       sleuthkit
-      solaar
       sops
       spotify
       squashfsTools
