@@ -8,7 +8,10 @@
 	"watcher": {
 		"ignore": ["node_modules/**", "dist/**", ".git/**"]
 	},
-	"plugins": ["opencode-goal-plugin@0.11.0"],
+	"plugins": [
+		"opencode-goal-plugin@0.11.0",
+		"@mohak34/opencode-notifier@1.0.0"
+	],
 	"permissions": [
 		{ "action": "edit", "resource": "*", "effect": "allow" },
 		{ "action": "shell", "resource": "*", "effect": "allow" },

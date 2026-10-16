@@ -16,9 +16,5 @@
     "blinking": true
   },
   "mouse": true,
-  "attention": {
-    "notifications": true,
-    "sound": true,
-    "volume": 0.4
-  }
+  "plugins": ["*", "-opencode.notifications"]
 }
