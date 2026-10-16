@@ -163,11 +163,9 @@ done
 récupérées depuis caches, sans activer profil ou système.
 
 **Limite importante :** construire `activationPackage` Home Manager ne lance
-pas les scripts d'activation. C'est souhaité ici : `home/common.nix` contient
-un backup VSCodium et une synchronisation qui installe/désinstalle extensions.
-Ces scripts peuvent modifier `$HOME` dès activation. Ne pas présenter un
-dry-run Home Manager comme garantie d'absence de mutation tant que scripts ne
-respectent pas explicitement `$DRY_RUN_CMD`.
+pas les scripts d'activation. Ne pas présenter un dry-run Home Manager comme
+garantie d'absence de mutation pour des scripts mutateurs qui ne respectent pas
+explicitement `$DRY_RUN_CMD`.
 
 ## 8. Contrôles statiques
 
@@ -191,7 +189,7 @@ Exemples ponctuels :
 ```bash
 nix fmt -- --check
 bash -n scripts/bootstrap-host scripts/generate-host-key-secret \
-  scripts/prepare-host-key-extra-files home/config/code/scripts/*.sh
+  scripts/prepare-host-key-extra-files
 zsh -n home/config/omz-custom/plugins/*/*.zsh home/dotfiles/p10k.zsh
 luac -p home/config/wezterm/*.lua home/config/hypr/*.lua home/config/hypr/config/*.lua
 ```
@@ -302,7 +300,7 @@ réutilisables, par exemple module K9s, vLLM ou Zsh core.
 
 Ne pas commencer par NMT pour profils complets : build des profils, assertions
 et sandbox scripts donnent ici meilleur gain. NMT ne teste ni GUI, GPU, réseau,
-Podman, extensions VSCodium, activation réelle ou secrets runtime.
+Podman, activation réelle ou secrets runtime.
 
 ## 12. Tests scripts dans sandbox
 
@@ -316,8 +314,8 @@ Créer pour chaque test :
 1. copie temporaire du dépôt initialisée avec Git ;
 2. `$HOME`, `TMPDIR` et secrets fixtures temporaires ;
 3. répertoire `bin/` injecté au début de `PATH` ;
-4. faux `sops`, `nix`, `ssh`, `ssh-keygen`, `ssh-to-age`, `codium`, `fzf`,
-   `tmuxp` et autres commandes externes ;
+4. faux `sops`, `nix`, `ssh`, `ssh-keygen`, `ssh-to-age`, `fzf`, `tmuxp` et
+   autres commandes externes ;
 5. journal des appels et arguments ;
 6. mocks qui refusent réseau, hôtes réels, `/etc`, `/home/gabriel` et tout
    chemin hors répertoire test.
@@ -332,7 +330,6 @@ secret. Utiliser clés et secrets synthétiques, jamais ceux du dépôt.
 | `generate-host-key-secret` | arité, hostname invalide (`..`, slash, saut ligne), secret existant, échec `ssh-keygen`/`ssh-to-age`/`sops`, absence fichier partiel, cleanup temporaire. |
 | `prepare-host-key-extra-files` | secret absent, structure générée, permissions, échec première/deuxième extraction, `SIGINT`/`SIGTERM`, absence clé résiduelle. |
 | `bootstrap-host` | hôte inconnu, IP/identité invalides, dépendance absente, refus utilisateur, insertion recipient idempotente, préflight Git, token worker absent, Tailscale absent, rollback après erreur, commande finale observée mais jamais lancée. |
-| scripts VSCodium | liste extensions, install/uninstall, erreur commande, absence mutation hors sandbox. |
 | plugins Zsh | annulation FZF, données malformées, erreurs commande, fonction retourne sans fermer shell. |
 
 Tester aussi états négatifs : un bon test montre qu'une configuration invalide
@@ -462,8 +459,6 @@ Après déploiement approuvé, vérifier au minimum :
 - Kubeconfigs non lisibles par autres utilisateurs ;
 - session shell sans erreurs ;
 - applications/outils requis disponibles ;
-- fichiers VSCodium et extensions : vérifier effet avant d'autoriser scripts
-  mutateurs ;
 - Hyprland/vLLM uniquement dans environnement contrôlé adapté.
 
 ## 17. CI non déployante à ajouter
@@ -527,7 +522,6 @@ Après essais :
 
 - [ ] Build `activationPackage` réussi.
 - [ ] Scripts d'activation lus et effets compris.
-- [ ] Backup VSCodium et synchronisation extensions explicitement acceptés.
 - [ ] Sauvegarde des données utilisateur existantes.
 - [ ] Chemins secrets et permissions attendues vérifiés dans résultat évalué.
 

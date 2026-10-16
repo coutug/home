@@ -4,7 +4,6 @@ local programs = {
     menu = "fuzzel",
     browser = "brave",
     passwdmgr = "keepassxc",
-    code = "code",
     note = "obsidian",
     music = "spotify",
     discord = "discord",

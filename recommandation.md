@@ -209,10 +209,7 @@ prérequis système implicites.
 
 **Incohérences confirmées.**
 
-- `EDITOR=nvim`, alias `nv=nvim` et VSCodium configuré pour `/usr/bin/nvim`,
-  mais `neovim` n'est pas déclaré ;
-- paquet installé : `vscodium`, alors que fonctions/raccourcis appellent
-  `code` ;
+- `EDITOR=nvim` et alias `nv=nvim`, mais `neovim` n'est pas déclaré ;
 - Hyprland appelle Waybar, Dunst, Hyprpaper, Hypridle, Hyprlock, Fuzzel,
   Dolphin, Brave, Obsidian, Discord, `wpctl`, `brightnessctl`, `playerctl`,
   agent polkit et police JetBrainsMono Nerd Font sans tous les déclarer ;
@@ -222,26 +219,11 @@ prérequis système implicites.
 **Action.** Choisir l'un des deux modèles et l'appliquer :
 
 1. **Profil autonome recommandé :** déclarer dépendances via Home Manager/Nix,
-   utiliser chemins exécutables Nix/PATH (`nvim`, `codium`), et installer police
-   requise.
+   utiliser chemins exécutables Nix/PATH (`nvim`), et installer police requise.
 2. **Profil complémentaire distribution :** documenter prérequis par profil et
    ajouter assertions/checks de présence au lieu de laisser échecs runtime.
 
 Ne pas affirmer reproductibilité complète tant que second modèle reste implicite.
-
-### 17. Aligner Neovim, VSCodium, extensions et formatteurs
-
-**Action.** Installer Neovim ou abandonner `nvim`; remplacer `/usr/bin/nvim`
-par exécutable présent dans PATH; utiliser `codium` si VSCodium est cible;
-
-**Validation.** Dans PATH propre du profil :
-
-```sh
-command -v nvim codium
-codium --list-extensions --show-versions
-```
-
-Tester fichiers Nix, Python, Java, XML, shell et Markdown.
 
 ### 19. Rendre vLLM opérationnel et protégé
 
@@ -381,8 +363,8 @@ refactorisation comme changement cosmétique isolé.
 2. Décider topologie firewall, modèle accès admin, RPO/RTO et politique SOPS.
 3. Restreindre firewall; segmenter recipients; compléter bootstrap Tailscale;
    mettre snapshots etcd testés; stabiliser Cilium.
-4. Définir frontière Home Manager/OS; aligner Neovim/Codium; rendre extensions
-   moins impératives; pinner vLLM/images/charts; sécuriser vLLM.
+4. Définir frontière Home Manager/OS; pinner vLLM/images/charts; sécuriser
+   vLLM.
 5. Ajouter formatter, checks, CI et tests bootstrap.
 6. Mesurer stockage et maintenance Nix, puis factoriser hôtes et Zsh.
 

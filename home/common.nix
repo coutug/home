@@ -6,14 +6,6 @@
   sops-nix,
   ...
 }:
-let
-  codiumExtensionsFile = ./config/code/extensions.list;
-  codiumExtensions = pkgs.lib.filter (s: s != "") (
-    map pkgs.lib.strings.trim (pkgs.lib.splitString "\n" (builtins.readFile codiumExtensionsFile))
-  );
-  backupScript = builtins.readFile ./config/code/scripts/backup-vsconfigs.sh;
-  syncScript = builtins.readFile ./config/code/scripts/sync-vscodium-extensions.sh;
-in
 {
   targets.genericLinux.enable = true;
 
@@ -163,7 +155,6 @@ in
       velero
       vesktop
       vlc
-      vscodium
       yara
       yay
       yazi
@@ -185,40 +176,12 @@ in
         ${pkgs.coreutils}/bin/install -d -m 0700 "${config.home.homeDirectory}/.kube/kubeconfig"
       '';
 
-      backupVSConfigs = lib.hm.dag.entryBefore [ "linkGeneration" ] ''
-        set -euo pipefail
-        export HOME="${config.home.homeDirectory}"
-        timestamp="$(date +%s)"
-        backup_ext=".bak.$timestamp"
-
-        ${backupScript}
-      '';
-
-      syncVSCodiumExtensions = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              set -euo pipefail
-              export HOME="${config.home.homeDirectory}"
-
-              desired_exts="$(cat <<'EOF'
-        ${pkgs.lib.concatMapStringsSep "\n" (ext: ext) codiumExtensions}
-        EOF
-        )"
-
-              codium_bin="${pkgs.vscodium}/bin/codium"
-
-              ${syncScript}
-      '';
     };
   };
 
   nixpkgs.config.allowUnfree = true;
 
   xdg.configFile = {
-    "Code/User/settings.json".source = ./config/code/user/settings.json;
-    "Code/User/keybindings.json".source = ./config/code/user/keybindings.json;
-
-    "VSCodium/User/settings.json".source = ./config/code/user/settings.json;
-    "VSCodium/User/keybindings.json".source = ./config/code/user/keybindings.json;
-
     "tmuxp/kmux.yml".source = ./config/kmux.yml;
   };
 }
