@@ -138,6 +138,7 @@
       spotify
       squashfsTools
       ssh-to-age
+      statix
       strace
       supermin
       syslinux
