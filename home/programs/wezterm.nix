@@ -10,15 +10,22 @@ let
     rev = "ae840db696791f638c190c3e0534d2ddfcd5e6a7";
     hash = "sha256-9kDZAoYqQMtSGAE9w70UtkW/DLUmmwVAwCxDxk8om1E=";
   };
+  sync-panes = pkgs.fetchFromGitHub {
+    owner = "annie444";
+    repo = "sync-panes.wez";
+    rev = "2cfa9fea761e507b62a09daa1d8bef440a40265c";
+    hash = "sha256-RgrMNW5GJ+WaJnioj2DfAWdBw6fxQezNJEYV4tqroSo=";
+  };
 in
 {
   programs.wezterm = {
-    package = (config.lib.nixGL.wrap pkgs.wezterm);
+    package = config.lib.nixGL.wrap pkgs.wezterm;
     enable = true;
     enableZshIntegration = true;
     extraConfig = ''
       local config = wezterm.config_builder()
       local smart_splits = dofile('${backend-wezterm}/plugin/init.lua')
+      local sync_panes = dofile('${sync-panes}/plugin/init.lua')
       local equalize_panes = dofile('${../config/wezterm/equalize_panes.lua}')
       local act = wezterm.action
 
@@ -91,6 +98,19 @@ in
           binding.action = act.AdjustPaneSize({ resize_directions[binding.key], 3 })
         end
       end
+
+      sync_panes.apply_to_config(config, {
+        toggle_key = "S",
+        toggle_mods = "CTRL|SHIFT",
+        indicator = false,
+      })
+
+      wezterm.on("update-status", function(window, _)
+        window:set_right_status(
+          sync_panes.is_synced(window) and " ⟳ SYNC " or ""
+        )
+      end)
+
       return config
     '';
   };
