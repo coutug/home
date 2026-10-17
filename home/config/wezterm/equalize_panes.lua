@@ -10,7 +10,14 @@ local function bounds(panes)
     right = math.max(right, pane.left + pane.width)
     bottom = math.max(bottom, pane.top + pane.height)
   end
-  return { width = right - left, height = bottom - top }
+  return {
+    left = left,
+    top = top,
+    right = right,
+    bottom = bottom,
+    width = right - left,
+    height = bottom - top,
+  }
 end
 
 local function build_tree(panes)
@@ -110,7 +117,9 @@ end
 
 local function snapshot(tab)
   local result = {}
-  for _, pane in ipairs(tab:panes_with_info()) do result[pane.index] = pane end
+  for _, pane in ipairs(tab:panes_with_info()) do
+    result[pane.pane:pane_id()] = pane
+  end
   return result
 end
 
@@ -136,47 +145,80 @@ local function undo_probe(window, tab, before, after, negative)
   return same_layout(before, snapshot(tab))
 end
 
-local function probe_boundary(window, tab, candidate, verify, property, direction, reverse)
+local function group_bounds(layout, node)
+  local panes = {}
+  for _, pane in ipairs(collect(node)) do
+    local current = layout[pane.pane:pane_id()]
+    if not current then return nil end
+    panes[#panes + 1] = current
+  end
+  return bounds(panes)
+end
+
+local function probe_boundary(window, tab, node, candidate, vertical, direction, reverse)
   local before = snapshot(tab)
   pcall(function()
     window:perform_action(act.ActivatePaneByIndex(candidate.index), tab:active_pane())
     window:perform_action(act.AdjustPaneSize({ direction, 1 }), tab:active_pane())
   end)
   local after = snapshot(tab)
-  local candidate_delta = before[candidate.index] and after[candidate.index]
-    and after[candidate.index][property] - before[candidate.index][property]
-  local verify_delta = before[verify.index] and after[verify.index]
-    and after[verify.index][property] - before[verify.index][property]
+
+  local first_before = group_bounds(before, node.first)
+  local second_before = group_bounds(before, node.second)
+  local first_after = group_bounds(after, node.first)
+  local second_after = group_bounds(after, node.second)
+  local first_edge = vertical and 'right' or 'bottom'
+  local second_edge = vertical and 'left' or 'top'
+  local cross_start = vertical and 'top' or 'left'
+  local cross_end = vertical and 'bottom' or 'right'
+  local boundary_delta
+  if first_before and second_before and first_after and second_after then
+    local first_delta = first_after[first_edge] - first_before[first_edge]
+    local second_delta = second_after[second_edge] - second_before[second_edge]
+    if first_delta == second_delta
+      and first_after[vertical and 'left' or 'top'] == first_before[vertical and 'left' or 'top']
+      and second_after[vertical and 'right' or 'bottom'] == second_before[vertical and 'right' or 'bottom']
+      and first_after[cross_start] == first_before[cross_start]
+      and first_after[cross_end] == first_before[cross_end]
+      and second_after[cross_start] == second_before[cross_start]
+      and second_after[cross_end] == second_before[cross_end]
+      and first_delta ~= 0 then
+      boundary_delta = first_delta
+    end
+  end
+
   if not undo_probe(window, tab, before, after, reverse) then
     wezterm.log_warn('Equalize panes: could not restore boundary probe; stopping')
-    return nil
+    error('Equalize panes: could not restore boundary probe; stopping')
   end
-  if candidate_delta and verify_delta and candidate_delta ~= 0 and verify_delta == -candidate_delta then
-    return candidate_delta
+
+  -- A split resize can move the boundary while resizing a different pane in
+  -- the adjacent subtree. Validate the two subtrees, not one guessed pane pair.
+  if boundary_delta then
+    return boundary_delta
   end
 end
 
 local function adjust_boundary(window, tab, node, delta)
   local vertical = node.type == 'vsplit'
-  local property = vertical and 'width' or 'height'
   local toward = vertical and 'Right' or 'Down'
   local away = vertical and 'Left' or 'Up'
   local first, second = boundary_pair(node.first, node.second, vertical)
   if not first then return false end
 
-  local change = probe_boundary(window, tab, first, second, property, toward, away)
+  local change = probe_boundary(window, tab, node, first, vertical, toward, away)
   local candidate = first
   if change == nil then
-    change = probe_boundary(window, tab, second, first, property, away, toward)
+    change = probe_boundary(window, tab, node, second, vertical, away, toward)
     if change == nil then return false end
-    change = -change
     candidate = second
     toward, away = away, toward
   end
   local direction = delta * change > 0 and toward or away
+  local before = snapshot(tab)
   window:perform_action(act.ActivatePaneByIndex(candidate.index), tab:active_pane())
   window:perform_action(act.AdjustPaneSize({ direction, math.abs(delta) }), tab:active_pane())
-  return true
+  return not same_layout(before, snapshot(tab))
 end
 
 local function equalize(window)
@@ -191,7 +233,7 @@ local function equalize(window)
     end
   end
 
-  local ok, err = xpcall(function()
+  local ok, err = pcall(function()
     for _ = 1, #panes - 1 do
       local current = tab:panes_with_info()
       local tree = build_tree(current)
@@ -219,7 +261,7 @@ local function equalize(window)
       end
       if not changed then break end
     end
-  end, debug.traceback)
+  end)
 
   if original then pcall(function() original:activate() end) end
   if not ok then wezterm.log_error('Equalize panes failed: ' .. tostring(err)) end
