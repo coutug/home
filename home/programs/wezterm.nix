@@ -27,7 +27,7 @@ in
       config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
 
       config.colors = dofile(wezterm.config_dir .. "/cyberdream.lua")
-      config.window_background_opacity = 0.65
+      config.window_background_opacity = 0.80
 
       config.keys = {
         -- Splits (dans le domaine du pane courant)
