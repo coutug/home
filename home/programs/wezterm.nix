@@ -24,12 +24,12 @@ in
     enableZshIntegration = true;
     extraConfig = ''
       local config = wezterm.config_builder()
+      package.path = package.path .. ';${backend-wezterm}/plugin/?.lua;${backend-wezterm}/plugin/?/init.lua'
+
       local smart_splits = dofile('${backend-wezterm}/plugin/init.lua')
       local sync_panes = dofile('${sync-panes}/plugin/init.lua')
       local equalize_panes = dofile('${../config/wezterm/equalize_panes.lua}')
       local act = wezterm.action
-
-      package.path = package.path .. ';${backend-wezterm}/plugin/?.lua;${backend-wezterm}/plugin/?/init.lua'
 
       -- Leader key
       config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }

@@ -80,7 +80,6 @@
 				"headers": {
 					"Authorization": "{file:./gh-token}"
 				},
-				"disabled": true
 			},
 			"gh_grep": {
 				"type": "remote",
