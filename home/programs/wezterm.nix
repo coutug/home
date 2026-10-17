@@ -40,7 +40,7 @@ in
       config.keys = {
         -- Splits (dans le domaine du pane courant)
         { key = "-", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },    -- haut/bas
-        { key = "|", mods = "LEADER|SHIFT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) }, -- gauche/droite
+        { key = "_", mods = "LEADER|SHIFT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) }, -- gauche/droite
 
         -- Tabs: new / rename / workspace
         { key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
