@@ -10,6 +10,12 @@ permissions:
   - action: shell
     resource: "*"
     effect: ask
+  - action: shell
+    resource: "git status"
+    effect: allow
+  - action: shell
+    resource: "git log"
+    effect: allow
 ---
 # Core Principles
 
