@@ -77,6 +77,7 @@
       clipboard-jh
       crane
       curlie
+      dbeaver-bin
       dhcpcd
       duf
       dust
