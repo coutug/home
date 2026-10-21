@@ -5,8 +5,8 @@
     "mode": "system"
   },
   "scroll": {
-    "speed": 3,
-    "acceleration": true
+    "speed": 1,
+    "acceleration": false
   },
   "diffs": {
     "view": "auto"
