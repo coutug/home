@@ -68,8 +68,8 @@ in
         { key = "a", mods = "LEADER|CTRL", action = act.SendKey({ key = "a", mods = "CTRL" }) },
         { key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
         { key = "Tab", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(-1) },
-        { key = "x", mods = "CTRL", action = act.CloseCurrentPane({ confirm = true }) },
-        { key = "x", mods = "CTRL|SHIFT", action = act.CloseCurrentTab({ confirm = true }) },
+        { key = "q", mods = "CTRL", action = act.CloseCurrentPane({ confirm = true }) },
+        { key = "q", mods = "CTRL|SHIFT", action = act.CloseCurrentTab({ confirm = true }) },
         {
           key = "v", mods = "CTRL",
           action = wezterm.action_callback(function(window, pane)
