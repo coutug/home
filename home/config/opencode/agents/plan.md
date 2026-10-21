@@ -10,12 +10,6 @@ permissions:
   - action: shell
     resource: "*"
     effect: ask
-  - action: shell
-    resource: "git status"
-    effect: allow
-  - action: shell
-    resource: "git log"
-    effect: allow
 ---
 # Core Principles
 
@@ -77,3 +71,4 @@ Include only sections and details that add value.
 - Be explicit and analytical
 - Avoid vague statements
 - Follow best practices
+- Use `read`, `glob`, and `grep` to inspect files as much as possible
