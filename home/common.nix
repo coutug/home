@@ -65,6 +65,7 @@
 
     sessionPath = pkgs.lib.mkAfter [
       "${config.home.homeDirectory}/.bun/bin"
+      "${config.home.homeDirectory}/.local/bin"
       "${config.home.homeDirectory}/go/bin"
     ];
 
