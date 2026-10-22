@@ -78,9 +78,9 @@ Suggestions worth raising:
 
 Keep the bar high. The goal is to flag things the eval author would say "good catch" about, not to nitpick every assertion.
 
-### Step 7: Write Grading Results
+### Step 7: Return Grading Results
 
-Save results to `{outputs_dir}/../grading.json` (sibling to outputs_dir).
+Return structured JSON to parent. Do not write files; parent validates and saves as `grading.json` in run directory.
 
 ## Grading Criteria
 
@@ -105,7 +105,7 @@ Save results to `{outputs_dir}/../grading.json` (sibling to outputs_dir).
 
 ## Output Format
 
-Write a JSON file with this structure:
+Return JSON with this structure:
 
 ```json
 {
@@ -198,7 +198,7 @@ Write a JSON file with this structure:
   - **output_chars**: Total character count of output files (proxy for tokens)
   - **transcript_chars**: Character count of transcript
 - **timing**: Wall clock timing from timing.json (if available)
-  - **executor_duration_seconds**: Time spent in executor subagent
+  - **executor_duration_seconds**: Wall time reported by execution launcher, or `null` if unavailable
   - **total_duration_seconds**: Total elapsed time for the run
 - **claims**: Extracted and verified claims from the output
   - **claim**: The statement being verified

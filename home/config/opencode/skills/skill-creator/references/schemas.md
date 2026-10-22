@@ -198,11 +198,14 @@ Output from the executor agent. Located at `<run-dir>/outputs/metrics.json`.
 
 Wall clock timing for a run. Located at `<run-dir>/timing.json`.
 
-**How to capture:** When a subagent task completes, the task notification includes `total_tokens` and `duration_ms`. Save these immediately — they are not persisted anywhere else and cannot be recovered after the fact.
+**How to capture:** Measure elapsed wall time in the execution launcher. Collect token usage from native OpenCode `step_finish` events when available. Subagent notifications do not provide these metrics. Store unavailable values as `null`; never substitute character counts for tokens.
 
 ```json
 {
-  "total_tokens": 84852,
+  "session_id": "session-id",
+  "requested_model": "provider/model",
+  "resolved_model": null,
+  "total_tokens": null,
   "duration_ms": 23332,
   "total_duration_seconds": 23.3,
   "executor_start": "2026-01-15T10:30:00Z",
@@ -225,7 +228,7 @@ Output from Benchmark mode. Located at `benchmarks/<timestamp>/benchmark.json`.
   "metadata": {
     "skill_name": "pdf",
     "skill_path": "/path/to/pdf",
-    "executor_model": "claude-sonnet-4-20250514",
+    "executor_model": "opencode-model-reference",
     "analyzer_model": "most-capable-model",
     "timestamp": "2026-01-15T10:30:00Z",
     "evals_run": [1, 2, 3],

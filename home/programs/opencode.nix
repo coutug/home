@@ -26,6 +26,7 @@ in
 
   home.packages = [
     opencode.packages.${pkgs.stdenv.hostPlatform.system}.default
+    (pkgs.python3.withPackages (pythonPackages: [ pythonPackages.pyyaml ]))
   ];
 
   xdg.configFile = {

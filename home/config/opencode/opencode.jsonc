@@ -10,21 +10,9 @@
 		"ignore": ["node_modules/**", "dist/**", ".git/**"]
 	},
 	"plugins": [
-		"opencode-goal-plugin@0.11.0",
+    // https://github.com/william-ricchiuti/OpenCode-goal-plugin/tree/v0.11.1
+		"opencode-goal-plugin@0.1.11",
 		"@mohak34/opencode-notifier@1.0.0"
-	],
-	"permissions": [
-		{ "action": "edit", "resource": "*", "effect": "allow" },
-		{ "action": "shell", "resource": "*", "effect": "allow" },
-		{ "action": "read", "resource": "*", "effect": "allow" },
-		{ "action": "grep", "resource": "*", "effect": "allow" },
-		{ "action": "glob", "resource": "*", "effect": "allow" },
-		{ "action": "skill", "resource": "*", "effect": "allow" },
-		{ "action": "todowrite", "resource": "*", "effect": "allow" },
-		{ "action": "todoread", "resource": "*", "effect": "allow" },
-		{ "action": "webfetch", "resource": "*", "effect": "allow" },
-		{ "action": "websearch", "resource": "*", "effect": "allow" },
-		{ "action": "question", "resource": "*", "effect": "allow" }
 	],
 	"providers": {
 		"openai": {

@@ -79,9 +79,10 @@ def validate_skill(skill_path):
         # Check for angle brackets
         if '<' in description or '>' in description:
             return False, "Description cannot contain angle brackets (< or >)"
-        # Check description length (max 1024 characters per spec)
+        # Keep descriptions portable across skill hosts; OpenCode does not
+        # currently enforce this 1024-character local policy.
         if len(description) > 1024:
-            return False, f"Description is too long ({len(description)} characters). Maximum is 1024 characters."
+            return False, f"Description exceeds local portability policy ({len(description)} characters; limit 1024)."
 
     # Validate compatibility field if present (optional)
     compatibility = frontmatter.get('compatibility', '')

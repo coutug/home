@@ -84,13 +84,13 @@ Compare A and B based on (in priority order):
 
 Be decisive - ties should be rare. One output is usually better, even if marginally.
 
-### Step 7: Write Comparison Results
+### Step 7: Return Comparison Results
 
-Save results to a JSON file at the path specified (or `comparison.json` if not specified).
+Return structured JSON to parent. Do not write files; parent validates and persists it.
 
 ## Output Format
 
-Write a JSON file with this structure:
+Return JSON with this structure:
 
 ```json
 {

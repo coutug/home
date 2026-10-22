@@ -49,6 +49,11 @@ MIME_OVERRIDES = {
 }
 
 
+def _safe_workspace_file(root: Path, path: Path) -> bool:
+    """Reject symlinks and paths resolving outside workspace."""
+    return not path.is_symlink() and path.resolve().is_relative_to(root.resolve())
+
+
 def get_mime_type(path: Path) -> str:
     ext = path.suffix.lower()
     if ext in MIME_OVERRIDES:
@@ -59,6 +64,7 @@ def get_mime_type(path: Path) -> str:
 
 def find_runs(workspace: Path) -> list[dict]:
     """Recursively find directories that contain an outputs/ subdirectory."""
+    workspace = workspace.resolve()
     runs: list[dict] = []
     _find_runs_recursive(workspace, workspace, runs)
     runs.sort(key=lambda r: (r.get("eval_id", float("inf")), r["id"]))
@@ -66,7 +72,11 @@ def find_runs(workspace: Path) -> list[dict]:
 
 
 def _find_runs_recursive(root: Path, current: Path, runs: list[dict]) -> None:
-    if not current.is_dir():
+    if (
+        current.is_symlink()
+        or not current.is_dir()
+        or not current.resolve().is_relative_to(root.resolve())
+    ):
         return
 
     outputs_dir = current / "outputs"
@@ -78,7 +88,7 @@ def _find_runs_recursive(root: Path, current: Path, runs: list[dict]) -> None:
 
     skip = {"node_modules", ".git", "__pycache__", "skill", "inputs"}
     for child in sorted(current.iterdir()):
-        if child.is_dir() and child.name not in skip:
+        if child.is_dir() and not child.is_symlink() and child.name not in skip:
             _find_runs_recursive(root, child, runs)
 
 
@@ -88,8 +98,12 @@ def build_run(root: Path, run_dir: Path) -> dict | None:
     eval_id = None
 
     # Try eval_metadata.json
-    for candidate in [run_dir / "eval_metadata.json", run_dir.parent / "eval_metadata.json"]:
-        if candidate.exists():
+    for candidate in [
+        run_dir / "eval_metadata.json",
+        run_dir.parent / "eval_metadata.json",
+        run_dir.parent.parent / "eval_metadata.json",
+    ]:
+        if candidate.exists() and _safe_workspace_file(root, candidate):
             try:
                 metadata = json.loads(candidate.read_text())
                 prompt = metadata.get("prompt", "")
@@ -102,7 +116,7 @@ def build_run(root: Path, run_dir: Path) -> dict | None:
     # Fall back to transcript.md
     if not prompt:
         for candidate in [run_dir / "transcript.md", run_dir / "outputs" / "transcript.md"]:
-            if candidate.exists():
+            if candidate.exists() and _safe_workspace_file(root, candidate):
                 try:
                     text = candidate.read_text()
                     match = re.search(r"## Eval Prompt\n\n([\s\S]*?)(?=\n##|$)", text)
@@ -121,15 +135,20 @@ def build_run(root: Path, run_dir: Path) -> dict | None:
     # Collect output files
     outputs_dir = run_dir / "outputs"
     output_files: list[dict] = []
-    if outputs_dir.is_dir():
+    if outputs_dir.is_dir() and not outputs_dir.is_symlink():
         for f in sorted(outputs_dir.iterdir()):
-            if f.is_file() and f.name not in METADATA_FILES:
+            if (
+                f.is_file()
+                and not f.is_symlink()
+                and f.resolve().is_relative_to(outputs_dir.resolve())
+                and f.name not in METADATA_FILES
+            ):
                 output_files.append(embed_file(f))
 
     # Load grading if present
     grading = None
     for candidate in [run_dir / "grading.json", run_dir.parent / "grading.json"]:
-        if candidate.exists():
+        if candidate.exists() and _safe_workspace_file(root, candidate):
             try:
                 grading = json.loads(candidate.read_text())
             except (json.JSONDecodeError, OSError):
@@ -220,7 +239,7 @@ def load_previous_iteration(workspace: Path) -> dict[str, dict]:
     # Load feedback
     feedback_map: dict[str, str] = {}
     feedback_path = workspace / "feedback.json"
-    if feedback_path.exists():
+    if feedback_path.exists() and _safe_workspace_file(workspace, feedback_path):
         try:
             data = json.loads(feedback_path.read_text())
             feedback_map = {
@@ -276,7 +295,8 @@ def generate_html(
     if benchmark:
         embedded["benchmark"] = benchmark
 
-    data_json = json.dumps(embedded)
+    # Prevent untrusted artifact text from terminating this script element.
+    data_json = json.dumps(embedded).replace("<", "\\u003c")
 
     return template.replace("/*__EMBEDDED_DATA__*/", f"const EMBEDDED_DATA = {data_json};")
 
@@ -348,7 +368,7 @@ class ReviewHandler(BaseHTTPRequestHandler):
             self.wfile.write(content)
         elif self.path == "/api/feedback":
             data = b"{}"
-            if self.feedback_path.exists():
+            if self.feedback_path.exists() and _safe_workspace_file(self.workspace, self.feedback_path):
                 data = self.feedback_path.read_bytes()
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
@@ -366,6 +386,8 @@ class ReviewHandler(BaseHTTPRequestHandler):
                 data = json.loads(body)
                 if not isinstance(data, dict) or "reviews" not in data:
                     raise ValueError("Expected JSON object with 'reviews' key")
+                if not _safe_workspace_file(self.workspace, self.feedback_path):
+                    raise ValueError("Unsafe feedback path")
                 self.feedback_path.write_text(json.dumps(data, indent=2) + "\n")
                 resp = b'{"ok":true}'
                 self.send_response(200)

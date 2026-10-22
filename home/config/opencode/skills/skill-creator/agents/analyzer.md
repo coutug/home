@@ -16,7 +16,7 @@ You receive these parameters in your prompt:
 - **loser_skill_path**: Path to the skill that produced the losing output
 - **loser_transcript_path**: Path to the execution transcript for the loser
 - **comparison_result_path**: Path to the blind comparator's output JSON
-- **output_path**: Where to save the analysis results
+- **output_path**: Parent-owned destination; return analysis without writing files
 
 ## Process
 
@@ -84,13 +84,13 @@ Based on the analysis, produce actionable suggestions for improving the loser sk
 
 Prioritize by impact. Focus on changes that would have changed the outcome.
 
-### Step 8: Write Analysis Results
+### Step 8: Return Analysis Results
 
-Save structured analysis to `{output_path}`.
+Return structured analysis to parent. Do not write files; parent validates and saves to `{output_path}`.
 
 ## Output Format
 
-Write a JSON file with this structure:
+Return JSON with this structure:
 
 ```json
 {
@@ -198,7 +198,7 @@ You receive these parameters in your prompt:
 
 - **benchmark_data_path**: Path to the in-progress benchmark.json with all run results
 - **skill_path**: Path to the skill being benchmarked
-- **output_path**: Where to save the notes (as JSON array of strings)
+- **output_path**: Parent-owned destination for returned notes (JSON array of strings)
 
 ## Process
 
@@ -246,9 +246,9 @@ Examples:
 - "Token usage is 80% higher with skill, primarily due to script output parsing"
 - "All 3 without-skill runs for eval 1 produced empty output"
 
-### Step 6: Write Notes
+### Step 6: Return Notes
 
-Save notes to `{output_path}` as a JSON array of strings:
+Return notes to parent as a JSON array of strings; do not write files:
 
 ```json
 [

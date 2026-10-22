@@ -17,25 +17,32 @@ from pathlib import Path
 
 from scripts.generate_report import generate_html
 from scripts.improve_description import improve_description
-from scripts.run_eval import find_project_root, run_eval
+from scripts.run_eval import run_eval
 from scripts.utils import parse_skill_md
 
 
 def split_eval_set(eval_set: list[dict], holdout: float, seed: int = 42) -> tuple[list[dict], list[dict]]:
-    """Split eval set into train and test sets, stratified by should_trigger."""
-    random.seed(seed)
+    """Split evals into fitting and validation sets, stratified by expectation."""
+    if not 0 <= holdout < 1:
+        raise ValueError("holdout must be in [0, 1)")
+    rng = random.Random(seed)
 
     # Separate by should_trigger
     trigger = [e for e in eval_set if e["should_trigger"]]
     no_trigger = [e for e in eval_set if not e["should_trigger"]]
 
     # Shuffle each group
-    random.shuffle(trigger)
-    random.shuffle(no_trigger)
+    rng.shuffle(trigger)
+    rng.shuffle(no_trigger)
 
     # Calculate split points
-    n_trigger_test = max(1, int(len(trigger) * holdout))
-    n_no_trigger_test = max(1, int(len(no_trigger) * holdout))
+    def validation_count(items: list[dict]) -> int:
+        if holdout == 0 or len(items) < 2:
+            return 0
+        return min(len(items) - 1, max(1, int(len(items) * holdout)))
+
+    n_trigger_test = validation_count(trigger)
+    n_no_trigger_test = validation_count(no_trigger)
 
     # Split
     test_set = trigger[:n_trigger_test] + no_trigger[:n_no_trigger_test]
@@ -60,9 +67,8 @@ def run_loop(
     log_dir: Path | None = None,
 ) -> dict:
     """Run the eval + improvement loop."""
-    project_root = find_project_root()
     name, original_description, content = parse_skill_md(skill_path)
-    current_description = description_override or original_description
+    current_description = description_override if description_override is not None else original_description
 
     # Split into train/test if holdout > 0
     if holdout > 0:
@@ -88,21 +94,57 @@ def run_loop(
         t0 = time.time()
         all_results = run_eval(
             eval_set=all_queries,
-            skill_name=name,
+            skill_path=skill_path,
             description=current_description,
             num_workers=num_workers,
             timeout=timeout,
-            project_root=project_root,
+            workspace_root=Path("/tmp/opencode/skill-creator/trigger-evals"),
             runs_per_query=runs_per_query,
             trigger_threshold=trigger_threshold,
             model=model,
         )
         eval_elapsed = time.time() - t0
 
-        # Split results back into train/test by matching queries
-        train_queries_set = {q["query"] for q in train_set}
-        train_result_list = [r for r in all_results["results"] if r["query"] in train_queries_set]
-        test_result_list = [r for r in all_results["results"] if r["query"] not in train_queries_set]
+        if all_results["summary"]["errors"]:
+            diagnostic_runs = [
+                {
+                    "eval_id": result["eval_id"],
+                    "query": result["query"],
+                    "errors": [
+                        {
+                            key: run.get(key)
+                            for key in (
+                                "run_index", "error", "session_id", "requested_model",
+                                "duration_seconds", "event_types",
+                            )
+                            if run.get(key) is not None
+                        }
+                        for run in result["errors"]
+                    ],
+                }
+                for result in all_results["results"]
+                if result["errors"]
+            ]
+            error_report = {
+                "iteration": iteration,
+                "description": current_description,
+                "summary": all_results["summary"],
+                "failed_runs": diagnostic_runs,
+            }
+            if log_dir:
+                log_dir.mkdir(parents=True, exist_ok=True)
+                (log_dir / f"trigger-errors-iter-{iteration}.json").write_text(
+                    json.dumps(error_report, indent=2, ensure_ascii=False),
+                    encoding="utf-8",
+                )
+            detail = json.dumps(diagnostic_runs[:5], ensure_ascii=False)
+            raise RuntimeError(
+                f"OpenCode trigger evaluation had {all_results['summary']['errors']} "
+                f"infrastructure error(s); diagnostics={detail}. Errors are not trigger misses."
+            )
+
+        train_result_list = [r for r in all_results["results"] if r["eval_index"] < len(train_set)]
+        test_result_list = [r for r in all_results["results"] if r["eval_index"] >= len(train_set)]
 
         train_passed = sum(1 for r in train_result_list if r["pass"])
         train_total = len(train_result_list)
@@ -166,7 +208,7 @@ def run_loop(
                 accuracy = (tp + tn) / total if total > 0 else 0.0
                 print(f"{label}: {tp+tn}/{total} correct, precision={precision:.0%} recall={recall:.0%} accuracy={accuracy:.0%} ({elapsed:.1f}s)", file=sys.stderr)
                 for r in results:
-                    status = "PASS" if r["pass"] else "FAIL"
+                    status = "ERROR" if r["pass"] is None else "PASS" if r["pass"] else "FAIL"
                     rate_str = f"{r['triggers']}/{r['runs']}"
                     print(f"  [{status}] rate={rate_str} expected={r['should_trigger']}: {r['query'][:60]}", file=sys.stderr)
 
@@ -213,7 +255,7 @@ def run_loop(
 
         current_description = new_description
 
-    # Find the best iteration by TEST score (or train if no test set)
+    # Validation set supports candidate selection; it is not a final untouched test.
     if test_set:
         best = max(history, key=lambda h: h["test_passed"] or 0)
         best_score = f"{best['test_passed']}/{best['test_total']}"
@@ -246,13 +288,13 @@ def main():
     parser.add_argument("--eval-set", required=True, help="Path to eval set JSON file")
     parser.add_argument("--skill-path", required=True, help="Path to skill directory")
     parser.add_argument("--description", default=None, help="Override starting description")
-    parser.add_argument("--num-workers", type=int, default=10, help="Number of parallel workers")
-    parser.add_argument("--timeout", type=int, default=30, help="Timeout per query in seconds")
+    parser.add_argument("--num-workers", type=int, default=4, help="Concurrent fresh OpenCode sessions")
+    parser.add_argument("--timeout", type=int, default=120, help="Deadline per query in seconds")
     parser.add_argument("--max-iterations", type=int, default=5, help="Max improvement iterations")
     parser.add_argument("--runs-per-query", type=int, default=3, help="Number of runs per query")
     parser.add_argument("--trigger-threshold", type=float, default=0.5, help="Trigger rate threshold")
-    parser.add_argument("--holdout", type=float, default=0.4, help="Fraction of eval set to hold out for testing (0 to disable)")
-    parser.add_argument("--model", required=True, help="Model for improvement")
+    parser.add_argument("--holdout", type=float, default=0.4, help="Fraction reserved for validation and candidate selection (0 to disable)")
+    parser.add_argument("--model", required=True, help="OpenCode model reference for optimization")
     parser.add_argument("--verbose", action="store_true", help="Print progress to stderr")
     parser.add_argument("--report", default="auto", help="Generate HTML report at this path (default: 'auto' for temp file, 'none' to disable)")
     parser.add_argument("--results-dir", default=None, help="Save all outputs (results.json, report.html, log.txt) to a timestamped subdirectory here")
@@ -271,10 +313,11 @@ def main():
     if args.report != "none":
         if args.report == "auto":
             timestamp = time.strftime("%Y%m%d_%H%M%S")
-            live_report_path = Path(tempfile.gettempdir()) / f"skill_description_report_{skill_path.name}_{timestamp}.html"
+            live_report_path = Path("/tmp/opencode") / f"skill_description_report_{skill_path.name}_{timestamp}.html"
         else:
             live_report_path = Path(args.report)
-        # Open the report immediately so the user can watch
+        live_report_path.parent.mkdir(parents=True, exist_ok=True)
+        # Open report immediately so user can watch progress.
         live_report_path.write_text("<html><body><h1>Starting optimization loop...</h1><meta http-equiv='refresh' content='5'></body></html>")
         webbrowser.open(str(live_report_path))
     else:
