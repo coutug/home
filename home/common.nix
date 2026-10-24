@@ -17,6 +17,7 @@
   imports = [
     sops-nix.homeManagerModules.sops
     ./programs/atuin.nix
+    ./programs/agent-orchestrator.nix
     ./programs/bat.nix
     ./programs/fzf.nix
     ./programs/git.nix
@@ -158,6 +159,7 @@
       velero
       vesktop
       vlc
+      worktrunk
       yara
       yay
       yazi
