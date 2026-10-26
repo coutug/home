@@ -12,7 +12,7 @@
     ./programs/fzf.nix
     ./programs/home-manager.nix
     ./programs/htop.nix
-    ./programs/zsh.nix
+    ./programs/zsh-server.nix
     ./programs/zoxide.nix
   ];
 
@@ -22,10 +22,6 @@
   home.packages = [
     k0s-nix.packages.${pkgs.stdenv.hostPlatform.system}.k0s
   ];
-
-  home.sessionVariables = {
-    SERVER_PROMPT = 1;
-  };
 
   sops.age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
 }
