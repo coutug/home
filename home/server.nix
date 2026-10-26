@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  lib,
   sops-nix,
   k0s-nix,
   ...

@@ -45,7 +45,6 @@
         "helm"
         "kubectl"
         "minikube"
-        "kmux"
         "pvc-usage"
         "sudo"
         "systemd"

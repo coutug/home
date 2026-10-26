@@ -9,10 +9,25 @@ Ce document explique comment vérifier ces configurations sans les déployer,
 quels tests ajouter progressivement, et ce que chaque niveau de test prouve ou
 ne prouve pas.
 
-> **État actuel :** le dépôt ne déclare pas encore `checks.<system>`,
-> `formatter.<system>`, tests automatisés ou CI. Les commandes et structures
-> marquées **à ajouter** sont des recommandations, pas des fonctionnalités déjà
-> disponibles.
+> **Current status:** focused automated tests exist (listed below), but the
+> repository has no `checks.<system>`, `formatter.<system>`, or CI. Commands and
+> structures marked **à ajouter** remain recommendations, not implemented features.
+
+## Existing focused regression tests
+
+Run these from the repository root without activation or SOPS decryption:
+
+```bash
+python3 tests/test_cleanup.py
+python3 tests/test_kubeconfig_permissions.py
+nix build --impure --no-link --file tests/k9s-aliases.nix
+```
+
+The cleanup test inspects source wiring, evaluates both workstation profiles
+and all three NixOS toplevels, and builds only generated shell/terminal config
+files for syntax and removal checks. It does not build complete profiles or
+systems. There are focused automated tests now, but no flake `checks` or CI.
+Removed kmux behavior tests are obsolete; absence checks replace them.
 
 ## 1. Règles de sécurité
 
@@ -314,8 +329,8 @@ Créer pour chaque test :
 1. copie temporaire du dépôt initialisée avec Git ;
 2. `$HOME`, `TMPDIR` et secrets fixtures temporaires ;
 3. répertoire `bin/` injecté au début de `PATH` ;
-4. faux `sops`, `nix`, `ssh`, `ssh-keygen`, `ssh-to-age`, `fzf`, `tmuxp` et
-   autres commandes externes ;
+4. Mock `sops`, `nix`, `ssh`, `ssh-keygen`, `ssh-to-age`, `fzf`, and
+   other external commands;
 5. journal des appels et arguments ;
 6. mocks qui refusent réseau, hôtes réels, `/etc`, `/home/gabriel` et tout
    chemin hors répertoire test.
