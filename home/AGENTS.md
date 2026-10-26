@@ -16,3 +16,11 @@
 - Keep program modules focused and small.
 - Keep shared logic in `common.nix` or dedicated reusable modules.
 - Do not run `home-manager switch` without explicit approval.
+
+## Tool removal boundary
+- Do not wire tmux, kmux, tmuxp, tmuxinator, VS Code, or VSCodium into profiles,
+  custom completions/plugins, launchers, or integrations.
+- Keep unrelated shell helpers (including the `tx` tax calculator), Atuin,
+  clipboard utilities, and WezTerm/Neovim integrations intact.
+- Custom completion and OpenCode skill directories are deployed recursively;
+  missing literal per-file imports do not make their contents unused.

@@ -147,8 +147,6 @@
       syslinux
       tealdeer
       thunderbird
-      tmux
-      tmuxp
       traceroute
       tradingview
       transfer-sh
@@ -171,7 +169,6 @@
     ];
 
     file = {
-      ".tmux.conf".source = ./config/tmux.conf;
       ".kube/kubie.yaml".source = ./config/kubie.yaml;
       ".ssh/config".source = ./config/ssh/config;
     };
@@ -185,8 +182,4 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-
-  xdg.configFile = {
-    "tmuxp/kmux.yml".source = ./config/kmux.yml;
-  };
 }

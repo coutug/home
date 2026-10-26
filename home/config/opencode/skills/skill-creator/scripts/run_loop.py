@@ -10,7 +10,6 @@ import argparse
 import json
 import random
 import sys
-import tempfile
 import time
 import webbrowser
 from pathlib import Path

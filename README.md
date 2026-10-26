@@ -26,3 +26,7 @@ Read the nearest `AGENTS.md` before editing a subtree:
 ## Notes
 - Keep changes declarative and reproducible.
 - Any new operational rule, module, workflow, or secret policy should be reflected in the relevant `AGENTS.md`.
+- Profiles do not configure or install tmux/kmux, tmuxp/tmuxinator, VS Code, or VSCodium.
+  This does not uninstall manually installed tools or remove unmanaged dotfiles.
+- Run `python3 tests/test_cleanup.py` for removal and profile-composition regressions;
+  see [testing.md](testing.md) for other non-activating checks.

@@ -5,7 +5,6 @@ import argparse
 import json
 import shutil
 import sys
-import tempfile
 import time
 import uuid
 from concurrent.futures import ProcessPoolExecutor, as_completed

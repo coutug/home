@@ -1,5 +1,9 @@
 # Recommandations d'amélioration
 
+> Historical audit: tmux, kmux, tmuxp, and tmuxinator wiring has since been
+> removed. References below record the original findings, not current setup
+> instructions. The separate Atuin findings remain unchanged.
+
 Ce document synthétise l'audit du dépôt. Les recommandations sont classées par
 impact et ordre d'exécution. Elles visent sécurité, fiabilité opérationnelle et
 reproductibilité ; elles n'impliquent pas de modifier des préférences
