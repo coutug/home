@@ -177,10 +177,10 @@
     };
 
     activation = {
-      ensureKubeconfigDirectory = lib.hm.dag.entryBefore [ "sops-nix" ] ''
-        ${pkgs.coreutils}/bin/install -d -m 0700 "${config.home.homeDirectory}/.kube/kubeconfig"
+      ensureKubeconfigDirectory = lib.hm.dag.entryBetween [ "sops-nix" ] [ "writeBoundary" ] ''
+        # Also correct permissions on existing installs before SOPS creates links.
+        run ${pkgs.coreutils}/bin/install -d -m 0700 ${lib.escapeShellArg "${config.home.homeDirectory}/.kube/kubeconfig"}
       '';
-
     };
   };
 
