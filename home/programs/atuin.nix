@@ -4,10 +4,11 @@
     enable = true;
     enableZshIntegration = true;
     daemon.enable = true;
-    themes."marineTheme"."marineTheme".name = "marine"; # fonctionne pas
     settings = {
-      auto_sync = true;
-      sync_frequency = "20m";
+      # Keep history local until a sync destination and filtering policy are approved.
+      auto_sync = false;
+      # Marine is built into the pinned Atuin version; no custom theme file is needed.
+      theme.name = "marine";
       style = "compact";
       update_check = false;
       invert = true;

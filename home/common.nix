@@ -27,6 +27,7 @@
     ./programs/neovim.nix
     ./programs/obs-studio.nix
     ./programs/opencode.nix
+    ./programs/tmux.nix
     ./programs/zsh.nix
     ./programs/wezterm.nix
     ./programs/zoxide.nix
@@ -147,7 +148,6 @@
       syslinux
       tealdeer
       thunderbird
-      tmux
       tmuxp
       traceroute
       tradingview
@@ -171,7 +171,6 @@
     ];
 
     file = {
-      ".tmux.conf".source = ./config/tmux.conf;
       ".kube/kubie.yaml".source = ./config/kubie.yaml;
       ".ssh/config".source = ./config/ssh/config;
     };
