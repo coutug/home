@@ -1158,8 +1158,13 @@
         return "";
       }
 
-      // Discover config names dynamically (everything except "delta")
-      const configs = Object.keys(summary).filter(k => k !== "delta");
+      // Keep candidate configurations before their baselines regardless of name.
+      const candidateNames = ["with_skill", "new_skill", "candidate"];
+      const baselineNames = ["without_skill", "old_skill", "baseline"];
+      const configs = Object.keys(summary).filter(k => k !== "delta").sort((a, b) => {
+        const role = name => candidateNames.includes(name) ? 0 : baselineNames.includes(name) ? 1 : 2;
+        return role(a) - role(b);
+      });
       const configA = configs[0] || "config_a";
       const configB = configs[1] || "config_b";
       const labelA = configA.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
@@ -1217,7 +1222,10 @@
           html += "<tbody>";
 
           // Group by config and render with average rows
-          const configGroups = [...new Set(evalRuns.map(r => r.configuration))];
+          const configGroups = [...new Set(evalRuns.map(r => r.configuration))].sort((a, b) => {
+            const role = name => candidateNames.includes(name) ? 0 : baselineNames.includes(name) ? 1 : 2;
+            return role(a) - role(b);
+          });
           for (let ci = 0; ci < configGroups.length; ci++) {
             const config = configGroups[ci];
             const configRuns = evalRuns.filter(r => r.configuration === config);

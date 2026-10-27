@@ -185,11 +185,11 @@ Each execution lives in numbered `run-N/`; keep transcript, `timing.json`, and `
 
 **Baseline run** (same prompt, but the baseline depends on context):
 - **Creating a new skill**: deny skill invocation except ambient `caveman` style skill. Global metadata may still be advertised; baseline is invalid if candidate skill content is loaded. Do not rely on omitting a skill path. Save to `without_skill/run-1/outputs/`.
-- **Improving an existing skill**: snapshot full skill directory, including references and scripts, before edits. Configure baseline to expose only frozen snapshot (plus `caveman`); deny current skill ID. Save to `old_skill/run-1/outputs/`.
+- **Improving an existing skill**: snapshot full skill directory, including references and scripts, before edits. Stage that snapshot as the only candidate skill source for the baseline, retaining its original directory name and native skill ID. Allow that ID in the baseline while denying other skills except ambient `caveman`; denying the shared ID would also block the snapshot. Save to `old_skill/run-1/outputs/`.
 
 Use fresh isolated `build` sessions with separate workspaces/configs. Capture native skill-tool `id` calls and session ID. Do not transfer candidate instructions or outputs into baseline context. If exclusion cannot be verified, mark baseline invalid.
 
-Launch through `opencode run --standalone --agent build --format json` from the run workspace, with per-run `OPENCODE_CONFIG_CONTENT`. Candidate config exposes only staged candidate directory; no-skill baseline omits it and denies `skill` except `caveman`; old-skill baseline exposes snapshot directory and denies current skill ID. Append these skill rules after agent rules so final matching rule enforces intended access. Save JSON event stream as transcript and keep session metadata beside outputs. Never point evaluator at the user's repository as writable cwd.
+Launch through `opencode run --standalone --agent build --format json` from the run workspace, with per-run `OPENCODE_CONFIG_CONTENT` and project config discovery disabled. Candidate config exposes only staged candidate directory; no-skill baseline omits it and denies `skill` except `caveman`; old-skill baseline exposes only the frozen snapshot and allows its original skill ID, denying other skills except `caveman`. Append these skill rules after agent rules so final matching rule enforces intended access. Save JSON event stream as transcript and keep session metadata beside outputs. Never point evaluator at the user's repository as writable cwd.
 
 Write an `eval_metadata.json` for each test case (assertions can be empty for now). Give each eval a descriptive name based on what it's testing. Use directory `eval-<ID>-<descriptive-name>/`. If iteration uses new or modified eval prompts, create these files for each eval directory; don't assume they carry over.
 
@@ -372,12 +372,12 @@ Present the eval set to the user for review using the HTML template:
 
 1. Read the template from `assets/eval_review.html`
 2. Replace the placeholders:
-   - `__EVAL_DATA_PLACEHOLDER__` → the JSON array of eval items (no quotes around it — it's a JS variable assignment)
+   - `__EVAL_DATA_PLACEHOLDER__` → the JSON array of eval items (no quotes around it — it's a JS variable assignment). Escape every `<` in the serialized JSON as `\u003c` before inserting it, preventing query text from closing the surrounding `<script>` element.
    - `__SKILL_NAME_PLACEHOLDER__` → the skill's name
    - `__SKILL_DESCRIPTION_PLACEHOLDER__` → the skill's current description
-3. Write to a temp file (e.g., `/tmp/eval_review_<skill-name>.html`) and open it: `open /tmp/eval_review_<skill-name>.html`
+3. Write to a temp file (e.g., `/tmp/eval_review_<skill-name>.html`) and open it with the platform's file opener (`xdg-open` on Linux, `open` on macOS). If no desktop/browser is available, provide the HTML path for the user to open elsewhere.
 4. The user can edit queries, toggle should-trigger, add/remove entries, then click "Export Eval Set"
-5. The file downloads to `~/Downloads/eval_set.json` — check the Downloads folder for the most recent version in case there are multiple (e.g., `eval_set (1).json`)
+5. Find the exported `eval_set.json` in the browser's configured download directory; check for a newly numbered copy if earlier exports exist.
 
 This step matters — bad eval queries lead to bad descriptions.
 
@@ -388,6 +388,7 @@ Tell the user: "This will take some time — I'll run the optimization loop in t
 Save the eval set to the workspace, then run in the background:
 
 ```bash
+cd <skill-creator-dir>
 python -m scripts.run_loop \
   --eval-set <path-to-trigger-eval.json> \
   --skill-path <path-to-skill> \
@@ -419,8 +420,11 @@ Take `best_description` from the JSON output and update the skill's SKILL.md fro
 Package through filesystem when useful; no presentation tool is required:
 
 ```bash
+cd <skill-creator-dir>
 python -m scripts.package_skill <path/to/skill-folder>
 ```
+
+The package excludes root `evals/` and `.opencode/` runtime data.
 
 After packaging, direct the user to the resulting `.skill` file path so they can install it.
 
