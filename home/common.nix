@@ -19,6 +19,7 @@
     ./programs/atuin.nix
     ./programs/agent-orchestrator.nix
     ./programs/bat.nix
+    ./programs/bottom.nix
     ./programs/fzf.nix
     ./programs/git.nix
     ./programs/home-manager.nix
