@@ -2,7 +2,7 @@
 description: Analyzes questions, code, systems, research, and decisions; plans implementation when execution is needed, without modifying files.
 mode: primary
 color: "#bc8cff"
-model: openai/gpt-6.1-sol#medium
+model: openroute/gemini-3.8-flash#high
 permissions:
   - action: edit
     resource: "*"

@@ -1,7 +1,7 @@
 ---
 description: Independently evaluates changes, plans, documents, and outputs against requirements; reports evidence-backed findings.
 mode: subagent
-model: openai/gpt-6-luna#xhigh
+model: openrouter/gpt-6.1-sol#medium
 permissions:
   - action: edit
     resource: "*"

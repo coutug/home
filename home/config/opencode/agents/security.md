@@ -1,7 +1,7 @@
 ---
 description: Audits software, infrastructure, workflows, and data boundaries for evidence-backed security risks.
 mode: subagent
-model: openai/gpt-6.1-sol#high
+model: openrouter/gpt-6.1-sol#high
 permissions:
   - action: edit
     resource: "*"
