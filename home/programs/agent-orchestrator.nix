@@ -5,7 +5,7 @@ let
     pname = "agent-orchestrator";
     inherit version;
     src = pkgs.fetchurl {
-      url = "https://github.com/OrchestratorInc/agent-orchestrator/releases/download/v${version}/agent-orchestrator-linux-x64.AppImage";
+      url = "https://github.com/OrchestratorInc/agent-orchestrator/releases/download/${version}/agent-orchestrator-linux-x64.AppImage";
       # nix store prefetch-file --json "https://github.com/OrchestratorInc/agent-orchestrator/releases/download/v${VERSION}/agent-orchestrator-linux-x64.AppImage"
       hash = "sha256-juhBl2C6ZwxTS+mhz2Se58ZG+gQ6Zmy4PI42zMhN2tU=";
     };
