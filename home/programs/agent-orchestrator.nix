@@ -1,13 +1,13 @@
 { config, pkgs, ... }:
 let
-  version = "v0.14.7-nightly.202610261927";
+  version = "v0.14.8";
   app = pkgs.appimageTools.wrapType2 {
     pname = "agent-orchestrator";
     inherit version;
     src = pkgs.fetchurl {
       url = "https://github.com/OrchestratorInc/agent-orchestrator/releases/download/${version}/agent-orchestrator-linux-x64.AppImage";
       # nix store prefetch-file --json "https://github.com/OrchestratorInc/agent-orchestrator/releases/download/v${VERSION}/agent-orchestrator-linux-x64.AppImage"
-      hash = "sha256-juhBl2C6ZwxTS+mhz2Se58ZG+gQ6Zmy4PI42zMhN2tU=";
+      hash = "sha256-qiOpmIp9FgAizp9sRfL2o2oo2QJSwBBFqKc9WK1KvGE=";
     };
   };
   wrappedApp = config.lib.nixGL.wrap app;
