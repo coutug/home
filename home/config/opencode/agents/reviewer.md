@@ -1,7 +1,6 @@
 ---
 description: Independently evaluates changes, plans, documents, and outputs against requirements; reports evidence-backed findings.
 mode: subagent
-model: openrouter/gpt-6.1-sol#medium
 permissions:
   - action: edit
     resource: "*"

@@ -2,7 +2,7 @@
 description: Executes explicit requirements or approved plans across code, configuration, documentation, and other project artifacts.
 mode: primary
 color: "#39c5cf"
-model: openrouter/gpt-6-luna#medium
+model: openrouter/auto-low
 permissions:
   - action: shell
     resource: "git commit *"

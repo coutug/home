@@ -2,7 +2,7 @@
 description: Analyzes questions, code, systems, research, and decisions; plans implementation when execution is needed, without modifying files.
 mode: primary
 color: "#bc8cff"
-model: openroute/gemini-3.8-flash#high
+model: openrouter/auto-medium
 permissions:
   - action: edit
     resource: "*"

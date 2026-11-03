@@ -1,6 +1,7 @@
 {
 	"$schema": "https://opencode.ai/config.json",
 	"update": "disable",
+  "model": "openrouter/auto-low",
   "shell": "/bin/zsh",
 	"default_agent": "plan",
 	"experimental": {
@@ -15,6 +16,40 @@
 		"@mohak34/opencode-notifier@1.0.0"
 	],
 	"providers": {
+		"openrouter": {
+			"headers": {
+				"X-OpenRouter-Metadata": "enabled"
+			},
+			"models": {
+				"auto-high": {
+					"modelID": "openrouter/auto",
+					"name": "Auto Router — High cost",
+					"body": {
+						"plugins": [
+							{ "id": "auto-router", "cost_tier": "high" }
+						]
+					}
+				},
+				"auto-medium": {
+					"modelID": "openrouter/auto",
+					"name": "Auto Router — Medium cost",
+					"body": {
+						"plugins": [
+							{ "id": "auto-router", "cost_tier": "medium" }
+						]
+					}
+				},
+				"auto-low": {
+					"modelID": "openrouter/auto",
+					"name": "Auto Router — Low cost",
+					"body": {
+						"plugins": [
+							{ "id": "auto-router", "cost_tier": "low" }
+						]
+					}
+				}
+			}
+		},
 		"openai": {
 			"models": {
 				"gpt-6.1-sol": {
