@@ -67,20 +67,40 @@
 			}
 		},
 		"vllm": {
-			"name": "vllm",
+			"name": "vLLM",
 			"settings": {
 				"baseURL": "{file:./vllm-url}"
 			},
 			"models": {
 				"gemma4": {
-					"name": "gemma4-12B",
+					"name": "Gemma 4 12B — local",
 					"capabilities": {
-						"tools": true
+						"tools": true,
+						"input": ["text"],
+						"output": ["text"]
 					},
 					"limit": {
-						"context": 543,
-						"output": 2000
-					}
+						"context": 32768,
+						"output": 8192
+					},
+					"body": {
+						"temperature": 1.0,
+						"top_p": 0.95,
+						"top_k": 64,
+						"chat_template_kwargs": {
+							"enable_thinking": false
+						}
+					},
+					"variants": [
+						{
+							"id": "think",
+							"body": {
+								"chat_template_kwargs": {
+									"enable_thinking": true
+								}
+							}
+						}
+					]
 				}
 			}
 		}
