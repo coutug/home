@@ -4,6 +4,10 @@
   "model": "openrouter/auto-low",
   "shell": "/bin/zsh",
 	"default_agent": "plan",
+	"permissions": [
+		{ "action": "shell", "resource": "agent-browser *", "effect": "ask" },
+		{ "action": "chrome-devtools_*", "resource": "*", "effect": "ask" }
+	],
 	"experimental": {
 		"subagent_depth": 2
 	},
@@ -107,6 +111,27 @@
 	},
 	"mcp": {
 		"servers": {
+			"chrome-devtools": {
+				"type": "local",
+				"command": [
+					"npx",
+					"-y",
+					"chrome-devtools-mcp@1.12.0",
+					"--no-usage-statistics",
+					"--performanceCrux=false",
+					"--categoryMemory=false",
+					"--categoryInput=false",
+					"--javascriptEvaluation=false",
+					"--redactNetworkHeaders=true",
+					"--filesystemRoot=/tmp/opencode"
+				],
+				"environment": {
+					"CHROME_DEVTOOLS_MCP_NO_UPDATE_CHECKS": "1"
+				},
+				"timeout": {
+					"startup": 120000
+				}
+			},
 			"kubernetes": {
 				"type": "local",
 				"command": [

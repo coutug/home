@@ -74,6 +74,7 @@
     packages = with pkgs; [
       act
       age
+      agent-browser
       argocd
       augeas
       cilium-cli

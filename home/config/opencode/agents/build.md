@@ -43,6 +43,114 @@ permissions:
   - action: shell
     resource: "nixos-anywhere *"
     effect: ask
+  - action: shell
+    resource: "agent-browser skills *"
+    effect: allow
+  - action: shell
+    resource: "agent-browser open https://*"
+    effect: allow
+  - action: shell
+    resource: "agent-browser open http://*"
+    effect: allow
+  - action: shell
+    resource: "agent-browser goto https://*"
+    effect: allow
+  - action: shell
+    resource: "agent-browser goto http://*"
+    effect: allow
+  - action: shell
+    resource: "agent-browser navigate https://*"
+    effect: allow
+  - action: shell
+    resource: "agent-browser navigate http://*"
+    effect: allow
+  - action: shell
+    resource: "agent-browser read"
+    effect: allow
+  - action: shell
+    resource: "agent-browser snapshot"
+    effect: allow
+  - action: shell
+    resource: "agent-browser get title"
+    effect: allow
+  - action: shell
+    resource: "agent-browser get url"
+    effect: allow
+  - action: shell
+    resource: "agent-browser get text *"
+    effect: allow
+  - action: shell
+    resource: "agent-browser get styles *"
+    effect: allow
+  - action: shell
+    resource: "agent-browser get count *"
+    effect: allow
+  - action: shell
+    resource: "agent-browser get box *"
+    effect: allow
+  - action: shell
+    resource: "agent-browser console"
+    effect: allow
+  - action: shell
+    resource: "agent-browser errors"
+    effect: allow
+  - action: shell
+    resource: "agent-browser close"
+    effect: allow
+  - action: "chrome-devtools_*"
+    resource: "*"
+    effect: ask
+  - action: "chrome-devtools_list_pages"
+    resource: "*"
+    effect: allow
+  - action: "chrome-devtools_new_page"
+    resource: "*"
+    effect: allow
+  - action: "chrome-devtools_navigate_page"
+    resource: "*"
+    effect: allow
+  - action: "chrome-devtools_wait_for"
+    resource: "*"
+    effect: allow
+  - action: "chrome-devtools_select_page"
+    resource: "*"
+    effect: allow
+  - action: "chrome-devtools_close_page"
+    resource: "*"
+    effect: allow
+  - action: "chrome-devtools_resize_page"
+    resource: "*"
+    effect: allow
+  - action: "chrome-devtools_emulate"
+    resource: "*"
+    effect: allow
+  - action: "chrome-devtools_take_snapshot"
+    resource: "*"
+    effect: allow
+  - action: "chrome-devtools_take_screenshot"
+    resource: "*"
+    effect: allow
+  - action: "chrome-devtools_get_css_styles"
+    resource: "*"
+    effect: allow
+  - action: "chrome-devtools_list_console_messages"
+    resource: "*"
+    effect: allow
+  - action: "chrome-devtools_get_console_message"
+    resource: "*"
+    effect: allow
+  - action: "chrome-devtools_performance_start_trace"
+    resource: "*"
+    effect: allow
+  - action: "chrome-devtools_performance_stop_trace"
+    resource: "*"
+    effect: allow
+  - action: "chrome-devtools_performance_analyze_insight"
+    resource: "*"
+    effect: allow
+  - action: "chrome-devtools_lighthouse_audit"
+    resource: "*"
+    effect: allow
 ---
 
 # Role
