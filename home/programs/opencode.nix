@@ -42,6 +42,10 @@ in
       source = ../config/opencode/skills;
       recursive = true;
     };
+    "opencode/plugins" = {
+      source = ../config/opencode/plugins;
+      recursive = true;
+    };
     "opencode/AGENTS.md".source = ../config/opencode/AGENTS.md;
     "opencode/opencode.jsonc".source = ../config/opencode/opencode.jsonc;
     "opencode/cli.json".source = ../config/opencode/cli.json;

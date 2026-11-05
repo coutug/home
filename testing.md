@@ -20,6 +20,7 @@ Run these from the repository root without activation or SOPS decryption:
 ```bash
 python3 tests/test_cleanup.py
 python3 tests/test_kubeconfig_permissions.py
+node --test tests/opencode-plugin.test.mjs
 nix build --impure --no-link --file tests/k9s-aliases.nix
 ```
 
@@ -27,6 +28,8 @@ The cleanup test inspects source wiring, evaluates both workstation profiles
 and all three NixOS toplevels, and builds only generated shell/terminal config
 files for syntax and removal checks. It does not build complete profiles or
 systems. There are focused automated tests now, but no flake `checks` or CI.
+The OpenCode plugin test checks that its model filter matches Gemma 4 on vLLM
+with any variant and excludes other providers and models.
 Removed kmux behavior tests are obsolete; absence checks replace them.
 
 ## 1. Règles de sécurité

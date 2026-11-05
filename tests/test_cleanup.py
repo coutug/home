@@ -155,7 +155,13 @@ class ProfileCleanup(unittest.TestCase):
                 self.assertEqual(home["aliases"]["kc"], "kubie ctx")
                 self.assertTrue(home["atuin"]["auto_sync"])
                 self.assertEqual(home["atuin"]["sync_frequency"], "20m")
-                for file in ("opencode/skills", "opencode/agents", "k9s/aliases.yaml", "nvim"):
+                for file in (
+                    "opencode/skills",
+                    "opencode/agents",
+                    "opencode/plugins",
+                    "k9s/aliases.yaml",
+                    "nvim",
+                ):
                     self.assertIn(file, home["xdgFiles"])
         self.assertIn("hypr/hyprland.lua", self.data["homes"]["laptop"]["xdgFiles"])
         self.assertNotIn("hypr/hyprland.lua", self.data["homes"]["desktop"]["xdgFiles"])
