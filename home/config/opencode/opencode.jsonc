@@ -6,7 +6,8 @@
 	"default_agent": "plan",
 	"permissions": [
 		{ "action": "shell", "resource": "agent-browser *", "effect": "ask" },
-		{ "action": "chrome-devtools_*", "resource": "*", "effect": "ask" }
+		{ "action": "chrome-devtools_*", "resource": "*", "effect": "ask" },
+		{ "action": "penpot_*", "resource": "*", "effect": "ask" }
 	],
 	"experimental": {
 		"subagent_depth": 2
@@ -16,8 +17,9 @@
 	},
 	"plugins": [
     // https://github.com/william-ricchiuti/OpenCode-goal-plugin/tree/v0.11.1
-		"opencode-goal-plugin@0.11.1",
     "github:coutug/oc-show-model#v0.2.0",
+		"opencode-goal-plugin@0.11.1",
+    "@upstash/context7-opencode",
 		"@mohak34/opencode-notifier@1.0.0"
 	],
 	"providers": {
@@ -52,21 +54,6 @@
 							{ "id": "auto-router", "cost_tier": "low" }
 						]
 					}
-				}
-			}
-		},
-		"openai": {
-			"models": {
-				"gpt-6.1-sol": {
-					"variants": [
-						{ "id": "medium", "settings": { "reasoningEffort": "medium", "textVerbosity": "low" } },
-						{ "id": "high", "settings": { "reasoningEffort": "high", "textVerbosity": "low" } }
-					]
-				},
-				"gpt-6-luna": {
-					"variants": [
-						{ "id": "high", "settings": { "reasoningEffort": "high", "textVerbosity": "low" } }
-					]
 				}
 			}
 		},
@@ -158,6 +145,11 @@
 			"gh_grep": {
 				"type": "remote",
 				"url": "https://mcp.grep.app"
+			},
+			"penpot": {
+				"type": "remote",
+				"url": "{file:./penpot-url}",
+				"oauth": false
 			}
 		}
 	}
