@@ -6,7 +6,7 @@ in
 {
   xdg.configFile."containers/systemd/vllm.container".text = ''
     [Unit]
-    Description=vLLM inference server
+    Description=vLLM Qwen3.8-27B inference server
     After=network-online.target
     Wants=network-online.target
 
@@ -25,7 +25,7 @@ in
 
     Pull=missing
 
-    Exec=--model google/gemma-4-12B-it-qat-w4a16-ct --served-model-name gemma4 --language-model-only --max-model-len 32768 --gpu-memory-utilization 0.85 --enable-auto-tool-choice --tool-call-parser gemma4 --reasoning-parser gemma4 --host 0.0.0.0 --port 8000
+    Exec=--model cyankiwi/Qwen3.8-27B-AWQ-INT4 --served-model-name qwen38 --language-model-only --max-model-len 8192 --max-num-seqs 1 --gpu-memory-utilization 0.88 --enable-auto-tool-choice --tool-call-parser qwen3_coder --reasoning-parser qwen3 --default-chat-template-kwargs="{\"enable_thinking\":false}" --host 0.0.0.0 --port 8000
 
     [Service]
     Restart=on-failure
