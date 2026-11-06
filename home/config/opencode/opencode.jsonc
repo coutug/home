@@ -76,8 +76,8 @@
 				"baseURL": "{file:./vllm-url}"
 			},
 			"models": {
-				"gemma4": {
-					"name": "Gemma 4 12B — local",
+				"qwen38": {
+					"name": "Qwen3.8-27B INT4 — local",
 					"capabilities": {
 						"tools": true,
 						"input": ["text"],
@@ -85,12 +85,13 @@
 					},
 					"limit": {
 						"context": 32768,
-						"output": 8192
+						"output": 4096
 					},
 					"body": {
-						"temperature": 1.0,
-						"top_p": 0.95,
-						"top_k": 64,
+						"temperature": 0.7,
+						"top_p": 0.8,
+						"top_k": 20,
+						"presence_penalty": 1.5,
 						"chat_template_kwargs": {
 							"enable_thinking": false
 						}
@@ -99,6 +100,10 @@
 						{
 							"id": "think",
 							"body": {
+								"temperature": 1.0,
+								"top_p": 0.95,
+								"top_k": 20,
+								"presence_penalty": 0.0,
 								"chat_template_kwargs": {
 									"enable_thinking": true
 								}
