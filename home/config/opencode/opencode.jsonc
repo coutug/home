@@ -16,8 +16,8 @@
 		"ignore": ["node_modules/**", "dist/**", ".git/**"]
 	},
 	"plugins": [
-    // https://github.com/william-ricchiuti/OpenCode-goal-plugin/tree/v0.11.1
     "github:coutug/oc-show-model#v0.2.0",
+    // https://github.com/william-ricchiuti/OpenCode-goal-plugin/tree/v0.11.1
 		"opencode-goal-plugin@0.11.1",
     // "@upstash/context7-opencode", to rework
 		"@mohak34/opencode-notifier@1.0.0"
@@ -150,6 +150,7 @@
 				"type": "remote",
 				"url": "{file:./penpot-url}",
 				"oauth": false
+				"disabled": false
 			}
 		}
 	}
