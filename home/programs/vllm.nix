@@ -25,15 +25,12 @@ in
 
     Pull=missing
 
-    Exec=--model cyankiwi/Qwen3.8-27B-AWQ-INT4 --served-model-name qwen38 --language-model-only --max-model-len 32768 --max-num-seqs 1 --gpu-memory-utilization 0.97 --enable-auto-tool-choice --tool-call-parser qwen3_coder --reasoning-parser qwen3 --default-chat-template-kwargs="{\"enable_thinking\":false}" --host 0.0.0.0 --port 8000
+    Exec=--model cyankiwi/Qwen3.8-27B-AWQ-INT4 --served-model-name qwen38 --language-model-only --max-model-len 32768 --max-num-seqs 1 --gpu-memory-utilization 0.98 --enable-chunked-prefill --max-num-batched-tokens 512 --enable-auto-tool-choice --tool-call-parser qwen3_coder --reasoning-parser qwen3 --default-chat-template-kwargs="{\"enable_thinking\":false}" --host 0.0.0.0 --port 8000
 
     [Service]
     Restart=on-failure
     RestartSec=5
     TimeoutStartSec=900
     TimeoutStopSec=60
-
-    [Install]
-    WantedBy=default.target
   '';
 }
