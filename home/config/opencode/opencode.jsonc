@@ -7,7 +7,44 @@
 	"permissions": [
 		{ "action": "shell", "resource": "agent-browser *", "effect": "ask" },
 		{ "action": "chrome-devtools_*", "resource": "*", "effect": "ask" },
-		{ "action": "penpot_*", "resource": "*", "effect": "ask" }
+		{ "action": "penpot_*", "resource": "*", "effect": "ask" },
+		{ "action": "libreoffice_*", "resource": "*", "effect": "ask" },
+		{ "action": "libreoffice_calc_find_text", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_calc_get_cell_info", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_calc_get_range", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_calc_get_sheet_layout", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_calc_list_charts", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_calc_list_comments", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_calc_list_conditional_formats", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_calc_list_images", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_calc_list_named_ranges", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_calc_list_sheets", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_impress_find_text", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_impress_get_notes", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_impress_get_overview", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_impress_get_shape", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_impress_get_slide", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_impress_get_text", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_impress_list_masters", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_office_get_document_info", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_office_list_documents", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_office_status", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_writer_find_text", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_writer_get_bookmarks", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_writer_get_comments", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_writer_get_footnotes", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_writer_get_headers_footers", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_writer_get_hyperlinks", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_writer_get_images", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_writer_get_outline", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_writer_get_page_setup", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_writer_get_paragraph", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_writer_get_structure", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_writer_get_table", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_writer_get_tables", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_writer_get_text", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_writer_get_track_changes", "resource": "*", "effect": "allow" },
+		{ "action": "libreoffice_writer_list_styles", "resource": "*", "effect": "allow" }
 	],
 	"experimental": {
 		"subagent_depth": 2
@@ -103,6 +140,15 @@
 	},
 	"mcp": {
 		"servers": {
+			"libreoffice": {
+				"type": "local",
+				"command": [
+					"docker", "run", "-i", "--rm",
+					"--mount=type=bind,source=/home/gabriel/Documents/repo/libre-office-mcp/workspace,target=/data",
+					"libreoffice-mcp:local"
+				],
+				"disabled": true
+			},
 			"chrome-devtools": {
 				"type": "local",
 				"command": [
