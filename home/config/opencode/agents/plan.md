@@ -10,60 +10,6 @@ permissions:
   - action: shell
     resource: "*"
     effect: ask
-  - action: shell
-    resource: "agent-browser skills *"
-    effect: allow
-  - action: shell
-    resource: "agent-browser open https://*"
-    effect: allow
-  - action: shell
-    resource: "agent-browser open http://*"
-    effect: allow
-  - action: shell
-    resource: "agent-browser goto https://*"
-    effect: allow
-  - action: shell
-    resource: "agent-browser goto http://*"
-    effect: allow
-  - action: shell
-    resource: "agent-browser navigate https://*"
-    effect: allow
-  - action: shell
-    resource: "agent-browser navigate http://*"
-    effect: allow
-  - action: shell
-    resource: "agent-browser read"
-    effect: allow
-  - action: shell
-    resource: "agent-browser snapshot"
-    effect: allow
-  - action: shell
-    resource: "agent-browser get title"
-    effect: allow
-  - action: shell
-    resource: "agent-browser get url"
-    effect: allow
-  - action: shell
-    resource: "agent-browser get text *"
-    effect: allow
-  - action: shell
-    resource: "agent-browser get styles *"
-    effect: allow
-  - action: shell
-    resource: "agent-browser get count *"
-    effect: allow
-  - action: shell
-    resource: "agent-browser get box *"
-    effect: allow
-  - action: shell
-    resource: "agent-browser console"
-    effect: allow
-  - action: shell
-    resource: "agent-browser errors"
-    effect: allow
-  - action: shell
-    resource: "agent-browser close"
-    effect: allow
   - action: "github_*"
     resource: "*"
     effect: ask
@@ -71,9 +17,6 @@ permissions:
     resource: "*"
     effect: ask
   - action: "kubernetes_*"
-    resource: "*"
-    effect: ask
-  - action: "chrome-devtools_*"
     resource: "*"
     effect: ask
   - action: "chrome-devtools_list_pages"

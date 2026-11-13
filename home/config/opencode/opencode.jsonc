@@ -196,7 +196,7 @@
 				"type": "remote",
 				"url": "{file:./penpot-url}",
 				"oauth": false,
-				"disabled": false
+				"disabled": true
 			}
 		}
 	}
