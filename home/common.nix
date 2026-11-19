@@ -147,6 +147,7 @@
       strace
       supermin
       syslinux
+      tabularis
       tealdeer
       thunderbird
       traceroute
