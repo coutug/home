@@ -2,6 +2,8 @@ Always use caveman skill in full mode.
 If you are in a git repo, set all text in english, except if told otherwise.
 Never try to decrypt a sops encrypted file.
 
+Whenever asked to modify application's configurations, check if it should go in the user configuration's repo at ~/Documents/repo/home/ instead of a traditionnal place like ~/.config/ or /etc/ .
+
 ## Browser use
 - Prefer websearch and webfetch for static research and documentation; use a browser for rendered pages, visual inspection, or interaction.
 - Use agent-browser for general browser automation. Use chrome-devtools for web-app debugging, computed CSS, console, Lighthouse, and performance analysis.
