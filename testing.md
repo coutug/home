@@ -20,6 +20,7 @@ Run these from the repository root without activation or SOPS decryption:
 ```bash
 python3 tests/test_cleanup.py
 python3 tests/test_kubeconfig_permissions.py
+python3 tests/test_engram_update.py
 node --test tests/opencode-plugin.test.mjs
 nix build --impure --no-link --file tests/k9s-aliases.nix
 ```

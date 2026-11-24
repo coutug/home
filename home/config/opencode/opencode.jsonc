@@ -140,6 +140,11 @@
 	},
 	"mcp": {
 		"servers": {
+			"engram": {
+				"type": "local",
+				"command": ["@ENGRAM_COMMAND@", "mcp", "--tools=agent"],
+				"codemode": false
+			},
 			"libreoffice": {
 				"type": "local",
 				"command": [

@@ -5,6 +5,27 @@
   ...
 }:
 let
+  engramRelease = builtins.fromJSON (builtins.readFile ./engram-version.json);
+  engramVersion = engramRelease.version;
+  engram = pkgs.stdenvNoCC.mkDerivation {
+    pname = "engram";
+    version = engramVersion;
+    src = pkgs.fetchurl {
+      url = "https://github.com/Gentleman-Programming/engram/releases/download/v${engramVersion}/engram_${engramVersion}_linux_amd64.tar.gz";
+      hash = engramRelease.binaryHash;
+    };
+    sourceRoot = ".";
+    installPhase = ''
+      install -Dm755 engram "$out/bin/engram"
+    '';
+    meta.platforms = [ "x86_64-linux" ];
+  };
+  engramPlugin = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/Gentleman-Programming/engram/v${engramVersion}/plugin/opencode/engram.ts";
+    hash = engramRelease.pluginHash;
+  };
+  engramCommand = "${engram}/bin/engram";
+  engramPluginSource = builtins.readFile engramPlugin;
   opencodeSecretsDir = ../../secrets/opencode;
   opencodeSecrets = builtins.readDir opencodeSecretsDir;
   opencodeSecretNames = builtins.filter (name: opencodeSecrets.${name} == "regular") (
@@ -26,6 +47,7 @@ in
 
   home.packages = [
     opencode.packages.${pkgs.stdenv.hostPlatform.system}.default
+    engram
     (pkgs.python3.withPackages (pythonPackages: [ pythonPackages.pyyaml ]))
   ];
 
@@ -47,7 +69,14 @@ in
       recursive = true;
     };
     "opencode/AGENTS.md".source = ../config/opencode/AGENTS.md;
-    "opencode/opencode.jsonc".source = ../config/opencode/opencode.jsonc;
+    "opencode/plugins/engram.ts".text = builtins.replaceStrings
+      [ ''?? "engram"'' ]
+      [ ''?? "${engramCommand}"'' ]
+      (assert pkgs.lib.hasInfix ''?? "engram"'' engramPluginSource; engramPluginSource);
+    "opencode/opencode.jsonc".text = builtins.replaceStrings
+      [ "@ENGRAM_COMMAND@" ]
+      [ engramCommand ]
+      (builtins.readFile ../config/opencode/opencode.jsonc);
     "opencode/cli.json".source = ../config/opencode/cli.json;
   };
 }
