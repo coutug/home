@@ -1,0 +1,41 @@
+{
+  "skill_name": "stallion-api",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "My checkout already has a full Canadian shipping address. Show me the Stallion v5 request shape and how to handle the response. I want prices without creating a shipment. In my test fixture Intelcom timed out, Fleet Optics returned no rate for the lane, and ICS returned pt.140. The integration must only use ship.stallion.ca. Use synthetic data and describe mock tests; don't send a request.",
+      "expected_output": "A flat POST /rates request with to_address and packages, rates:read, production as the only API host, an exact pt.140 service selection, and different handling for timeout versus no_rate_for_lane.",
+      "files": [],
+      "assertions": [
+        "Uses the production v5 base URL and POST /rates with a flat to_address and packages body, not POST /shipments or a shipments wrapper.",
+        "Requires rates:read and keeps the Bearer token server-side.",
+        "Preserves pt.140 and distinguishes a carrier_timeout retry from no_rate_for_lane using meta.excluded_services.",
+        "Proposes synthetic or mocked tests and does not make a live request."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Our Stallion v5 worker bought postage for an existing numeric shipment ID but the HTTP request timed out. What state should we store before the call, and how should the worker retry and reprint without buying another label? Include how to recover a 422 from the older one-call purchase path if it gives us a shipment ID. Give an offline test plan; do not use an actual account.",
+      "expected_output": "A persistent Idempotency-Key per purchase, reconciliation after an ambiguous timeout unless deduplication is guaranteed, same-body replay with the same key only when safe, GET label retrieval, and a switch to the existing shipment's label endpoint for the combined-call error.",
+      "files": [],
+      "assertions": [
+        "Persists a stable key before POST /labels/{shipment_id}; reconciles an ambiguous timeout unless deduplication is guaranteed and reuses the same key and body for a safe replay within 24 hours.",
+        "Reconciles unknown outcomes or an expired replay window instead of issuing another purchase with a fresh key.",
+        "Uses GET /labels/{shipment_id} to retrieve or refresh documents without purchasing again.",
+        "Uses error.details.shipment_id from a combined POST /labels failure to resume on the existing shipment instead of creating another one."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I can list our imported Shopify orders in Stallion. I want to create one draft and let Stallion send tracking back once we buy postage. Which order ID and JSON body should I send, and how do I handle validation or a duplicate? Please provide the sequence and tests, not actual API calls.",
+      "expected_output": "Use GET /orders data[].id as store_order_id, create through POST /shipments with a shipments array, inspect the 201 row-level result, reuse existing shipments on conflict, and explain the store fulfillment side effect.",
+      "files": [],
+      "assertions": [
+        "Uses the Stallion order ID from GET /orders as store_order_id and explains that order_id alone does not link the shipment.",
+        "Sends a bulk-shaped POST /shipments request even for one row and reads data.shipments and data.errors on HTTP 201.",
+        "Does not duplicate a linked shipment after conflict and notes that recipient/items overrides replace the imported value rather than merging.",
+        "Explains that label purchase can fulfill the store order and push tracking according to store settings; does not call the live API."
+      ]
+    }
+  ]
+}
