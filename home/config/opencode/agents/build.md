@@ -2,7 +2,7 @@
 description: Executes explicit requirements or approved plans across code, configuration, documentation, and other project artifacts.
 mode: primary
 color: "#39c5cf"
-model: openai/gpt-6.2-terra
+model: openai/gpt-6.1-terra
 variant: low
 permissions:
   - action: shell
