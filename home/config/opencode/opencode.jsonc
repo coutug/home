@@ -60,6 +60,7 @@
     // "@upstash/context7-opencode", to rework
 	],
 	"providers": {
+		"openai": {},
 		"openrouter": {
 			"headers": {
 				"X-OpenRouter-Metadata": "enabled"

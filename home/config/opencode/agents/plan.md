@@ -2,7 +2,8 @@
 description: Analyzes questions, code, systems, research, and decisions; plans implementation when execution is needed, without modifying files.
 mode: primary
 color: "#bc8cff"
-model: openrouter/auto-medium
+model: openai/gpt-6.2-sol
+variant: medium
 permissions:
   - action: edit
     resource: "*"
