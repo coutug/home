@@ -22,6 +22,10 @@
       url = "github:coutug/nvim";
       flake = false;
     };
+    skills-mattpocock = {
+      url = "github:mattpocock/skills";
+      flake = false;
+    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -40,6 +44,7 @@
       sops-nix,
       opencode,
       nvim-config,
+      skills-mattpocock,
       disko,
       k0s-nix,
       ...
@@ -63,6 +68,7 @@
               opencode
               nvim-config
               ;
+            opencodeSkillSources = { inherit skills-mattpocock; };
           };
           modules = [
             ./home/laptop.nix
@@ -77,6 +83,7 @@
               opencode
               nvim-config
               ;
+            opencodeSkillSources = { inherit skills-mattpocock; };
           };
           modules = [
             ./home/desktop.nix

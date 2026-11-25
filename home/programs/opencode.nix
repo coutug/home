@@ -43,6 +43,8 @@ let
   };
 in
 {
+  imports = [ ./opencode-skills.nix ];
+
   sops.secrets = builtins.listToAttrs (map mkOpencodeSecret opencodeSecretNames);
 
   home.packages = [
@@ -58,10 +60,6 @@ in
     };
     "opencode/commands" = {
       source = ../config/opencode/commands;
-      recursive = true;
-    };
-    "opencode/skills" = {
-      source = ../config/opencode/skills;
       recursive = true;
     };
     "opencode/plugins" = {

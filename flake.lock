@@ -176,7 +176,24 @@
         "nixpkgs": "nixpkgs",
         "nvim-config": "nvim-config",
         "opencode": "opencode",
+        "skills-mattpocock": "skills-mattpocock",
         "sops-nix": "sops-nix"
+      }
+    },
+    "skills-mattpocock": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1795608503,
+        "narHash": "sha256-kM/OK6+kbTHzlN5d6wjL9hM80lolcSCoO8A1oRvEJEU=",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "rev": "6f7f7831a625f040a8e06a0e7954826b87ce775a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mattpocock",
+        "repo": "skills",
+        "type": "github"
       }
     },
     "sops-nix": {
