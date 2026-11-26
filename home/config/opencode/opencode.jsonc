@@ -197,6 +197,15 @@
 				"type": "remote",
 				"url": "https://mcp.grep.app"
 			},
+			"drive": {
+				"type": "remote",
+				"url": "https://drivemcp.googleapis.com/mcp/v1",
+				"oauth": {
+					"client_id": "{file:./google-drive-client-id}",
+					"client_secret": "{file:./google-drive-client-secret}",
+					"scope": "https://www.googleapis.com/auth/drive.readonly"
+				}
+			},
 			"penpot": {
 				"type": "remote",
 				"url": "{file:./penpot-url}",
